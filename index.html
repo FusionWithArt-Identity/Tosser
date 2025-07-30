@@ -43,24 +43,168 @@
             width: 100%;
         }
 
-        .milkybar-header h1 {
-    color: #00FFFF; /* Electric Blue */
+.milkybar-header h1 {
+    color: #00FFFF; /* Electric Blue base color */
     font-size: clamp(1.8rem, 6vw, 3.5rem);
     text-transform: uppercase;
     letter-spacing: 1px;
-    /* Fiery text-shadow effect with previous setup included */
     text-shadow:
         2px 2px 0px rgba(0,0,0,0.1), /* Your previous text-shadow setup */
-        0 0 5px #00FFFF,            /* Primary blue glow */
-        0 0 10px #00FFFF,           /* Wider blue glow */
-        0 0 20px #00FFFF,           /* Even wider blue glow */
-        0 0 30px #00FFFF,           /* Farthest blue glow */
-        0 0 40px #00BFFF,           /* Sky blue for fiery tips */
+        0 0 5px #00FFFF,
+        0 0 10px #00FFFF,
+        0 0 20px #00FFFF,
+        0 0 30px #00FFFF,
+        0 0 40px #00BFFF,
         0 0 50px #00BFFF,
         0 0 60px #00BFFF;
     margin-bottom: 5px;
     font-weight: 800;
     line-height: 1.2;
+    /* Apply the new neon flickering animation */
+    animation: neon-flicker 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes neon-flicker {
+    0%, 100% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF; /* Full electric blue */
+    }
+    10% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.05), /* Slight variation for original shadow */
+            0 0 3px rgba(0,255,255,0.8), /* Dimmer short flicker */
+            0 0 8px rgba(0,255,255,0.6);
+        color: rgba(0,255,255,0.8); /* Slightly less intense color */
+    }
+    12% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
+    15% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.08),
+            0 0 4px rgba(0,255,255,0.7), /* Another slight flicker */
+            0 0 12px rgba(0,255,255,0.5);
+        color: rgba(0,255,255,0.9);
+    }
+    18% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
+    20% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.05),
+            0 0 2px rgba(0,255,255,0.6), /* Quick, subtle flicker */
+            0 0 7px rgba(0,255,255,0.4);
+        color: rgba(0,255,255,0.7);
+    }
+    23% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
+    /* The rest of the animation frames allow the glow to stabilize for a bit
+       before the next flicker, creating a more natural "tube light" effect. */
+    25%, 70% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
+    75% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.05),
+            0 0 3px rgba(0,255,255,0.8),
+            0 0 8px rgba(0,255,255,0.6);
+        color: rgba(0,255,255,0.8);
+    }
+    78% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
+    80% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.08),
+            0 0 4px rgba(0,255,255,0.7),
+            0 0 12px rgba(0,255,255,0.5);
+        color: rgba(0,255,255,0.9);
+    }
+    83% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
+    85% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.05),
+            0 0 2px rgba(0,255,255,0.6),
+            0 0 7px rgba(0,255,255,0.4);
+        color: rgba(0,255,255,0.7);
+    }
+    88% {
+        text-shadow:
+            2px 2px 0px rgba(0,0,0,0.1),
+            0 0 5px #00FFFF,
+            0 0 10px #00FFFF,
+            0 0 20px #00FFFF,
+            0 0 30px #00FFFF,
+            0 0 40px #00BFFF,
+            0 0 50px #00BFFF,
+            0 0 60px #00BFFF;
+        color: #00FFFF;
+    }
 }
 
         .milkybar-header p {
