@@ -75,10 +75,44 @@
         0 0 25px #bc13fe,
         0 0 40px #bc13fe;
 
-    /* Original border and box-shadow */
-    border: 0.2rem solid #fff;
-    border-radius: 2rem;
+    /* Removed static border and box-shadow from h1 to apply them via pseudo-element */
+    /* position: relative and overflow: hidden are still needed for the pseudo-element */
+    position: relative;
+    overflow: hidden;
+
+    /* Apply the revised flickering animation for the text */
+    animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
+
+    /* Padding from original h1 for spacing, combined with the new pseudo-element's border */
     padding: 0.4em;
+    border-radius: 2rem; /* Keep for overflow clipping */
+    z-index: 1; /* Ensure text is above the moving border pseudo-element */
+}
+
+/* Pseudo-element for the moving border */
+.milkybar-header h1::before {
+    content: '';
+    position: absolute;
+    top: -0.2rem; /* Matches the h1 border width to position directly on top */
+    left: -0.2rem;
+    right: -0.2rem;
+    bottom: -0.2rem;
+    z-index: -1; /* Place behind the text */
+    border-radius: 2.2rem; /* Slightly larger radius than h1 for continuous path */
+    
+    /* Set up the border using border-image with a gradient */
+    border: 0.2rem solid transparent; /* Required for border-image to work */
+    border-image: linear-gradient(
+        to right,
+        #bc13fe 0%, #bc13fe 5%, /* Light trail segment */
+        transparent 5%, transparent 15%, /* Discontinuous transparent segment */
+        #bc13fe 15%, #bc13fe 20%, /* Another light trail segment (optional, for more "lights") */
+        transparent 20%, transparent 100% /* Rest of the transparent border */
+    );
+    border-image-slice: 1; /* Ensure the entire border is covered */
+    border-image-repeat: stretch; /* Stretch the gradient across the border */
+
+    /* Add a subtle static box-shadow behind the moving border for continuity */
     box-shadow: 0 0 .2rem #fff,
                 0 0 .2rem #fff,
                 0 0 2rem #bc13fe,
@@ -86,36 +120,12 @@
                 0 0 2.8rem #bc13fe,
                 inset 0 0 1.3rem #bc13fe;
 
-    /* Apply the revised flickering animation */
-    animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
-
-    /* --- Additions for the moving border light trail --- */
-    position: relative; /* Needed for pseudo-element positioning */
-    overflow: hidden; /* Clips the pseudo-element to the h1's rounded border */
-}
-
-.milkybar-header h1::before {
-    content: '';
-    position: absolute;
-    top: -5%; /* Slightly outside the border */
-    left: -5%;
-    right: -5%;
-    bottom: -5%;
-    z-index: -1; /* Place behind the text */
-    border-radius: 2.2rem; /* Slightly larger than h1 border-radius */
-    
-    /* Create the discontinuous light trail with a repeating linear gradient */
-    background: repeating-linear-gradient(
-        45deg,
-        #bc13fe 0%, #bc13fe 10%, /* Purple segment */
-        transparent 10%, transparent 20% /* Transparent segment for discontinuity */
-    );
-    background-size: 200% 200%; /* Make the gradient larger than the element */
-    animation: border-trail-animate 5s linear infinite; /* Animation for the trail */
+    /* Animation for the border-image */
+    animation: border-light-trail 3s linear infinite; /* Adjusted speed for border movement */
 }
 
 
-/* Keyframes for the enhanced professional neon tube flickering effect (no change here) */
+/* Keyframes for the text flickering effect (no change here) */
 @keyframes neon-tube-flicker-enhanced {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         color: #f0f0f0;
@@ -151,6 +161,29 @@
             0 0 8px rgba(255,255,255,0.7),
             0 0 12px rgba(188,19,254,0.8),
             0 0 25px rgba(188,19,254,0.6);
+    }
+}
+
+/* Keyframes for the border light trail animation */
+@keyframes border-light-trail {
+    0% {
+        border-image-source: linear-gradient(
+            to right,
+            #bc13fe 0%, #bc13fe 5%,
+            transparent 5%, transparent 15%,
+            #bc13fe 15%, #bc13fe 20%,
+            transparent 20%, transparent 100%
+        );
+    }
+    100% {
+        /* Shift the gradient along the border for movement */
+        border-image-source: linear-gradient(
+            to right,
+            transparent 0%, transparent 80%,
+            #bc13fe 80%, #bc13fe 85%,
+            transparent 85%, transparent 95%,
+            #bc13fe 95%, #bc13fe 100%
+        );
     }
 }
 
