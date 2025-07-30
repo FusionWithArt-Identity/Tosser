@@ -44,7 +44,7 @@
         }
 
 .milkybar-header h1 {
-    /* Base text properties from your original setup */
+    /* Base text properties */
     font-size: clamp(1.8rem, 6vw, 3.5rem);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -53,19 +53,16 @@
     line-height: 1.2;
     text-align: center;
 
-    /* Neon text style for more contrast (text only) */
+    /* Simplified Neon text style for better performance */
     color: #fff; /* White text color */
     text-shadow:
-        0 0 10px #fff,    /* Increased intensity for inner white glow */
-        0 0 20px #fff,
-        0 0 40px #fff,
-        0 0 60px #bc13fe, /* Increased intensity and spread for purple glow */
-        0 0 100px #bc13fe,
-        0 0 120px #bc13fe,
-        0 0 140px #bc13fe,
-        0 0 200px #bc13fe; /* Even wider spread for maximum contrast */
+        0 0 5px #fff,    /* Reduced intensity for inner white glow */
+        0 0 10px #fff,
+        0 0 15px #bc13fe, /* Reduced intensity for purple glow */
+        0 0 30px #bc13fe,
+        0 0 50px #bc13fe; /* Maximum blur reduced for performance */
 
-    /* Original border and box-shadow (no increased outer glow) */
+    /* Original border and box-shadow */
     border: 0.2rem solid #fff;
     border-radius: 2rem;
     padding: 0.4em;
@@ -76,42 +73,39 @@
                 0 0 2.8rem #bc13fe,
                 inset 0 0 1.3rem #bc13fe;
 
-    /* Apply the flickering animation */
-    animation: neon-flicker-contrast 1.5s infinite alternate ease-in-out;
+    /* Apply the less intrusive flickering animation */
+    animation: neon-flicker-less-intrusive 1.5s infinite alternate ease-in-out;
 }
 
-/* Keyframes for a more pronounced flickering effect with enhanced contrast */
-@keyframes neon-flicker-contrast {
+/* Keyframes for a less intrusive flickering effect */
+@keyframes neon-flicker-less-intrusive {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         text-shadow:
-            0 0 10px #fff,    /* Intense white glow */
-            0 0 20px #fff,
-            0 0 40px #fff,
-            0 0 60px #bc13fe, /* Intense purple glow */
-            0 0 100px #bc13fe,
-            0 0 120px #bc13fe,
-            0 0 140px #bc13fe,
-            0 0 200px #bc13fe;
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #bc13fe,
+            0 0 30px #bc13fe,
+            0 0 50px #bc13fe;
         color: #fff; /* Full white color */
     }
 
     20%, 24%, 55% {
         text-shadow:
             0 0 2px #fff,    /* Dimmer white glow for flicker */
-            0 0 8px #fff,
-            0 0 15px #bc13fe, /* Dimmer purple glow for flicker */
-            0 0 30px #bc13fe,
-            0 0 60px #bc13fe;
+            0 0 5px #fff,
+            0 0 10px #bc13fe, /* Dimmer purple glow for flicker */
+            0 0 20px #bc13fe,
+            0 0 30px #bc13fe;
         color: rgba(255, 255, 255, 0.7); /* Slightly dimmed text color */
     }
 
     22%, 53% {
         text-shadow:
-            0 0 5px #fff,    /* Medium white glow for slight pulse */
-            0 0 12px #fff,
-            0 0 25px #bc13fe, /* Medium purple glow for slight pulse */
-            0 0 45px #bc13fe,
-            0 0 80px #bc13fe;
+            0 0 3px #fff,    /* Medium white glow for slight pulse */
+            0 0 7px #fff,
+            0 0 12px #bc13fe, /* Medium purple glow for slight pulse */
+            0 0 25px #bc13fe,
+            0 0 40px #bc13fe;
         color: rgba(255, 255, 255, 0.9); /* Slightly less dimmed text color */
     }
 }
