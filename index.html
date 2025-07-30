@@ -6,6 +6,18 @@
     <title>How to Train Your Dragon - Dragon Profiles</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* New Font Import for the glowing text (Concert One) - This is for the floating text's general style */
+        @import url(https://fonts.googleapis.com/css?family=Concert+One);
+
+        /* NEW: Root variables for the striped effect (used on floating text) */
+        :root {
+            --stripe-size: 100px;
+            --color1: #c44; /* Red stripe color */
+            --color2: #FFFFFF; /* Changed to White stripe color */
+            --duration: 2s;
+            --vh: 100vh; /* Added for mobile viewport height stability */
+        }
+
         /* Base styles - keep as original as possible */
         * {
             margin: 0;
@@ -18,8 +30,8 @@
             background-color: Black;
             font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
             overflow-x: hidden; /* Prevent horizontal scroll */
-            /* Removed touch-action: pan-y to allow default browser scroll behavior, addressing mobile scroll reset */
-            min-height: 100vh;
+            /* REMOVED: touch-action: pan-y; to address aggressive mobile scrolling/reset */
+            min-height: 100vh; /* Will now be controlled by --vh */
             display: flex;
             flex-direction: column;
         }
@@ -38,22 +50,23 @@
 
         .milkybar-header {
             text-align: center;
-            /* Adjusted margin-bottom to decrease space below h1 */
-            margin-bottom: 10px; /* Reduced from 20px */
+            /* MODIFIED: margin-bottom decreased to reduce space below h1 */
+            margin-bottom: 10px; /* Original was 20px */
             padding: 0 5px;
             width: 100%;
         }
 
+        /* REVERTED: Styling for the main header (h1) to its original state */
         .milkybar-header h1 {
             color: #d4a017;
             font-size: clamp(1.8rem, 6vw, 3.5rem);
             text-transform: uppercase;
             letter-spacing: 1px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-            /* This margin-bottom contributes to the space below h1, keeping it as is */
             margin-bottom: 5px;
             font-weight: 800;
             line-height: 1.2;
+            /* Removed stripe-related properties */
         }
 
         .milkybar-header p {
@@ -85,8 +98,8 @@
             perspective: 1200px; /* Crucial for 3D effect */
             overflow: hidden;
             transform-style: preserve-3d; /* Needed for child 3D transforms */
-            /* Adjusted padding to allow glow to show properly */
-            padding: 20px 0; /* Reduced from 40px */
+            /* MODIFIED: Padding top decreased to reduce cropping of upper glow */
+            padding: 20px 0; /* Original was 40px */
         }
 
         .image-track {
@@ -211,45 +224,6 @@
             }
         }
 
-
-/* Updated Keyframes for Red Neon Light Trail Effect on Text */
-    @keyframes neon-light-trail {
-        0%, 100% {
-            text-shadow:
-                0 0 5px #FFA500,   /* Red base glow */
-                0 0 10px #FFA500,
-                0 0 20px rgba(255, 0, 0, 0.6), /* Wider red glow */
-                0 0 30px rgba(255, 0, 0, 0.4);
-        }
-        25% {
-            text-shadow:
-                -2px -2px 5px #FFA500, /* Lighter Red trail up-left */
-                -4px -4px 10px #FFA500,
-                -6px -6px 20px rgba(255, 51, 51, 0.6),
-                -8px -8px 30px rgba(255, 51, 51, 0.4);
-        }
-        50% {
-            text-shadow:
-                0 0 5px #FF0000,   /* Red base glow */
-                0 0 10px #FF0000,
-                0 0 20px rgba(255, 0, 0, 0.6),
-                0 0 30px rgba(255, 0, 0, 0.4);
-        }
-        75% {
-            text-shadow:
-                2px 2px 5px #FFA500, /* Darker Red trail down-right */
-                4px 4px 10px #FFA500,
-                6px 6px 20px rgba(204, 0, 0, 0.6),
-                8px 8px 30px rgba(204, 0, 0, 0.4);
-        }
-    }
-
-    /* Apply the neon light trail animation */
-    .dragon-frame.flipped .dragon-back-text {
-        animation: neon-light-trail 4s infinite ease-in-out;
-    }
-
-
         .dragon-frame.flipped {
             transform: translateY(-5px) scale(1.02) translateZ(50px);
             z-index: 20; /* Ensure flipped card is above others */
@@ -292,7 +266,7 @@
              pointer-events: none;
         }
 
-        /* --- MODIFICATION FOR ISSUE #2 --- */
+        /* --- MODIFICATION FOR ISSUE #2 & Frosted Glass --- */
         .dragon-back {
             transform: rotateY(180deg);
             background: transparent;
@@ -330,35 +304,35 @@
             transition: all 0.3s ease-in-out;
         }
 
-        /* NEW: Floating text area on the back of the flip card */
+        /* MODIFIED: Floating text area - now the frosted glass container */
         .dragon-back-text {
             position: absolute;
-            top: 60%; /* Positioned a bit lower */
+            top: 60%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Center both horizontally and vertically */
-            width: calc(100% - 20px); /* Adjust width to fit within padding */
-            max-height: 50%; /* Limit height to prevent excessive overlap with media */
-            background: rgba(0, 0, 0, 0.6); /* Slightly darker background */
-	        Font-family: FBI;
-            color: White; /* Text color matching header */
-            padding: 5px 8px;
-            border-radius: 8px;
-            /* --- ADJUSTED FOR LARGER FONT SIZE ON ALL SCREENS, ESPECIALLY MOBILE --- */
-            font-size: clamp(1.6rem, 5.5vw, 3rem); /* Significantly increased values */
-            /* --- END ADJUSTMENT --- */
+            transform: translate(-50%, -50%);
+            width: calc(100% - 20px);
+            max-height: 50%;
+            /* Frosted glass properties for the *box* */
+            background-color: rgba(255, 255, 255, 0.1); /* Lighter, very transparent background */
+            padding: 20px 15px; /* Adjust padding to give space around text */
+            line-height: 1.5; /* Line height for text within */
             text-align: center;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            z-index: 2; /* Ensure it's above the media but below reflections/other overlays */
-            opacity: 0; /* Hidden by default */
+            border-radius: 8px;
+            backdrop-filter: blur(20px); /* Increased blur for stronger frosted effect */
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4); /* More visible, whiter border */
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.5), /* Stronger outer shadow */
+                inset 0 0 15px rgba(255, 255, 255, 0.1); /* More visible inner shadow */
+            z-index: 2;
+            opacity: 0;
             transition: opacity 0.3s ease-in-out;
-
-            /* Make it scrollable without scrollbars */
-            overflow-y: auto; /* Enable vertical scrolling when content overflows */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            display: flex; /* Use flexbox to center inner content vertically/horizontally */
+            align-items: center;
+            justify-content: center;
         }
 
         /* Hide scrollbar for Chrome, Safari and Opera */
@@ -366,8 +340,30 @@
             display: none;
         }
 
+        /* Apply opacity when flipped (animation runs on the element directly) */
         .dragon-frame.flipped .dragon-back-text {
             opacity: 1; /* Show when flipped */
+        }
+
+        /* NEW: Styles for the actual text content with stripe effect */
+        .dragon-back-text-content {
+            font-family: 'Concert One', sans-serif;
+            font-size: clamp(1.6rem, 5.5vw, 3rem); /* Apply font-size to content */
+            text-transform: uppercase;
+            color: transparent; /* Make text transparent to show background gradient */
+            background: repeating-linear-gradient(
+                45deg,
+                var(--color1) 25%,
+                var(--color1) 50%,
+                var(--color2) 50%,
+                var(--color2) 75%
+            );
+            background-size: var(--stripe-size) var(--stripe-size);
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: stripeBackgroundPosition var(--duration) linear infinite;
+            display: inline-block; /* Essential for background-clip: text */
+            white-space: normal; /* Ensure text wraps */
         }
 
 
@@ -668,135 +664,64 @@
             cursor: auto;
         }
 
+        /* NEW: Keyframes for the striped effect animation */
+        @keyframes stripeBackgroundPosition {
+            0% { background-position: 0 0; }
+            100% { background-position: calc(var(--stripe-size) * -1) 0; }
+        }
+
+        /* Removed: Responsive scaling for the main header (no longer needed for stripes) */
+        /* @media (max-width: 768px) { .milkybar-header h1 { font-size: 4rem; } } */
+        /* @media (max-width: 480px) { .milkybar-header h1 { font-size: 3rem; } } */
+
         @media (max-width: 575px) {
-            .image-slide {
-                width: 100%;
-            }
+            .image-slide { width: 100%; }
         }
-
         @media (min-width: 576px) {
-            .image-slide {
-                width: 50%;
-            }
-            .milkybar-prev {
-                left: -15px;
-            }
-            .milkybar-next {
-                right: -15px;
-            }
+            .image-slide { width: 50%; }
+            .milkybar-prev { left: -15px; }
+            .milkybar-next { right: -15px; }
         }
-
         @media (min-width: 768px) {
-            .image-slide {
-                width: 33.333%;
-            }
-            .milkybar-prev {
-                left: -25px;
-            }
-            .milkybar-next {
-                right: -25px;
-            }
+            .image-slide { width: 33.333%; }
+            .milkybar-prev { left: -25px; }
+            .milkybar-next { right: -25px; }
         }
-
         @media (min-width: 992px) {
-            .image-slide {
-                width: 25%;
-            }
-            .milkybar-prev {
-                left: -30px;
-            }
-            .milkybar-next {
-                right: -30px;
-            }
+            .image-slide { width: 25%; }
+            .milkybar-prev { left: -30px; }
+            .milkybar-next { right: -30px; }
         }
-
         @media (max-width: 480px) and (orientation: portrait) {
-            .image-carousel {
-                min-height: 350px;
-            }
-            .dragon-frame {
-                width: 70vw;
-                height: 90vw;
-                max-width: 250px;
-                max-height: 350px;
-            }
-            .milkybar-nav {
-                width: 40px;
-                height: 40px;
-            }
+            .image-carousel { min-height: 350px; }
+            .dragon-frame { width: 70vw; height: 90vw; max-width: 250px; max-height: 350px; }
+            .milkybar-nav { width: 40px; height: 40px; }
             /* Adjusted font-size for smaller portrait mobile screens */
-            .dragon-back-text {
-                font-size: clamp(1.4rem, 4vw, 2.5rem);
-                padding: 4px 6px;
-            }
+            .dragon-back-text { font-size: clamp(1.4rem, 4vw, 2.5rem); padding: 4px 6px; }
         }
-
         @media (max-height: 480px) and (orientation: landscape) {
-            .milkybar-container {
-                padding: 10px;
-            }
-            .milkybar-header h1 {
-                font-size: clamp(1.5rem, 5vw, 2.5rem);
-            }
-            .milkybar-header p {
-                font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-            }
-            .image-carousel {
-                min-height: 250px;
-            }
-            .dragon-frame {
-                width: clamp(120px, 30vw, 200px);
-                height: clamp(150px, 40vw, 280px);
-            }
-            .milkybar-nav {
-                width: 30px;
-                height: 30px;
-                font-size: 1rem;
-            }
-            .milkybar-prev {
-                left: -5px;
-            }
-            .milkybar-next {
-                right: -5px;
-            }
-            .info-section-wrapper {
-                margin-top: 10px;
-            }
-            .dragon-name {
-                font-size: clamp(1.5rem, 4vw, 2rem);
-            }
-            .dragon-description {
-                font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            }
+            .milkybar-container { padding: 10px; }
+            .milkybar-header h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); } /* Keep responsive for smaller screens */
+            .milkybar-header p { font-size: clamp(0.8rem, 2.5vw, 1.2rem); }
+            .image-carousel { min-height: 250px; }
+            .dragon-frame { width: clamp(120px, 30vw, 200px); height: clamp(150px, 40vw, 280px); }
+            .milkybar-nav { width: 30px; height: 30px; font-size: 1rem; }
+            .milkybar-prev { left: -5px; }
+            .milkybar-next { right: -5px; }
+            .info-section-wrapper { margin-top: 10px; }
+            .dragon-name { font-size: clamp(1.5rem, 4vw, 2rem); }
+            .dragon-description { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
             /* Adjusted font-size for landscape mobile screens */
-            .dragon-back-text {
-                font-size: clamp(1.2rem, 3.5vw, 2rem);
-                padding: 4px 6px;
-            }
+            .dragon-back-text { font-size: clamp(1.2rem, 3.5vw, 2rem); padding: 4px 6px; }
         }
-
         @media (max-width: 992px) and (min-width: 768px) and (hover: none) {
-            .image-slide {
-                width: 33.333% !important;
-            }
-            .milkybar-nav {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .milkybar-prev {
-                left: -10px !important;
-            }
-            .milkybar-next {
-                right: -10px !important;
-            }
-            .dragon-frame {
-                width: clamp(180px, 30vw, 220px) !important;
-                height: clamp(240px, 40vw, 300px) !important;
-            }
+            .image-slide { width: 33.333% !important; }
+            .milkybar-nav { width: 40px !important; height: 40px !important; }
+            .milkybar-prev { left: -10px !important; }
+            .milkybar-next { right: -10px !important; }
+            .dragon-frame { width: clamp(180px, 30vw, 220px) !important; height: clamp(240px, 40vw, 300px) !important; }
             /* Adjusted font-size for larger tablets in portrait */
-            .dragon-back-text {
-                font-size: clamp(1.5rem, 4.8vw, 2.8rem);
-            }
+            .dragon-back-text { font-size: clamp(1.5rem, 4.8vw, 2.8rem); }
         }
     </style>
 </head>
@@ -812,7 +737,6 @@
                 <div class="image-carousel">
                     <div class="image-track" id="imageTrack"></div>
                 </div>
-
                 <button class="milkybar-nav milkybar-prev" id="milkybarPrev">
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -821,389 +745,574 @@
                 </button>
             </div>
 
-            <div class="milkybar-dots" id="milkybarDots"></div>
-        </div>
-
-        <div class="info-section-wrapper">
-            <div class="info-section" id="infoSection">
-                <h2 class="dragon-name" id="dragonName"></h2>
-                <p class="dragon-description" id="dragonDescription"></p>
+            <div class="info-section-wrapper">
+                <div id="infoSections"></div>
             </div>
+            <div class="milkybar-dots" id="milkybarDots"></div>
         </div>
     </div>
 
     <div class="media-overlay" id="mediaOverlay">
-        <img src="" alt="Full size image" class="overlay-content" id="overlayImage" style="display: none;">
-        <video controls autoplay loop muted playsinline class="overlay-content" id="overlayVideo" style="display: none;" data-type="video"></video>
+         <div id="overlayContentWrapper"></div>
     </div>
 
 
     <script>
-        const imageTrack = document.getElementById('imageTrack');
-        const milkybarPrev = document.getElementById('milkybarPrev');
-        const milkybarNext = document.getElementById('milkybarNext');
-        const milkybarDots = document.getElementById('milkybarDots');
-        const infoSection = document.getElementById('infoSection');
-        const dragonNameElem = document.getElementById('dragonName');
-        const dragonDescriptionElem = document.getElementById('dragonDescription');
-        const mediaOverlay = document.getElementById('mediaOverlay');
-        const overlayImage = document.getElementById('overlayImage');
-        const overlayVideo = document.getElementById('overlayVideo');
-
-        // Dynamic data for dragons
-        const dragons = [
+        const dragonData = [
             {
-                name: "Toothless",
-                description: "The loyal and intelligent Night Fury, Hiccup's best friend.",
-                image: "https://i.imgur.com/K1U1q6T.jpg",
-                video: "https://i.imgur.com/yF9P2jV.mp4"
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/b/b8/HTTYD_Gronckle.png/revision/latest/scale-to-width-down/1000?cb=20171031142609' },
+                back: { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', poster: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/b/be/DTV_cg_toothless_05-1st_image.png/revision/latest/scale-to-width/360?cb=20150708054601', text: 'NARUTO SHIPUDDEN' },
+                name: 'GRONCKLE',
+                description: 'The Gronckle is a slow, bumbling dragon that buzzes around clumsily like a bumblebee. Despite its awkward appearance, it has a powerful digestive system that allows it to eat rocks and produce molten lava.'
             },
             {
-                name: "Stormfly",
-                description: "Astrid's deadly but beautiful Nadder, known for her loyalty.",
-                image: "https://i.imgur.com/Wb1kK2w.jpg",
-                video: "https://i.imgur.com/j134y6k.mp4"
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/3/3f/HTTYD_Hideous_Zippleback.png/revision/latest/scale-to-width-down/1000?cb=20140807192912' },
+                back: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/1/1e/HTTYD_Hideous_Zippleback_Profile.png/revision/latest?cb=20140807192913', text: 'Each head of a Hideous Zippleback has a distinct role: one produces gas, the other ignites it. This two-headed dragon communicates through a series of hisses and growls between its heads, often leading to comical arguments. They are surprisingly agile in the air, using their two tails for balance. Despite their intimidating appearance, they can be quite playful once trained, often engaging in mischievous pranks.' },
+                name: 'HIDEOUS ZIPPLEBACK',
+                description: 'The Hideous Zippleback is a two-headed dragon where the two heads are like squabbling, bickering twins. One head breathes flammable gas while the other creates sparks to ignite it, making them a dangerous combination.'
             },
             {
-                name: "Hookfang",
-                description: "Snotlout's monstrous Nightmare, fiery and unpredictable.",
-                image: "https://i.imgur.com/V7M3qQo.jpg",
-                video: "https://i.imgur.com/zWzX6fB.mp4"
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/9/9a/Toothless_HTTYD.png/revision/latest/scale-to-width-down/1000?cb=20140807192856' },
+                back: { type: 'video', src: 'https://www.w3schools.com/html/movie.mp4', poster: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/7/76/HTTYD_Night_Fury_Profile.png/revision/latest?cb=20140807192857', text: 'Night Furies are incredibly rare and known for their unmatched speed and plasma blasts. Their sleek, dark scales allow them to blend seamlessly into the night sky, making them nearly invisible. They are highly intelligent and bond deeply with their riders, displaying loyalty and fierce protectiveness. Their plasma blasts are extremely powerful and precise, capable of destroying targets with pinpoint accuracy. Finding a Night Fury is considered a legendary feat.' },
+                name: 'NIGHT FURY',
+                description: 'The Night Fury is the most elusive and mysterious of all dragons. With incredible speed and stealth capabilities, it was considered the unholy offspring of lightning and death itself before being understood.'
             },
             {
-                name: "Meatlug",
-                description: "Fishlegs' Gronckle, sweet-natured and loves lava rocks.",
-                image: "https://i.imgur.com/f7jYyGq.jpg",
-                video: "https://i.imgur.com/gK6wYwN.mp4"
-            },
-            {
-                name: "Barf & Belch",
-                description: "Ruffnut and Tuffnut's Zippleback, two heads, double the trouble.",
-                image: "https://i.imgur.com/2wE0gTj.jpg",
-                video: "https://i.imgur.com/jM8NfVb.mp4"
-            },
-             {
-                name: "Cloudjumper",
-                description: "Valka's loyal Stormcutter, with four wings and wise eyes.",
-                image: "https://i.imgur.com/2s4J4zW.jpg",
-                video: "https://i.imgur.com/1GzGz5e.mp4"
-            },
-             {
-                name: "Skullcrusher",
-                description: "Stoick's loyal Bewilderbeast, a massive and powerful dragon.",
-                image: "https://i.imgur.com/KjN0d1T.jpg",
-                video: "https://i.imgur.com/dK5z53c.mp4"
-            },
-             {
-                name: "Grump",
-                description: "Gobber's Hotburple, lazy but incredibly strong.",
-                image: "https://i.imgur.com/dD9eE7x.jpg",
-                video: "https://i.imgur.com/aTq3iQf.mp4"
-            },
-             {
-                name: "Pouncer & Ruffrunner",
-                description: "Toothless's mischievous Night Light offspring, playful and fast.",
-                image: "https://i.imgur.com/R211wF7.jpg",
-                video: "https://i.imgur.com/2s4J4zW.mp4" // Placeholder, replace with actual video
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/5/5b/HTTYD_Deadly_Nadder.png/revision/latest/scale-to-width-down/1000?cb=20140807192845' },
+                back: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyarudragon/images/3/3f/HTTYD_Deadly_Nadder_Profile.png/revision/latest?cb=20140807192846', text: 'Deadly Nadders are vain but beautiful dragons, famous for their venomous spines and keen sense of smell. They have a distinctive, bright coloration and a large, expressive face. Their long, sharp tail spines can be launched with great force, acting as a potent defensive mechanism. Despite their beauty, they are quick to anger and possess a "blinding class" attack where they temporarily blind opponents with a flash of light from their eyes. They are highly agile flyers and intelligent hunters.' },
+                name: 'DEADLY NADDA',
+                description: 'The Deadly Nadder is covered in sharp spines that it can shoot like arrows when threatened. Despite its defensive capabilities, it is actually quite friendly and intelligent when properly trained.'
             }
         ];
 
+        const imageTrack = document.getElementById('imageTrack');
+        const infoSectionsContainer = document.getElementById('infoSections');
+        const dotsContainer = document.getElementById('milkybarDots');
+        const prevButton = document.getElementById('milkybarPrev');
+        const nextButton = document.getElementById('milkybarNext');
+        const mediaOverlay = document.getElementById('mediaOverlay');
+        const overlayContentWrapper = document.getElementById('overlayContentWrapper');
+
         let currentIndex = 0;
-        let lastScrollY = 0;
-        let isScrolling = false;
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let isDragging = false;
-        let startX = 0;
-        let scrollLeft = 0;
+        let slideFullWidth = 0;
+        let videoTimeUpdateIntervals = {}; // To store intervals for saving video time
+
+        // Keys for localStorage
+        const LOCAL_STORAGE_CURRENT_INDEX = 'milkybarCarouselCurrentIndex';
+        const LOCAL_STORAGE_FLIPPED_STATE = 'milkybarCarouselFlippedState'; // Stores an object like {0: true, 1: false}
+        const LOCAL_STORAGE_VIDEO_TIME = 'milkybarCarouselVideoTime_'; // Suffix with index
+        const LOCAL_STORAGE_OVERLAY_VISIBLE = 'milkybarCarouselOverlayVisible';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_SRC = 'milkybarCarouselOverlaySrc';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_TYPE = 'milkybarCarouselOverlayType';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME = 'milkybarCarouselOverlayCurrentTime';
 
 
-        // Function to update carousel display
-        function updateCarousel() {
-            imageTrack.innerHTML = ''; // Clear existing slides
-            milkybarDots.innerHTML = ''; // Clear existing dots
+        function initCarousel() {
+            imageTrack.innerHTML = '';
+            infoSectionsContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
 
-            const visibleSlides = [];
-            const totalDragons = dragons.length;
-
-            // Determine which slides to show based on currentIndex
-            // Ensure enough "buffer" slides for seamless 3D effect
-            for (let i = -3; i <= 3; i++) { // Show 7 slides (3 far-prev/prev, current, 3 next/far-next)
-                let slideIndex = (currentIndex + i + totalDragons) % totalDragons;
-                visibleSlides.push({ data: dragons[slideIndex], offset: i });
+            // Retrieve saved states
+            currentIndex = parseInt(localStorage.getItem(LOCAL_STORAGE_CURRENT_INDEX) || '0');
+            let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+            if (Object.keys(savedFlippedState).length !== dragonData.length) {
+                // If data schema changed or first load, reset flipped state
+                savedFlippedState = {};
+                dragonData.forEach((_, i) => savedFlippedState[i] = false);
+                localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
             }
 
-            visibleSlides.forEach(slideInfo => {
-                const dragon = slideInfo.data;
-                const offset = slideInfo.offset;
-
-                const slide = document.createElement('div');
-                slide.classList.add('image-slide');
-
-                if (offset === 0) {
-                    slide.classList.add('current');
-                } else if (offset === -1) {
-                    slide.classList.add('prev');
-                } else if (offset === 1) {
-                    slide.classList.add('next');
-                } else if (offset === -2) {
-                    slide.classList.add('far-prev');
-                } else if (offset === 2) {
-                    slide.classList.add('far-next');
-                } else if (offset === -3) {
-                    slide.classList.add('far-far-prev'); // Further out
-                } else if (offset === 3) {
-                    slide.classList.add('far-far-next'); // Further out
-                }
+            dragonData.forEach((dragon, index) => {
+                const imageSlide = document.createElement('div');
+                imageSlide.className = 'image-slide';
+                imageSlide.dataset.index = index;
 
                 const frame = document.createElement('div');
-                frame.classList.add('dragon-frame');
-                frame.dataset.index = dragons.indexOf(dragon); // Store original index
+                frame.className = 'dragon-frame';
 
-                const inner = document.createElement('div');
-                inner.classList.add('dragon-frame-inner');
+                const frameInner = document.createElement('div');
+                frameInner.className = 'dragon-frame-inner';
 
                 const front = document.createElement('div');
-                front.classList.add('dragon-front');
-                const frontImg = document.createElement('img');
-                frontImg.src = dragon.image;
-                frontImg.alt = dragon.name;
-                frontImg.loading = 'lazy'; // Lazy load images
-                front.appendChild(frontImg);
+                front.className = 'dragon-front';
+
+                let frontContentElement;
+                if (dragon.front.type === 'video') {
+                    frontContentElement = document.createElement('video');
+                    frontContentElement.src = dragon.front.src;
+                    frontContentElement.loop = true;
+                    frontContentElement.playsInline = true;
+                    frontContentElement.muted = true; // Always muted on front
+                    if (dragon.front.poster) frontContentElement.poster = dragon.front.poster;
+                    // Preload metadata to avoid errors on first play attempts
+                    frontContentElement.preload = 'metadata';
+                } else {
+                    frontContentElement = document.createElement('img');
+                    frontContentElement.src = dragon.front.src;
+                }
+                frontContentElement.alt = dragon.name;
+                frontContentElement.className = 'dragon-content';
+                frontContentElement.dataset.type = dragon.front.type;
 
                 const back = document.createElement('div');
-                back.classList.add('dragon-back');
+                back.className = 'dragon-back';
 
-                let backContent;
-                if (dragon.video) {
-                    backContent = document.createElement('video');
-                    backContent.src = dragon.video;
-                    backContent.controls = true;
-                    backContent.autoplay = true;
-                    backContent.loop = true;
-                    backContent.muted = true; // Muted autoplay
-                    backContent.playsInline = true; // For iOS autoplay
-                    backContent.preload = 'metadata'; // Load metadata only
-                    backContent.classList.add('dragon-content');
-                } else {
-                    backContent = document.createElement('img');
-                    backContent.src = dragon.image;
-                    backContent.alt = dragon.name;
-                    backContent.loading = 'lazy';
-                    backContent.classList.add('dragon-content');
-                }
-                back.appendChild(backContent);
+                let backContentElement;
+                if (dragon.back.type === 'video') {
+                    backContentElement = document.createElement('video');
+                    backContentElement.src = dragon.back.src;
+                    backContentElement.loop = true;
+                    backContentElement.playsInline = true;
+                    backContentElement.muted = true; // Start muted, unmuted when flipped
+                    backContentElement.controls = true;
+                    backContentElement.controlsList = "nodownload nofullscreen";
+                    if (dragon.back.poster) backContentElement.poster = dragon.back.poster;
+                    backContentElement.preload = 'metadata'; // Preload metadata
 
-                // Add the new floating text area
-                const backText = document.createElement('p');
-                backText.classList.add('dragon-back-text');
-                backText.textContent = dragon.name; // Display dragon name
-                back.appendChild(backText);
-
-
-                inner.appendChild(front);
-                inner.appendChild(back);
-                frame.appendChild(inner);
-                slide.appendChild(frame);
-                imageTrack.appendChild(slide);
-
-                // Add click listener for flipping the card
-                frame.addEventListener('click', (event) => {
-                    // Prevent flipping if click originated from media controls
-                    if (event.target.tagName === 'VIDEO' || event.target.tagName === 'IMG' && event.target.closest('.dragon-back')) {
-                        return;
+                    // Restore video playback time
+                    const savedVideoTime = parseFloat(localStorage.getItem(LOCAL_STORAGE_VIDEO_TIME + index) || '0');
+                    if (savedVideoTime > 0) {
+                        backContentElement.currentTime = savedVideoTime;
                     }
-                    frame.classList.toggle('flipped');
-                });
 
-                // Add event listener for media overlay
-                if (dragon.video) {
-                    backContent.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Prevent card flip
-                        showMediaOverlay(dragon.video, 'video');
+                    // Save video playback time periodically and on events
+                    const saveVideoTime = () => {
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, backContentElement.currentTime.toString());
+                    };
+
+                    backContentElement.addEventListener('play', () => {
+                        // Clear any existing interval for this video
+                        if (videoTimeUpdateIntervals[index]) {
+                            clearInterval(videoTimeUpdateIntervals[index]);
+                        }
+                        // Set interval to save time every 5 seconds
+                        videoTimeUpdateIntervals[index] = setInterval(saveVideoTime, 5000);
                     });
+                    backContentElement.addEventListener('pause', () => {
+                        clearInterval(videoTimeUpdateIntervals[index]); // Clear interval on pause
+                        saveVideoTime(); // Save immediately on pause
+                    });
+                    backContentElement.addEventListener('ended', () => {
+                        clearInterval(videoTimeUpdateIntervals[index]); // Clear interval on end
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset on end
+                    });
+
                 } else {
-                    backContent.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Prevent card flip
-                        showMediaOverlay(dragon.image, 'image');
+                    backContentElement = document.createElement('img');
+                    backContentElement.src = dragon.back.src;
+                }
+                backContentElement.alt = `${dragon.name} back view`;
+                backContentElement.className = 'dragon-content';
+                backContentElement.dataset.type = dragon.back.type;
+                backContentElement.dataset.src = dragon.back.src; // Store original src for overlay
+
+                back.appendChild(backContentElement);
+
+                // Add the floating text area (with new inner span for striped text)
+                if (dragon.back.text) {
+                    const backText = document.createElement('div');
+                    backText.className = 'dragon-back-text'; // This div will be the frosted glass container
+
+                    const backTextContent = document.createElement('span'); // NEW: Inner element for striped text
+                    backTextContent.className = 'dragon-back-text-content'; // Assign a new class
+                    backTextContent.textContent = dragon.back.text; // Move text here
+
+                    backText.appendChild(backTextContent); // Append the span to the div
+                    back.appendChild(backText);
+                }
+
+                // Add double click to zoom for images only
+                if (dragon.back.type === 'image') {
+                    backContentElement.addEventListener('dblclick', (e) => {
+                        e.stopPropagation();
+                        showMediaInOverlay(backContentElement.src, backContentElement.dataset.type);
                     });
                 }
-            });
 
-            // Update dots
-            dragons.forEach((_, index) => {
-                const dot = document.createElement('span');
-                dot.classList.add('milkybar-dot');
-                if (index === currentIndex) {
-                    dot.classList.add('active');
+                front.appendChild(frontContentElement);
+                frameInner.appendChild(front);
+                frameInner.appendChild(back);
+                frame.appendChild(frameInner);
+
+                // Restore flipped state immediately after creation
+                if (savedFlippedState[index]) {
+                    frame.classList.add('flipped');
                 }
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateCarousel();
+
+                frame.addEventListener('click', function(e) {
+                    if (imageSlide.classList.contains('current')) {
+                        e.stopPropagation();
+                        const isFlippingToBack = !this.classList.contains('flipped');
+                        this.classList.toggle('flipped');
+
+                        const currentBackVideo = this.querySelector('.dragon-back video');
+                        const currentFrontVideo = this.querySelector('.dragon-front video');
+
+                        if (isFlippingToBack) {
+                            hideMediaOverlay(); // Ensure overlay is hidden when flipping to back
+                            if (currentBackVideo) {
+                                currentBackVideo.muted = false; // Unmute when flipped to back
+                                currentBackVideo.play().catch(error => console.warn("Autoplay with sound was prevented:", error));
+                            }
+                            if (currentFrontVideo) currentFrontVideo.pause();
+                        } else { // Flipped back to front
+                            if (currentBackVideo) {
+                                currentBackVideo.pause();
+                                currentBackVideo.currentTime = 0; // Reset video on flip back
+                                currentBackVideo.muted = true;
+                                localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
+                            }
+                            if (currentFrontVideo) {
+                                frontContentElement.muted = true; // Ensure front video is muted
+                                currentFrontVideo.play().catch(error => console.warn("Front video autoplay prevented:", error));
+                            }
+                        }
+                        // Save flipped state
+                        savedFlippedState[index] = this.classList.contains('flipped');
+                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+
+                    } else {
+                        goToSlide(parseInt(imageSlide.dataset.index));
+                    }
                 });
-                milkybarDots.appendChild(dot);
+
+                imageSlide.appendChild(frame);
+                imageTrack.appendChild(imageSlide);
+
+                const dot = document.createElement('div');
+                dot.className = 'milkybar-dot';
+                dot.dataset.index = index;
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
             });
 
-            // Update info section
-            dragonNameElem.textContent = dragons[currentIndex].name;
-            dragonDescriptionElem.textContent = dragons[currentIndex].description;
+            const infoSectionContent = document.createElement('div');
+            infoSectionContent.className = 'info-section';
+            infoSectionsContainer.appendChild(infoSectionContent);
+
+            updateCarousel();
         }
 
-        function showMediaOverlay(src, type) {
-            if (type === 'image') {
-                overlayImage.src = src;
-                overlayImage.style.display = 'block';
-                overlayVideo.style.display = 'none';
-                overlayImage.classList.add('zoomable-image');
-                overlayVideo.classList.remove('zoomable-image'); // Ensure video doesn't have zoom-out cursor
-            } else if (type === 'video') {
-                overlayVideo.src = src;
-                overlayVideo.style.display = 'block';
-                overlayImage.style.display = 'none';
-                overlayVideo.load(); // Load the video
-                overlayVideo.play();
-                overlayVideo.classList.remove('zoomable-image'); // Ensure video doesn't have zoom-out cursor
-            }
-            mediaOverlay.classList.add('visible');
-            // Pause all carousel videos when overlay is open
-            document.querySelectorAll('.dragon-back video').forEach(video => {
-                if (video !== overlayVideo) {
-                    video.pause();
+        function showMediaInOverlay(src, type, initialTime = 0) {
+            overlayContentWrapper.innerHTML = '';
+            let mediaElement;
+
+            if (type === 'video') {
+                mediaElement = document.createElement('video');
+                mediaElement.src = src;
+                mediaElement.loop = true;
+                mediaElement.playsInline = true;
+                mediaElement.controls = true;
+                mediaElement.controlsList = "nodownload nofullscreen";
+                mediaElement.muted = false; // Unmute in overlay
+                mediaElement.preload = 'auto'; // Preload for better experience in overlay
+
+                if (initialTime > 0) {
+                    mediaElement.currentTime = initialTime;
                 }
-            });
+
+                mediaElement.addEventListener('play', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                });
+                mediaElement.addEventListener('pause', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                });
+                mediaElement.addEventListener('ended', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, '0');
+                });
+                mediaElement.addEventListener('timeupdate', () => {
+                    if (Math.floor(mediaElement.currentTime) % 5 === 0 && mediaElement.lastSavedTime !== Math.floor(mediaElement.currentTime)) {
+                        localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                        mediaElement.lastSavedTime = Math.floor(mediaElement.currentTime);
+                    }
+                });
+
+                // Ensure video starts playing if it was playing when overlay was opened
+                mediaElement.play().catch(e => console.warn("Overlay video autoplay prevented:", e));
+
+            } else { // image
+                mediaElement = document.createElement('img');
+                mediaElement.src = src;
+                mediaElement.classList.add('zoomable-image');
+                mediaElement.addEventListener('dblclick', hideMediaOverlay);
+            }
+            mediaElement.className = 'overlay-content';
+            mediaElement.dataset.type = type; // Store type
+            mediaElement.dataset.src = src;   // Store src
+
+            overlayContentWrapper.appendChild(mediaElement);
+            mediaOverlay.classList.add('visible');
+
+            // Save overlay state
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_VISIBLE, 'true');
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC, src);
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE, type);
         }
 
         function hideMediaOverlay() {
             mediaOverlay.classList.remove('visible');
-            overlayImage.style.display = 'none';
-            overlayVideo.style.display = 'none';
-            overlayVideo.pause(); // Pause video when closing overlay
-            overlayVideo.src = ""; // Clear video source
-            overlayImage.src = ""; // Clear image source
-            // Resume current carousel video if it exists and was playing
-            const currentVideo = document.querySelector('.image-slide.current .dragon-back video');
-            if (currentVideo) {
-                currentVideo.play();
+            const overlayVideo = overlayContentWrapper.querySelector('video');
+            if (overlayVideo) {
+                overlayVideo.pause();
+                // We don't reset currentTime here if the user closed it, they might want to continue
+            }
+            overlayContentWrapper.innerHTML = '';
+            // Clear overlay state from localStorage
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_VISIBLE);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME);
+        }
+
+        function restoreOverlayState() {
+            const isOverlayVisible = localStorage.getItem(LOCAL_STORAGE_OVERLAY_VISIBLE) === 'true';
+            if (isOverlayVisible) {
+                const src = localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC);
+                const type = localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE);
+                const currentTime = parseFloat(localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME) || '0');
+                if (src && type) {
+                    showMediaInOverlay(src, type, currentTime);
+                } else {
+                    hideMediaOverlay(); // Fallback if data is incomplete
+                }
             }
         }
 
+        function cleanUpAllMedia() {
+            document.querySelectorAll('.image-slide').forEach(slide => {
+                const index = parseInt(slide.dataset.index);
+                const frame = slide.querySelector('.dragon-frame');
+                const frontVideo = slide.querySelector('.dragon-front video');
+                const backVideo = slide.querySelector('.dragon-back video');
+
+                const isCurrentSlide = slide.classList.contains('current');
+                const isFlipped = frame.classList.contains('flipped');
+
+                // Clear any ongoing video time update intervals
+                if (videoTimeUpdateIntervals[index]) {
+                    clearInterval(videoTimeUpdateIntervals[index]);
+                    delete videoTimeUpdateIntervals[index];
+                }
+
+                if (frontVideo) {
+                    frontVideo.pause();
+                    frontVideo.muted = true;
+                    // No need to reset currentTime for front video, it's decorative
+                }
+
+                if (backVideo) {
+                    if (isCurrentSlide && isFlipped) {
+                        // If it's the current, flipped card, do not pause or reset.
+                        // It's meant to be actively playing.
+                        backVideo.muted = false; // Ensure it's unmuted
+                    } else {
+                        backVideo.pause();
+                        backVideo.currentTime = 0; // Reset video to start
+                        backVideo.muted = true;
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
+                    }
+                }
+
+                // If a card is not the current slide OR is current but not flipped, unflip it.
+                // This ensures only the active, potentially flipped card remains in that state.
+                if (!isCurrentSlide || (isCurrentSlide && !isFlipped)) {
+                    frame.classList.remove('flipped');
+                    let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+                    savedFlippedState[index] = false;
+                    localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+                }
+            });
+            hideMediaOverlay(); // Always hide overlay when navigating carousel
+        }
+
+
+        function updateInfoSection() {
+            const infoSectionContent = document.querySelector('.info-section');
+            const currentDragon = dragonData[currentIndex];
+            infoSectionContent.innerHTML = `
+                <h2 class="dragon-name">${currentDragon.name}</h2>
+                <p class="dragon-description">${currentDragon.description}</p>
+            `;
+        }
+
+        function updateCarousel() {
+            const imageSlides = document.querySelectorAll('.image-slide');
+            const dots = document.querySelectorAll('.milkybar-dot');
+
+            if (imageSlides.length === 0) return;
+            slideFullWidth = imageSlides[0].offsetWidth;
+
+            const carouselWidth = imageTrack.parentElement.offsetWidth;
+            const slidesCount = dragonData.length;
+
+            let translateXValue = (carouselWidth / 2) - (slideFullWidth / 2);
+            translateXValue -= currentIndex * slideFullWidth;
+
+            imageTrack.style.transform = `translateX(${translateXValue}px)`;
+            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentIndex));
+            updateInfoSection();
+
+            // Save current index to localStorage
+            localStorage.setItem(LOCAL_STORAGE_CURRENT_INDEX, currentIndex.toString());
+
+            imageSlides.forEach((slide, index) => {
+                slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
+
+                let distance = index - currentIndex;
+                if (distance > slidesCount / 2) distance -= slidesCount;
+                else if (distance < -slidesCount / 2) distance += slidesCount;
+
+                switch(distance) {
+                    case 0: slide.classList.add('current'); break;
+                    case 1: slide.classList.add('next'); break;
+                    case -1: slide.classList.add('prev'); break;
+                    case -2: slide.classList.add('far-prev'); break;
+                    case 2: slide.classList.add('far-next'); break;
+                }
+
+                const frontVideo = slide.querySelector('.dragon-front video');
+                const backVideo = slide.querySelector('.dragon-back video');
+                const frame = slide.querySelector('.dragon-frame');
+                const isFlipped = frame.classList.contains('flipped');
+
+
+                if (frontVideo) {
+                    frontVideo.muted = true; // Always muted on front
+                    if (slide.classList.contains('current') && !isFlipped) {
+                        frontVideo.play().catch(e=>console.warn("Front video autoplay prevented (current):", e));
+                    } else {
+                        frontVideo.pause();
+                    }
+                }
+
+                if (backVideo) {
+                    // Only manage back video if it's the current slide
+                    if (slide.classList.contains('current') && isFlipped) {
+                        backVideo.muted = false; // Unmute if current and flipped
+                        backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
+                    } else {
+                        // Pause and reset if not the current *active* back video
+                        backVideo.pause();
+                        backVideo.currentTime = 0;
+                        backVideo.muted = true;
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
+                    }
+                }
+            });
+        }
+
+        function goToSlide(index) {
+            cleanUpAllMedia(); // Clean up all media states before changing slide
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            cleanUpAllMedia();
+            currentIndex = (currentIndex + 1) % dragonData.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            cleanUpAllMedia();
+            currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
+            updateCarousel();
+        }
+
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
         mediaOverlay.addEventListener('click', hideMediaOverlay);
-        overlayImage.addEventListener('click', (e) => e.stopPropagation()); // Prevent closing when clicking image
-        overlayVideo.addEventListener('click', (e) => e.stopPropagation()); // Prevent closing when clicking video
+        overlayContentWrapper.addEventListener('click', e => e.stopPropagation());
 
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isDragging = false; // To differentiate between tap and drag for mobile carousel swipe
+        let startX = 0;
+        let scrollLeft = 0;
 
-        // Navigation functions
-        milkybarPrev.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + dragons.length) % dragons.length;
-            updateCarousel();
-            milkybarPrev.classList.add('glow-active');
-            setTimeout(() => milkybarPrev.classList.remove('glow-active'), 1200);
-        });
-
-        milkybarNext.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % dragons.length;
-            updateCarousel();
-            milkybarNext.classList.add('glow-active');
-            setTimeout(() => milkybarNext.classList.remove('glow-active'), 1200);
-        });
-
-        // Touch/Drag functionality for carousel on mobile
         imageTrack.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            isDragging = true;
+            if (mediaOverlay.classList.contains('visible')) return; // Prevent swipe if overlay is open
+            touchStartX = e.changedTouches[0].screenX;
+            isDragging = false; // Assume not dragging initially
             startX = e.touches[0].clientX - imageTrack.getBoundingClientRect().left;
             scrollLeft = imageTrack.scrollLeft;
-        }, { passive: true });
+        }, { passive: true }); // Passive to improve scroll performance
 
         imageTrack.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            // Removed default event prevention to allow normal page scroll initially
-            // e.preventDefault(); // Prevent default scroll to enable custom drag
+            if (mediaOverlay.classList.contains('visible')) return;
+            const currentX = e.changedTouches[0].screenX;
+            const deltaX = currentX - touchStartX;
+
+            // Mark as dragging if significant horizontal movement occurs
+            if (Math.abs(deltaX) > 10) {
+                isDragging = true;
+                e.preventDefault(); // Prevent default only if a horizontal swipe is detected
+            }
+
             const x = e.touches[0].clientX - imageTrack.getBoundingClientRect().left;
             const walk = (x - startX) * 1.5; // Adjust scroll speed
             imageTrack.scrollLeft = scrollLeft - walk;
 
-            // Only prevent default if significant horizontal movement is detected
-            if (Math.abs(e.touches[0].clientX - touchStartX) > 10 && Math.abs(e.touches[0].clientY - e.touches[0].clientY) < 5) {
-                e.preventDefault();
-            }
-        }, { passive: false }); // Set to false to allow preventDefault conditionally
+        }, { passive: false }); // Not passive to allow preventDefault
 
         imageTrack.addEventListener('touchend', (e) => {
-            isDragging = false;
-            touchEndX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
-
-        imageTrack.addEventListener('touchcancel', (e) => {
-            isDragging = false;
-        });
-
-
-        function handleSwipe() {
-            const swipeThreshold = 50; // pixels
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swiped left (next)
-                currentIndex = (currentIndex + 1) % dragons.length;
-                updateCarousel();
-                milkybarNext.classList.add('glow-active');
-                setTimeout(() => milkybarNext.classList.remove('glow-active'), 1200);
-            } else if (touchEndX > touchStartX + swipeThreshold) {
-                // Swiped right (prev)
-                currentIndex = (currentIndex - 1 + dragons.length) % dragons.length;
-                updateCarousel();
-                milkybarPrev.classList.add('glow-active');
-                setTimeout(() => milkybarPrev.classList.remove('glow-active'), 1200);
+            if (mediaOverlay.classList.contains('visible')) return;
+            touchEndX = e.changedTouches[0].screenX;
+            if (isDragging) { // Only handle swipe if it was a drag gesture
+                const threshold = 50;
+                if (touchEndX < touchStartX - threshold) nextSlide();
+                else if (touchEndX > touchStartX + threshold) prevSlide();
             }
-        }
-
-        // Initialize carousel on load
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCarousel();
-            // Store the initial visual viewport height
-            if (window.visualViewport) {
-                document.documentElement.style.setProperty('--vh', `${window.visualViewport.height * 0.01}px`);
-
-                window.visualViewport.addEventListener('resize', () => {
-                    document.documentElement.style.setProperty('--vh', `${window.visualViewport.height * 0.01}px`);
-                });
-            } else {
-                 // Fallback for browsers not supporting visualViewport
-                document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-                window.addEventListener('resize', () => {
-                    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-                });
-            }
+            isDragging = false; // Reset dragging state
         });
 
-        // Add a class to body when content is scrolled to avoid issues with address bar
-        // This attempts to address the mobile scroll reset by not relying solely on 100vh
-        // and letting the browser handle the address bar hiding/showing more naturally.
-        let prevScrollY = 0;
-        window.addEventListener('scroll', () => {
-            if (window.visualViewport) {
-                // Check if the address bar is moving (visualViewport.height changes)
-                const currentVisualViewportHeight = window.visualViewport.height;
-                const rootVh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vh')) * 100;
-
-                // If the visual viewport height is significantly different from --vh,
-                // it means the address bar is likely affecting the layout.
-                // We avoid aggressive adjustments here.
-                if (Math.abs(currentVisualViewportHeight - rootVh) > 5) { // Threshold of 5px
-                    // Do nothing or apply very subtle adjustments if necessary,
-                    // but the primary fix is removing aggressive touch-action and
-                    // handling 100vh with --vh custom property.
+        document.addEventListener('keydown', (e) => {
+            if (mediaOverlay.classList.contains('visible')) {
+                if (e.key === 'Escape') hideMediaOverlay();
+                return; // Prevent carousel navigation if overlay is open
+            }
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') {
+                 // If a card is flipped, unflip it first. Otherwise, do nothing.
+                const currentFlippedCard = document.querySelector('.image-slide.current .dragon-frame.flipped');
+                if (currentFlipperedCard) {
+                    currentFlippedCard.click(); // Simulate click to unflip
                 }
             }
+        });
 
-            const currentScrollY = window.scrollY;
-            if (Math.abs(currentScrollY - prevScrollY) > 50) { // Only consider significant scrolls
-                 // You can add/remove classes here if specific visual feedback is needed during scroll
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                initCarousel();
+                updateCarousel(); // Re-render and update positions
+                restoreOverlayState(); // Restore overlay if it was open
+            }, 200);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set the --vh custom property for mobile viewport stability
+            const setVhProperty = () => {
+                document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+            };
+
+            setVhProperty(); // Set initially
+            window.addEventListener('resize', setVhProperty); // Update on resize
+
+            initCarousel(); // Initializes the carousel and restores basic states
+            updateCarousel(); // Ensures all current/prev/next classes are applied and media states are correct
+            restoreOverlayState(); // Restores the media overlay state if it was open
+
+            const isTouchDevice = window.matchMedia('(hover: none)').matches;
+            if(isTouchDevice) {
+                [prevButton, nextButton].forEach(button => {
+                    button.addEventListener('touchstart', () => button.classList.add('glow-active'));
+                    button.addEventListener('animationend', () => button.classList.remove('glow-active'));
+                });
             }
-            prevScrollY = currentScrollY;
-        }, { passive: true });
-
-
+        });
     </script>
 </body>
 </html>
