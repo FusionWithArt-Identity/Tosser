@@ -60,11 +60,11 @@
     /* Enhanced Neon Tube text style with black border */
     color: #f0f0f0; /* Slightly off-white for softer text core */
     text-shadow:
-        /* Inner "tube" definition - now black for contrast */
-        -2px -2px 0 #000, /* Top-left shadow */
-        2px 2px 0 #000,   /* Bottom-right shadow */
-        2px -2px 0 #000,  /* Top-right shadow */
-        -2px 2px 0 #000,  /* Bottom-left shadow */
+        /* Inner "tube" definition - black for contrast */
+        -2px -2px 0 #000,
+        2px 2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
         
         /* White inner glow - sharper and more intense */
         0 0 4px #fff,
@@ -75,7 +75,7 @@
         0 0 25px #bc13fe,
         0 0 40px #bc13fe;
 
-    /* Original border and box-shadow (no change to outer glow) */
+    /* Original border and box-shadow */
     border: 0.2rem solid #fff;
     border-radius: 2rem;
     padding: 0.4em;
@@ -88,53 +88,79 @@
 
     /* Apply the revised flickering animation */
     animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
+
+    /* --- Additions for the moving border light trail --- */
+    position: relative; /* Needed for pseudo-element positioning */
+    overflow: hidden; /* Clips the pseudo-element to the h1's rounded border */
 }
 
-/* Keyframes for the enhanced professional neon tube flickering effect */
+.milkybar-header h1::before {
+    content: '';
+    position: absolute;
+    top: -5%; /* Slightly outside the border */
+    left: -5%;
+    right: -5%;
+    bottom: -5%;
+    z-index: -1; /* Place behind the text */
+    border-radius: 2.2rem; /* Slightly larger than h1 border-radius */
+    
+    /* Create the discontinuous light trail with a repeating linear gradient */
+    background: repeating-linear-gradient(
+        45deg,
+        #bc13fe 0%, #bc13fe 10%, /* Purple segment */
+        transparent 10%, transparent 20% /* Transparent segment for discontinuity */
+    );
+    background-size: 200% 200%; /* Make the gradient larger than the element */
+    animation: border-trail-animate 5s linear infinite; /* Animation for the trail */
+}
+
+
+/* Keyframes for the enhanced professional neon tube flickering effect (no change here) */
 @keyframes neon-tube-flicker-enhanced {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        color: #f0f0f0; /* Soft white */
+        color: #f0f0f0;
         text-shadow:
-            /* Inner "tube" definition - now black */
             -2px -2px 0 #000,
             2px 2px 0 #000,
             2px -2px 0 #000,
             -2px 2px 0 #000,
-            /* White inner glow */
             0 0 4px #fff,
             0 0 10px #fff,
-            /* Purple outer glow */
             0 0 15px #bc13fe,
             0 0 25px #bc13fe,
             0 0 40px #bc13fe;
     }
 
     20%, 24%, 55% {
-        color: rgba(240, 240, 240, 0.7); /* Dimmer text for flicker */
+        color: rgba(240, 240, 240, 0.7);
         text-shadow:
-            /* Inner "tube" effect slightly dimmed - black */
             -1px -1px 0 rgba(0,0,0,0.7),
             1px 1px 0 rgba(0,0,0,0.7),
-            /* Dimmer white glow for flicker */
             0 0 1px rgba(255,255,255,0.8),
             0 0 5px rgba(255,255,255,0.6),
-            /* Dimmer purple glow for flicker */
             0 0 7px rgba(188,19,254,0.7),
             0 0 15px rgba(188,19,254,0.5);
     }
 
     22%, 53% {
-        color: rgba(240, 240, 240, 0.9); /* Slightly less dimmed text */
+        color: rgba(240, 240, 240, 0.9);
         text-shadow:
-            /* Inner "tube" effect slightly dimmed - black */
             -1.5px -1.5px 0 rgba(0,0,0,0.8),
             1.5px 1.5px 0 rgba(0,0,0,0.8),
-            /* Medium white glow for slight pulse */
             0 0 3px rgba(255,255,255,0.9),
             0 0 8px rgba(255,255,255,0.7),
-            /* Medium purple glow for slight pulse */
             0 0 12px rgba(188,19,254,0.8),
             0 0 25px rgba(188,19,254,0.6);
+    }
+}
+
+/* Keyframes for the moving border light trail */
+@keyframes border-trail-animate {
+    0% {
+        background-position: 0% 0%; /* Start position */
+    }
+    100% {
+        background-position: 100% 100%; /* End position for diagonal movement */
     }
 }
         .milkybar-header p {
