@@ -53,7 +53,7 @@
     line-height: 1.2;
     text-align: center;
 
-    /* Enhanced Neon text style for more contrast */
+    /* Neon text style for more contrast (text only) */
     color: #fff; /* White text color */
     text-shadow:
         0 0 10px #fff,    /* Increased intensity for inner white glow */
@@ -65,45 +65,54 @@
         0 0 140px #bc13fe,
         0 0 200px #bc13fe; /* Even wider spread for maximum contrast */
 
-    /* Border and box-shadow, also enhanced for more contrast */
+    /* Original border and box-shadow (no increased outer glow) */
     border: 0.2rem solid #fff;
     border-radius: 2rem;
     padding: 0.4em;
-    box-shadow: 0 0 .4rem #fff,   /* Increased intensity */
-                0 0 .4rem #fff,
-                0 0 3rem #bc13fe, /* Increased intensity */
-                0 0 1.5rem #bc13fe,
-                0 0 4rem #bc13fe,
-                inset 0 0 2rem #bc13fe;
+    box-shadow: 0 0 .2rem #fff,
+                0 0 .2rem #fff,
+                0 0 2rem #bc13fe,
+                0 0 0.8rem #bc13fe,
+                0 0 2.8rem #bc13fe,
+                inset 0 0 1.3rem #bc13fe;
 
-    /* Apply the pulsate animation */
-    animation: pulsate 1.5s infinite alternate;
+    /* Apply the flickering animation */
+    animation: neon-flicker-contrast 1.5s infinite alternate ease-in-out;
 }
 
-/* Keyframes for the pulsate animation - also enhanced for more contrast */
-@keyframes pulsate {
-    100% {
+/* Keyframes for a more pronounced flickering effect with enhanced contrast */
+@keyframes neon-flicker-contrast {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         text-shadow:
-            0 0 6px #fff,    /* Adjusted for pulsate 100% state */
-            0 0 15px #fff,
-            0 0 25px #fff,
-            0 0 50px #bc13fe,
-            0 0 90px #bc13fe,
+            0 0 10px #fff,    /* Intense white glow */
+            0 0 20px #fff,
+            0 0 40px #fff,
+            0 0 60px #bc13fe, /* Intense purple glow */
             0 0 100px #bc13fe,
-            0 0 110px #bc13fe,
-            0 0 160px #bc13fe;
+            0 0 120px #bc13fe,
+            0 0 140px #bc13fe,
+            0 0 200px #bc13fe;
+        color: #fff; /* Full white color */
     }
 
-    0% {
+    20%, 24%, 55% {
         text-shadow:
-            0 0 3px #fff,    /* Adjusted for pulsate 0% state */
-            0 0 6px #fff,
-            0 0 9px #fff,
-            0 0 15px #bc13fe,
-            0 0 50px #bc13fe,
-            0 0 60px #bc13fe,
-            0 0 75px #bc13fe,
-            0 0 85px #bc13fe;
+            0 0 2px #fff,    /* Dimmer white glow for flicker */
+            0 0 8px #fff,
+            0 0 15px #bc13fe, /* Dimmer purple glow for flicker */
+            0 0 30px #bc13fe,
+            0 0 60px #bc13fe;
+        color: rgba(255, 255, 255, 0.7); /* Slightly dimmed text color */
+    }
+
+    22%, 53% {
+        text-shadow:
+            0 0 5px #fff,    /* Medium white glow for slight pulse */
+            0 0 12px #fff,
+            0 0 25px #bc13fe, /* Medium purple glow for slight pulse */
+            0 0 45px #bc13fe,
+            0 0 80px #bc13fe;
+        color: rgba(255, 255, 255, 0.9); /* Slightly less dimmed text color */
     }
 }
 
