@@ -6,6 +6,7 @@
     <title>Naruto Webpage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+	    @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
         /* Base styles - keep as original as possible */
         * {
             margin: 0;
@@ -53,14 +54,17 @@
     line-height: 1.2;
     text-align: center;
 
+    /* Apply 'Ninja Naruto' font */
+    font-family: 'Ninja Naruto', sans-serif; /* Added font-family */
+
     /* Simplified Neon text style for better performance */
     color: #fff; /* White text color */
     text-shadow:
-        0 0 5px #fff,    /* Reduced intensity for inner white glow */
+        0 0 5px #fff,
         0 0 10px #fff,
-        0 0 15px #bc13fe, /* Reduced intensity for purple glow */
+        0 0 15px #bc13fe,
         0 0 30px #bc13fe,
-        0 0 50px #bc13fe; /* Maximum blur reduced for performance */
+        0 0 50px #bc13fe;
 
     /* Original border and box-shadow */
     border: 0.2rem solid #fff;
@@ -77,7 +81,7 @@
     animation: neon-flicker-less-intrusive 1.5s infinite alternate ease-in-out;
 }
 
-/* Keyframes for a less intrusive flickering effect */
+/* Keyframes for a less intrusive flickering effect (no change needed here) */
 @keyframes neon-flicker-less-intrusive {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         text-shadow:
@@ -86,30 +90,29 @@
             0 0 15px #bc13fe,
             0 0 30px #bc13fe,
             0 0 50px #bc13fe;
-        color: #fff; /* Full white color */
+        color: #fff;
     }
 
     20%, 24%, 55% {
         text-shadow:
-            0 0 2px #fff,    /* Dimmer white glow for flicker */
+            0 0 2px #fff,
             0 0 5px #fff,
-            0 0 10px #bc13fe, /* Dimmer purple glow for flicker */
+            0 0 10px #bc13fe,
             0 0 20px #bc13fe,
             0 0 30px #bc13fe;
-        color: rgba(255, 255, 255, 0.7); /* Slightly dimmed text color */
+        color: rgba(255, 255, 255, 0.7);
     }
 
     22%, 53% {
         text-shadow:
-            0 0 3px #fff,    /* Medium white glow for slight pulse */
+            0 0 3px #fff,
             0 0 7px #fff,
-            0 0 12px #bc13fe, /* Medium purple glow for slight pulse */
+            0 0 12px #bc13fe,
             0 0 25px #bc13fe,
             0 0 40px #bc13fe;
-        color: rgba(255, 255, 255, 0.9); /* Slightly less dimmed text color */
+        color: rgba(255, 255, 255, 0.9);
     }
 }
-
         .milkybar-header p {
             color: #8c6d3e;
             font-size: clamp(1rem, 3vw, 1.5rem);
