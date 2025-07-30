@@ -44,19 +44,19 @@
         }
 
 .milkybar-header h1 {
-    color: #00FFFF; /* Electric Blue base color */
+    color: #FF8C00; /* Dark Orange base color */
     font-size: clamp(1.8rem, 6vw, 3.5rem);
     text-transform: uppercase;
     letter-spacing: 1px;
     text-shadow:
         2px 2px 0px rgba(0,0,0,0.1), /* Your previous text-shadow setup */
-        0 0 5px #00FFFF,
-        0 0 10px #00FFFF,
-        0 0 20px #00FFFF,
-        0 0 30px #00FFFF,
-        0 0 40px #00BFFF,
-        0 0 50px #00BFFF,
-        0 0 60px #00BFFF;
+        0 0 5px #FFFF00,             /* Primary yellow glow */
+        0 0 10px #FFFF00,
+        0 0 20px #FFFF00,
+        0 0 30px #FFFF00,
+        0 0 40px #FFD700,            /* Gold/brighter yellow for fiery tips */
+        0 0 50px #FFD700,
+        0 0 60px #FFD700;
     margin-bottom: 5px;
     font-weight: 800;
     line-height: 1.2;
@@ -68,142 +68,141 @@
     0%, 100% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF; /* Full electric blue */
+            0 0 5px #FFFF00,             /* Yellow glow */
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00; /* Dark Orange */
     }
     10% {
         text-shadow:
-            2px 2px 0px rgba(0,0,0,0.05), /* Slight variation for original shadow */
-            0 0 3px rgba(0,255,255,0.8), /* Dimmer short flicker */
-            0 0 8px rgba(0,255,255,0.6);
-        color: rgba(0,255,255,0.8); /* Slightly less intense color */
+            2px 2px 0px rgba(0,0,0,0.05),
+            0 0 3px rgba(255,255,0,0.8), /* Dimmer short flicker (yellow) */
+            0 0 8px rgba(255,255,0,0.6);
+        color: rgba(255,140,0,0.8); /* Slightly less intense orange */
     }
     12% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
     15% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.08),
-            0 0 4px rgba(0,255,255,0.7), /* Another slight flicker */
-            0 0 12px rgba(0,255,255,0.5);
-        color: rgba(0,255,255,0.9);
+            0 0 4px rgba(255,255,0,0.7), /* Another slight flicker (yellow) */
+            0 0 12px rgba(255,255,0,0.5);
+        color: rgba(255,140,0,0.9);
     }
     18% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
     20% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.05),
-            0 0 2px rgba(0,255,255,0.6), /* Quick, subtle flicker */
-            0 0 7px rgba(0,255,255,0.4);
-        color: rgba(0,255,255,0.7);
+            0 0 2px rgba(255,255,0,0.6), /* Quick, subtle flicker (yellow) */
+            0 0 7px rgba(255,255,0,0.4);
+        color: rgba(255,140,0,0.7);
     }
     23% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
-    /* The rest of the animation frames allow the glow to stabilize for a bit
-       before the next flicker, creating a more natural "tube light" effect. */
+    /* The rest of the animation frames allow the glow to stabilize for a bit */
     25%, 70% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
     75% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.05),
-            0 0 3px rgba(0,255,255,0.8),
-            0 0 8px rgba(0,255,255,0.6);
-        color: rgba(0,255,255,0.8);
+            0 0 3px rgba(255,255,0,0.8),
+            0 0 8px rgba(255,255,0,0.6);
+        color: rgba(255,140,0,0.8);
     }
     78% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
     80% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.08),
-            0 0 4px rgba(0,255,255,0.7),
-            0 0 12px rgba(0,255,255,0.5);
-        color: rgba(0,255,255,0.9);
+            0 0 4px rgba(255,255,0,0.7),
+            0 0 12px rgba(255,255,0,0.5);
+        color: rgba(255,140,0,0.9);
     }
     83% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
     85% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.05),
-            0 0 2px rgba(0,255,255,0.6),
-            0 0 7px rgba(0,255,255,0.4);
-        color: rgba(0,255,255,0.7);
+            0 0 2px rgba(255,255,0,0.6),
+            0 0 7px rgba(255,255,0,0.4);
+        color: rgba(255,140,0,0.7);
     }
     88% {
         text-shadow:
             2px 2px 0px rgba(0,0,0,0.1),
-            0 0 5px #00FFFF,
-            0 0 10px #00FFFF,
-            0 0 20px #00FFFF,
-            0 0 30px #00FFFF,
-            0 0 40px #00BFFF,
-            0 0 50px #00BFFF,
-            0 0 60px #00BFFF;
-        color: #00FFFF;
+            0 0 5px #FFFF00,
+            0 0 10px #FFFF00,
+            0 0 20px #FFFF00,
+            0 0 30px #FFFF00,
+            0 0 40px #FFD700,
+            0 0 50px #FFD700,
+            0 0 60px #FFD700;
+        color: #FF8C00;
     }
 }
 
