@@ -1122,11 +1122,18 @@
             `;
         }
 
-        function updateCarousel() {
+        // MODIFICATION: Added 'isInstant' parameter to handle resize adjustments
+        function updateCarousel(isInstant = false) {
             const imageSlides = document.querySelectorAll('.image-slide');
             const dots = document.querySelectorAll('.milkybar-dot');
 
             if (imageSlides.length === 0) return;
+
+            // Temporarily disable transition for instant adjustment during resize
+            if (isInstant) {
+                imageTrack.style.transition = 'none';
+            }
+
             slideFullWidth = imageSlides[0].offsetWidth;
 
             const carouselWidth = imageTrack.parentElement.offsetWidth;
@@ -1136,6 +1143,15 @@
             translateXValue -= currentIndex * slideFullWidth;
 
             imageTrack.style.transform = `translateX(${translateXValue}px)`;
+            
+            // Restore transition after the instant adjustment is rendered
+            if (isInstant) {
+                // A minimal timeout allows the browser to apply the style change before re-enabling the transition
+                setTimeout(() => {
+                    imageTrack.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                }, 50);
+            }
+
             dots.forEach((dot, index) => dot.classList.toggle('active', index === currentIndex));
             updateInfoSection();
 
@@ -1244,10 +1260,9 @@
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
-            // MODIFICATION: The resize handler is now less aggressive to prevent page "resets" on mobile 
-            // when the address bar appears/disappears. It only recalculates positions instead of rebuilding the entire carousel.
             resizeTimeout = setTimeout(() => {
-                updateCarousel(); // Only update positions and states
+                // MODIFICATION: Pass 'true' to indicate an instant, non-animated adjustment
+                updateCarousel(true);
             }, 200);
         });
 
