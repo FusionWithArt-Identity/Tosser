@@ -1122,14 +1122,12 @@
             `;
         }
 
-        // MODIFICATION: Added 'isInstant' parameter to handle resize adjustments
         function updateCarousel(isInstant = false) {
             const imageSlides = document.querySelectorAll('.image-slide');
             const dots = document.querySelectorAll('.milkybar-dot');
 
             if (imageSlides.length === 0) return;
 
-            // Temporarily disable transition for instant adjustment during resize
             if (isInstant) {
                 imageTrack.style.transition = 'none';
             }
@@ -1144,9 +1142,7 @@
 
             imageTrack.style.transform = `translateX(${translateXValue}px)`;
             
-            // Restore transition after the instant adjustment is rendered
             if (isInstant) {
-                // A minimal timeout allows the browser to apply the style change before re-enabling the transition
                 setTimeout(() => {
                     imageTrack.style.transition = 'transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
                 }, 50);
@@ -1155,7 +1151,6 @@
             dots.forEach((dot, index) => dot.classList.toggle('active', index === currentIndex));
             updateInfoSection();
 
-            // Save current index to localStorage
             localStorage.setItem(LOCAL_STORAGE_CURRENT_INDEX, currentIndex.toString());
 
             imageSlides.forEach((slide, index) => {
@@ -1189,23 +1184,21 @@
                 }
 
                 if (backVideo) {
-                    // Only manage back video if it's the current slide
                     if (slide.classList.contains('current') && isFlipped) {
                         backVideo.muted = false; // Unmute if current and flipped
                         backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
                     } else {
-                        // Pause and reset if not the current *active* back video
                         backVideo.pause();
                         backVideo.currentTime = 0;
                         backVideo.muted = true;
-                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
                     }
                 }
             });
         }
 
         function goToSlide(index) {
-            cleanUpAllMedia(); // Clean up all media states before changing slide
+            cleanUpAllMedia(); 
             currentIndex = index;
             updateCarousel();
         }
@@ -1230,11 +1223,11 @@
         let touchStartX = 0;
         let touchEndX = 0;
         imageTrack.addEventListener('touchstart', (e) => {
-            if (mediaOverlay.classList.contains('visible')) return; // Prevent swipe if overlay is open
+            if (mediaOverlay.classList.contains('visible')) return; 
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
         imageTrack.addEventListener('touchend', (e) => {
-            if (mediaOverlay.classList.contains('visible')) return; // Prevent swipe if overlay is open
+            if (mediaOverlay.classList.contains('visible')) return; 
             touchEndX = e.changedTouches[0].screenX;
             const threshold = 50;
             if (touchEndX < touchStartX - threshold) nextSlide();
@@ -1244,15 +1237,14 @@
         document.addEventListener('keydown', (e) => {
             if (mediaOverlay.classList.contains('visible')) {
                 if (e.key === 'Escape') hideMediaOverlay();
-                return; // Prevent carousel navigation if overlay is open
+                return; 
             }
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
             if (e.key === 'Escape') {
-                 // If a card is flipped, unflip it first. Otherwise, do nothing.
                 const currentFlippedCard = document.querySelector('.image-slide.current .dragon-frame.flipped');
                 if (currentFlippedCard) {
-                    currentFlippedCard.click(); // Simulate click to unflip
+                    currentFlippedCard.click(); 
                 }
             }
         });
@@ -1261,15 +1253,18 @@
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
-                // MODIFICATION: Pass 'true' to indicate an instant, non-animated adjustment
-                updateCarousel(true);
+                // MODIFICATION: Use requestAnimationFrame to sync with the browser's render cycle.
+                // This ensures layout dimensions are correct before calculating the new center position.
+                requestAnimationFrame(() => {
+                    updateCarousel(true);
+                });
             }, 200);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            initCarousel(); // Initializes the carousel and restores basic states
-            updateCarousel(); // Ensures all current/prev/next classes are applied and media states are correct
-            restoreOverlayState(); // Restores the media overlay state if it was open
+            initCarousel(); 
+            updateCarousel(); 
+            restoreOverlayState(); 
 
             const isTouchDevice = window.matchMedia('(hover: none)').matches;
             if(isTouchDevice) {
