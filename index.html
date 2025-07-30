@@ -45,7 +45,7 @@
         }
 
 .milkybar-header h1 {
-    /* Base text properties */
+    /* Base text properties for size, case, spacing, etc. */
     font-size: clamp(1.8rem, 6vw, 3.5rem);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -54,147 +54,138 @@
     line-height: 1.2;
     text-align: center;
 
-    /* Apply 'Ninja Naruto' font */
+    /* Apply the custom 'Ninja Naruto' font */
     font-family: 'Ninja Naruto', sans-serif;
 
-    /* Enhanced Neon Tube text style with black border */
-    color: #f0f0f0; /* Slightly off-white for softer text core */
+    /* Text styling: color and inner/outer glow effects */
+    color: #f0f0f0; /* Soft off-white for the main text color */
     text-shadow:
-        /* Inner "tube" definition - black for contrast */
-        -2px -2px 0 #000,
-        2px 2px 0 #000,
-        2px -2px 0 #000,
-        -2px 2px 0 #000,
+        /* Inner "tube" definition (black border around letters for contrast) */
+        -2px -2px 0 #000,   /* Top-left */
+        2px 2px 0 #000,     /* Bottom-right */
+        2px -2px 0 #000,    /* Top-right */
+        -2px 2px 0 #000,    /* Bottom-left */
         
-        /* White inner glow - sharper and more intense */
+        /* White inner glow (makes the text appear lit from within) */
         0 0 4px #fff,
         0 0 10px #fff,
         
-        /* Purple outer glow - more vibrant but controlled spread */
+        /* Purple outer glow (the main neon light effect) */
         0 0 15px #bc13fe,
         0 0 25px #bc13fe,
         0 0 40px #bc13fe;
 
-    /* Removed static border and box-shadow from h1 to apply them via pseudo-element */
-    /* position: relative and overflow: hidden are still needed for the pseudo-element */
-    position: relative;
-    overflow: hidden;
+    /* Static border and its outer glow (acts as the base for the moving trail) */
+    border: 0.2rem solid #fff; /* A thin white static border */
+    border-radius: 2rem;       /* Rounded corners for the border */
+    padding: 0.4em;            /* Padding around the text inside the border */
+    box-shadow: 
+        0 0 .2rem #fff,     /* Subtle white inner glow for the box */
+        0 0 .2rem #fff,
+        0 0 2rem #bc13fe,   /* Purple outer glow matching the text neon */
+        0 0 0.8rem #bc13fe,
+        0 0 2.8rem #bc13fe,
+        inset 0 0 1.3rem #bc13fe; /* Inset purple glow for depth */
 
-    /* Apply the revised flickering animation for the text */
+    /* Positioning and overflow settings for pseudo-elements */
+    position: relative; /* Essential for positioning ::before and ::after relative to h1 */
+    overflow: hidden;   /* Clips content (like the moving border trail) outside border-radius */
+    z-index: 1;         /* Ensures the h1 content and its static border are above other elements */
+
+    /* Animation for the text flickering effect */
     animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
-
-    /* Padding from original h1 for spacing, combined with the new pseudo-element's border */
-    padding: 0.4em;
-    border-radius: 2rem; /* Keep for overflow clipping */
-    z-index: 1; /* Ensure text is above the moving border pseudo-element */
 }
 
-/* Pseudo-element for the moving border */
+/* Pseudo-element for the MOVING BORDER LIGHT TRAIL */
 .milkybar-header h1::before {
-    content: '';
-    position: absolute;
-    top: -0.2rem; /* Matches the h1 border width to position directly on top */
-    left: -0.2rem;
-    right: -0.2rem;
-    bottom: -0.2rem;
-    z-index: -1; /* Place behind the text */
-    border-radius: 2.2rem; /* Slightly larger radius than h1 for continuous path */
+    content: ''; /* Required for pseudo-elements */
+    position: absolute; /* Positions relative to the h1 */
+    /* Extends slightly beyond h1's border to create a full trail illusion */
+    top: -0.5rem;
+    left: -0.5rem;
+    right: -0.5rem;
+    bottom: -0.5rem;
+    z-index: 2; /* Renders above the h1's static border/glow, but below the text */
+    border-radius: 2.5rem; /* Slightly larger than h1's border-radius for smooth clipping */
     
-    /* Set up the border using border-image with a gradient */
-    border: 0.2rem solid transparent; /* Required for border-image to work */
-    border-image: linear-gradient(
-        to right,
-        #bc13fe 0%, #bc13fe 5%, /* Light trail segment */
-        transparent 5%, transparent 15%, /* Discontinuous transparent segment */
-        #bc13fe 15%, #bc13fe 20%, /* Another light trail segment (optional, for more "lights") */
-        transparent 20%, transparent 100% /* Rest of the transparent border */
+    /* Creates the discontinuous yellow light trail using a repeating gradient */
+    background: repeating-linear-gradient(
+        45deg, /* Angle for the gradient, helps with perceived clockwise movement */
+        #ffea00 0%, #ffea00 5%, /* Yellow light segment (5% of gradient length) */
+        transparent 5%, transparent 20% /* Transparent gap (15% of gradient length) */
     );
-    border-image-slice: 1; /* Ensure the entire border is covered */
-    border-image-repeat: stretch; /* Stretch the gradient across the border */
-
-    /* Add a subtle static box-shadow behind the moving border for continuity */
-    box-shadow: 0 0 .2rem #fff,
-                0 0 .2rem #fff,
-                0 0 2rem #bc13fe,
-                0 0 0.8rem #bc13fe,
-                0 0 2.8rem #bc13fe,
-                inset 0 0 1.3rem #bc13fe;
-
-    /* Animation for the border-image */
-    animation: border-light-trail 3s linear infinite; /* Adjusted speed for border movement */
+    background-size: 400% 400%; /* Makes the background much larger for smoother animation */
+    /* Animates the background-position to create the moving trail effect */
+    animation: border-trail-move 6s linear infinite; /* Sets speed, loop, and timing function */
 }
 
+/* Pseudo-element for ONE THUNDERBOLT SPARK (positioned on the left side) */
+.milkybar-header h1::after {
+    content: ''; /* Required for pseudo-elements */
+    position: absolute; /* Positions relative to the h1 */
+    top: 50%; /* Vertically center the spark */
+    left: 8%; /* Horizontal position - adjust this value to move the spark */
+    transform: translate(-50%, -50%); /* Centers the spark precisely based on its own size */
+    width: 25px; /* Size of the spark */
+    height: 25px;
+    background-color: #ffff00; /* Yellow color for the spark's core */
+    border-radius: 50%; /* Starts as a circle before clip-path applies shape */
+    box-shadow: 
+        0 0 7px #ffff00,  /* Inner yellow glow */
+        0 0 15px #ffff00, /* Medium yellow glow */
+        0 0 25px #ffff00; /* Outer yellow glow */
+    opacity: 0.8; /* Slight transparency for a more ethereal look */
+    z-index: 3; /* Renders above text and the moving border trail */
+    /* Defines the jagged, thunderbolt-like shape of the spark */
+    clip-path: polygon(
+        50% 0%, 60% 35%, 100% 35%, 70% 55%, 100% 70%, 
+        60% 70%, 50% 100%, 40% 70%, 0% 70%, 30% 55%, 
+        0% 35%, 40% 35%
+    );
+    /* Animation for the spark's pulsing effect */
+    animation: spark-pulse 1.2s infinite alternate; /* Sets speed, loop, and timing function */
+}
 
-/* Keyframes for the text flickering effect (no change here) */
+/* Keyframes for the text flickering effect */
 @keyframes neon-tube-flicker-enhanced {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        color: #f0f0f0;
+        color: #f0f0f0; /* Full text color */
         text-shadow:
-            -2px -2px 0 #000,
-            2px 2px 0 #000,
-            2px -2px 0 #000,
-            -2px 2px 0 #000,
-            0 0 4px #fff,
-            0 0 10px #fff,
-            0 0 15px #bc13fe,
-            0 0 25px #bc13fe,
-            0 0 40px #bc13fe;
+            -2px -2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+            0 0 4px #fff, 0 0 10px #fff,
+            0 0 15px #bc13fe, 0 0 25px #bc13fe, 0 0 40px #bc13fe;
     }
-
     20%, 24%, 55% {
-        color: rgba(240, 240, 240, 0.7);
+        color: rgba(240, 240, 240, 0.7); /* Dimmed text color for flicker */
         text-shadow:
-            -1px -1px 0 rgba(0,0,0,0.7),
-            1px 1px 0 rgba(0,0,0,0.7),
-            0 0 1px rgba(255,255,255,0.8),
-            0 0 5px rgba(255,255,255,0.6),
-            0 0 7px rgba(188,19,254,0.7),
-            0 0 15px rgba(188,19,254,0.5);
+            -1px -1px 0 rgba(0,0,0,0.7), 1px 1px 0 rgba(0,0,0,0.7), /* Dimmed black border */
+            0 0 1px rgba(255,255,255,0.8), 0 0 5px rgba(255,255,255,0.6), /* Dimmed white glow */
+            0 0 7px rgba(188,19,254,0.7), 0 0 15px rgba(188,19,254,0.5); /* Dimmed purple glow */
     }
-
     22%, 53% {
-        color: rgba(240, 240, 240, 0.9);
+        color: rgba(240, 240, 240, 0.9); /* Slightly less dimmed text for subtle variation */
         text-shadow:
-            -1.5px -1.5px 0 rgba(0,0,0,0.8),
-            1.5px 1.5px 0 rgba(0,0,0,0.8),
-            0 0 3px rgba(255,255,255,0.9),
-            0 0 8px rgba(255,255,255,0.7),
-            0 0 12px rgba(188,19,254,0.8),
-            0 0 25px rgba(188,19,254,0.6);
+            -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px 1.5px 0 rgba(0,0,0,0.8), /* Slightly less dimmed black border */
+            0 0 3px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7), /* Slightly less dimmed white glow */
+            0 0 12px rgba(188,19,254,0.8), 0 0 25px rgba(188,19,254,0.6); /* Slightly less dimmed purple glow */
     }
 }
 
-/* Keyframes for the border light trail animation */
-@keyframes border-light-trail {
+/* Keyframes for the MOVING BORDER LIGHT TRAIL animation */
+@keyframes border-trail-move {
     0% {
-        border-image-source: linear-gradient(
-            to right,
-            #bc13fe 0%, #bc13fe 5%,
-            transparent 5%, transparent 15%,
-            #bc13fe 15%, #bc13fe 20%,
-            transparent 20%, transparent 100%
-        );
+        background-position: 0% 0%; /* Starting position of the gradient */
     }
     100% {
-        /* Shift the gradient along the border for movement */
-        border-image-source: linear-gradient(
-            to right,
-            transparent 0%, transparent 80%,
-            #bc13fe 80%, #bc13fe 85%,
-            transparent 85%, transparent 95%,
-            #bc13fe 95%, #bc13fe 100%
-        );
+        background-position: 100% 100%; /* Ending position, creates diagonal movement perceived as circling */
     }
 }
 
-/* Keyframes for the moving border light trail */
-@keyframes border-trail-animate {
-    0% {
-        background-position: 0% 0%; /* Start position */
-    }
-    100% {
-        background-position: 100% 100%; /* End position for diagonal movement */
-    }
+/* Keyframes for the THUNDERBOLT SPARK pulsing effect */
+@keyframes spark-pulse {
+    0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); } /* Normal state */
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } /* Brighter and slightly larger state */
+    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); } /* Return to normal */
 }
         .milkybar-header p {
             color: #8c6d3e;
