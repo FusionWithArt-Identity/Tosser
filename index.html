@@ -55,16 +55,25 @@
     text-align: center;
 
     /* Apply 'Ninja Naruto' font */
-    font-family: 'Ninja Naruto', sans-serif; /* Added font-family */
+    font-family: 'Ninja Naruto', sans-serif;
 
-    /* Simplified Neon text style for better performance */
-    color: #fff; /* White text color */
+    /* Refined Neon Tube text style for professional look */
+    color: #f0f0f0; /* Slightly off-white for softer text */
     text-shadow:
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #bc13fe,
-        0 0 30px #bc13fe,
-        0 0 50px #bc13fe;
+        /* Inner "tube" effect - darker outline for definition */
+        -1px -1px 0 #bc13fe, /* Top-left shadow */
+        1px 1px 0 #bc13fe,   /* Bottom-right shadow */
+        1px -1px 0 #bc13fe,  /* Top-right shadow */
+        -1px 1px 0 #bc13fe,  /* Bottom-left shadow */
+        
+        /* White inner glow - reduced intensity */
+        0 0 3px #fff,
+        0 0 7px #fff,
+        
+        /* Purple outer glow - significantly reduced and softer */
+        0 0 10px #bc13fe,
+        0 0 20px #bc13fe,
+        0 0 30px #bc13fe; /* Max blur radius reduced for less brightness */
 
     /* Original border and box-shadow */
     border: 0.2rem solid #fff;
@@ -77,40 +86,55 @@
                 0 0 2.8rem #bc13fe,
                 inset 0 0 1.3rem #bc13fe;
 
-    /* Apply the less intrusive flickering animation */
-    animation: neon-flicker-less-intrusive 1.5s infinite alternate ease-in-out;
+    /* Apply the revised flickering animation */
+    animation: neon-tube-flicker 1.5s infinite alternate ease-in-out;
 }
 
-/* Keyframes for a less intrusive flickering effect (no change needed here) */
-@keyframes neon-flicker-less-intrusive {
+/* Keyframes for the professional neon tube flickering effect */
+@keyframes neon-tube-flicker {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        color: #f0f0f0; /* Soft white */
         text-shadow:
-            0 0 5px #fff,
-            0 0 10px #fff,
-            0 0 15px #bc13fe,
-            0 0 30px #bc13fe,
-            0 0 50px #bc13fe;
-        color: #fff;
-    }
-
-    20%, 24%, 55% {
-        text-shadow:
-            0 0 2px #fff,
-            0 0 5px #fff,
+            /* Inner "tube" effect */
+            -1px -1px 0 #bc13fe,
+            1px 1px 0 #bc13fe,
+            1px -1px 0 #bc13fe,
+            -1px 1px 0 #bc13fe,
+            /* White inner glow */
+            0 0 3px #fff,
+            0 0 7px #fff,
+            /* Purple outer glow */
             0 0 10px #bc13fe,
             0 0 20px #bc13fe,
             0 0 30px #bc13fe;
-        color: rgba(255, 255, 255, 0.7);
+    }
+
+    20%, 24%, 55% {
+        color: rgba(240, 240, 240, 0.7); /* Dimmer text for flicker */
+        text-shadow:
+            /* Inner "tube" effect slightly dimmed */
+            -0.5px -0.5px 0 rgba(188,19,254,0.7),
+            0.5px 0.5px 0 rgba(188,19,254,0.7),
+            /* Dimmer white glow for flicker */
+            0 0 1px rgba(255,255,255,0.8),
+            0 0 4px rgba(255,255,255,0.6),
+            /* Dimmer purple glow for flicker */
+            0 0 5px rgba(188,19,254,0.7),
+            0 0 10px rgba(188,19,254,0.5);
     }
 
     22%, 53% {
+        color: rgba(240, 240, 240, 0.9); /* Slightly less dimmed text */
         text-shadow:
-            0 0 3px #fff,
-            0 0 7px #fff,
-            0 0 12px #bc13fe,
-            0 0 25px #bc13fe,
-            0 0 40px #bc13fe;
-        color: rgba(255, 255, 255, 0.9);
+            /* Inner "tube" effect slightly dimmed */
+            -0.8px -0.8px 0 rgba(188,19,254,0.8),
+            0.8px 0.8px 0 rgba(188,19,254,0.8),
+            /* Medium white glow for slight pulse */
+            0 0 2px rgba(255,255,255,0.9),
+            0 0 6px rgba(255,255,255,0.7),
+            /* Medium purple glow for slight pulse */
+            0 0 8px rgba(188,19,254,0.8),
+            0 0 15px rgba(188,19,254,0.6);
     }
 }
         .milkybar-header p {
