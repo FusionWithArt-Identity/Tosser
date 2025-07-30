@@ -18,19 +18,11 @@
             background-color: Black;
             font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
             overflow-x: hidden; /* Prevent horizontal scroll */
-            /* Removed 'touch-action: pan-y;' to fix aggressive mobile scrolling */
-            min-height: 100vh; /* Will be dynamically adjusted by JS for mobile */
+            touch-action: pan-y; /* Allow vertical scroll, prevent horizontal on body */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
-        /* Mobile viewport height fix (JavaScript will set --vh) */
-        @supports (height: calc(var(--vh, 1vh) * 100)) {
-            body {
-                min-height: calc(var(--vh, 1vh) * 100);
-            }
-        }
-
 
         .milkybar-container {
             width: 100%;
@@ -46,7 +38,7 @@
 
         .milkybar-header {
             text-align: center;
-            margin-bottom: 5px; /* Decreased space below header for glow */
+            margin-bottom: 10px; /* MODIFICATION: Reduced space */
             padding: 0 5px;
             width: 100%;
         }
@@ -57,7 +49,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-            margin-bottom: 2px; /* Decreased space below h1 for glow */
+            margin-bottom: 5px;
             font-weight: 800;
             line-height: 1.2;
         }
@@ -87,11 +79,12 @@
             width: 100%;
             height: auto;
             min-height: 400px; /* Ensure enough space for slides */
-            margin: 20px auto;
+            margin: 10px auto; /* MODIFICATION: Reduced space */
             perspective: 1200px; /* Crucial for 3D effect */
             overflow: hidden;
             transform-style: preserve-3d; /* Needed for child 3D transforms */
-            padding: 30px 0; /* Adjusted padding to help with top glow cropping */
+            /* INCREASED PADDING to prevent top cropping */
+            padding: 40px 0;
         }
 
         .image-track {
@@ -674,669 +667,602 @@
         }
 
         @media (max-width: 575px) {
-            .image-slide {
-                width: 100%;
-            }
+            .image-slide { width: 100%; }
         }
-
         @media (min-width: 576px) {
-            .image-slide {
-                width: 50%;
-            }
-            .milkybar-prev {
-                left: -15px;
-            }
-            .milkybar-next {
-                right: -15px;
-            }
+            .image-slide { width: 50%; }
+            .milkybar-prev { left: -15px; }
+            .milkybar-next { right: -15px; }
         }
-
         @media (min-width: 768px) {
-            .image-slide {
-                width: 33.333%;
-            }
-            .milkybar-prev {
-                left: -25px;
-            }
-            .milkybar-next {
-                right: -25px;
-            }
+            .image-slide { width: 33.333%; }
+            .milkybar-prev { left: -25px; }
+            .milkybar-next { right: -25px; }
         }
-
         @media (min-width: 992px) {
-            .image-slide {
-                width: 25%;
-            }
-            .milkybar-prev {
-                left: -30px;
-            }
-            .milkybar-next {
-                right: -30px;
-            }
+            .image-slide { width: 25%; }
+            .milkybar-prev { left: -30px; }
+            .milkybar-next { right: -30px; }
         }
-
         @media (max-width: 480px) and (orientation: portrait) {
-            .image-carousel {
-                min-height: 350px;
-            }
-            .dragon-frame {
-                width: 70vw;
-                height: 90vw;
-                max-width: 250px;
-                max-height: 350px;
-            }
-            .milkybar-nav {
-                width: 40px;
-                height: 40px;
-            }
+            .image-carousel { min-height: 350px; }
+            .dragon-frame { width: 70vw; height: 90vw; max-width: 250px; max-height: 350px; }
+            .milkybar-nav { width: 40px; height: 40px; }
             /* Adjusted font-size for smaller portrait mobile screens */
-            .dragon-back-text {
-                font-size: clamp(1.4rem, 4vw, 2.5rem);
-                padding: 4px 6px;
-            }
+            .dragon-back-text { font-size: clamp(1.4rem, 4vw, 2.5rem); padding: 4px 6px; }
         }
-
         @media (max-height: 480px) and (orientation: landscape) {
-            .milkybar-container {
-                padding: 10px;
-            }
-            .milkybar-header h1 {
-                font-size: clamp(1.5rem, 5vw, 2.5rem);
-            }
-            .milkybar-header p {
-                font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-            }
-            .image-carousel {
-                min-height: 250px;
-            }
-            .dragon-frame {
-                width: clamp(120px, 30vw, 200px);
-                height: clamp(150px, 40vw, 280px);
-            }
-            .milkybar-nav {
-                width: 30px;
-                height: 30px;
-                font-size: 1rem;
-            }
-            .milkybar-prev {
-                left: -5px;
-            }
-            .milkybar-next {
-                right: -5px;
-            }
-            .info-section-wrapper {
-                margin-top: 10px;
-            }
-            .dragon-name {
-                font-size: clamp(1.5rem, 4vw, 2rem);
-            }
-            .dragon-description {
-                font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            }
+            .milkybar-container { padding: 10px; }
+            .milkybar-header h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+            .milkybar-header p { font-size: clamp(0.8rem, 2.5vw, 1.2rem); }
+            .image-carousel { min-height: 250px; }
+            .dragon-frame { width: clamp(120px, 30vw, 200px); height: clamp(150px, 40vw, 280px); }
+            .milkybar-nav { width: 30px; height: 30px; font-size: 1rem; }
+            .milkybar-prev { left: -5px; }
+            .milkybar-next { right: -5px; }
+            .info-section-wrapper { margin-top: 10px; }
+            .dragon-name { font-size: clamp(1.5rem, 4vw, 2rem); }
+            .dragon-description { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
             /* Adjusted font-size for landscape mobile screens */
-            .dragon-back-text {
-                font-size: clamp(1.2rem, 3.5vw, 2rem);
-                padding: 4px 6px;
-            }
+            .dragon-back-text { font-size: clamp(1.2rem, 3.5vw, 2rem); padding: 4px 6px; }
         }
-
         @media (max-width: 992px) and (min-width: 768px) and (hover: none) {
-            .image-slide {
-                width: 33.333% !important;
-            }
-            .milkybar-nav {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .milkybar-prev {
-                left: -10px !important;
-            }
-            .milkybar-next {
-                right: -10px !important;
-            }
-        }
-
-        @media (max-width: 767px) and (min-width: 576px) and (hover: none) {
-            .image-slide {
-                width: 50% !important;
-            }
-            .milkybar-nav {
-                width: 35px !important;
-                height: 35px !important;
-            }
-            .milkybar-prev {
-                left: -5px !important;
-            }
-            .milkybar-next {
-                right: -5px !important;
-            }
+            .image-slide { width: 33.333% !important; }
+            .milkybar-nav { width: 40px !important; height: 40px !important; }
+            .milkybar-prev { left: -10px !important; }
+            .milkybar-next { right: -10px !important; }
+            .dragon-frame { width: clamp(180px, 30vw, 220px) !important; height: clamp(240px, 40vw, 300px) !important; }
+            /* Adjusted font-size for larger tablets in portrait */
+            .dragon-back-text { font-size: clamp(1.5rem, 4.8vw, 2.8rem); }
         }
     </style>
 </head>
 <body>
     <div class="milkybar-container">
         <div class="milkybar-header">
-            <h1>HOW TO TRAIN YOUR DRAGON</h1>
-            <p>DRAGON PROFILES</p>
+            <h1>How to Train Your Dragon</h1>
+            <p>Meet the Dragon Collection</p>
         </div>
 
         <div class="dragon-carousel">
             <div class="carousel-visuals-wrapper">
                 <div class="image-carousel">
-                    <div class="image-track" id="imageTrack">
-                        <div class="image-slide" data-id="1">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/L5hS0hP/IMG-20240728-193026.png" alt="Toothless" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/tZ51cK0/IMG-20240728-193051.png" alt="Toothless Back" class="dragon-content">
-                                        <div class="dragon-back-text">NIGHT FURY</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="2">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/3k5f1qL/IMG-20240728-193134.png" alt="Stormfly" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/FWSs35L/IMG-20240728-193155.png" alt="Stormfly Back" class="dragon-content">
-                                        <div class="dragon-back-text">DEADLY NADERR</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="3">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/P4w8kXj/IMG-20240728-193237.png" alt="Meatlug" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/P99L73B/IMG-20240728-193259.png" alt="Meatlug Back" class="dragon-content">
-                                        <div class="dragon-back-text">GRONCKLE</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="4">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/y4L2s5b/IMG-20240728-193335.png" alt="Barf & Belch" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/k2D8YpM/IMG-20240728-193356.png" alt="Barf & Belch Back" class="dragon-content">
-                                        <div class="dragon-back-text">HIDEUS ZIPPLEBACK</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="5">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/7Y3X9c9/IMG-20240728-193437.png" alt="Hookfang" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/R221wFp/IMG-20240728-193502.png" alt="Hookfang Back" class="dragon-content">
-                                        <div class="dragon-back-text">MONSTROUS NIGHTMARE</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="6">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/wCLwTgn/IMG-20240728-193531.png" alt="Cloudjumper" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/Hq4X24k/IMG-20240728-193557.png" alt="Cloudjumper Back" class="dragon-content">
-                                        <div class="dragon-back-text">STORM CUTTER</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="7">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/rQf2y68/IMG-20240728-193630.png" alt="Skullcrusher" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/q7RkM9L/IMG-20240728-193652.png" alt="Skullcrusher Back" class="dragon-content">
-                                        <div class="dragon-back-text">RUMBLEHORN</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="image-slide" data-id="8">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/ZzF44x7/IMG-20240728-193721.png" alt="Grump" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/C0f907r/IMG-20240728-193740.png" alt="Grump Back" class="dragon-content">
-                                        <div class="dragon-back-text">HOTBURPLE</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="9">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/V95wYwM/IMG-20240728-193809.png" alt="Bewilderbeast" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/2h2gQ5Y/IMG-20240728-193836.png" alt="Bewilderbeast Back" class="dragon-content">
-                                        <div class="dragon-back-text">ALPHA DRAGON</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="image-slide" data-id="10">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/1KkM26D/IMG-20240728-193902.png" alt="Crimson Goregutter" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/hL7g6N9/IMG-20240728-193922.png" alt="Crimson Goregutter Back" class="dragon-content">
-                                        <div class="dragon-back-text">CRIMSON GOREGUTTER</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="11">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/q1z6L52/IMG-20240728-193952.png" alt="Light Fury" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/Vp8p36L/IMG-20240728-194017.png" alt="Light Fury Back" class="dragon-content">
-                                        <div class="dragon-back-text">LIGHT FURY</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="image-slide" data-id="12">
-                            <div class="dragon-frame">
-                                <div class="dragon-frame-inner">
-                                    <div class="dragon-front">
-                                        <img src="https://i.ibb.co/Mh03mBq/IMG-20240728-194042.png" alt="Night Lights" class="dragon-image">
-                                    </div>
-                                    <div class="dragon-back">
-                                        <img src="https://i.ibb.co/ZJ90z63/IMG-20240728-194101.png" alt="Night Lights Back" class="dragon-content">
-                                        <div class="dragon-back-text">NIGHT LIGHTS</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="image-track" id="imageTrack"></div>
                 </div>
-                <button class="milkybar-nav milkybar-prev" aria-label="Previous Dragon"><i class="fas fa-chevron-left"></i></button>
-                <button class="milkybar-nav milkybar-next" aria-label="Next Dragon"><i class="fas fa-chevron-right"></i></button>
+                <button class="milkybar-nav milkybar-prev" id="milkybarPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="milkybar-nav milkybar-next" id="milkybarNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="info-section-wrapper">
+                <div id="infoSections"></div>
             </div>
             <div class="milkybar-dots" id="milkybarDots"></div>
-        </div>
-
-        <div class="info-section-wrapper">
-            <div class="info-section" id="infoSection">
-                <h2 class="dragon-name" id="dragonName"></h2>
-                <p class="dragon-description" id="dragonDescription"></p>
-            </div>
         </div>
     </div>
 
     <div class="media-overlay" id="mediaOverlay">
-        <img src="" alt="Overlay Content" class="overlay-content" id="overlayContent">
+         <div id="overlayContentWrapper"></div>
     </div>
 
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const imageTrack = document.getElementById('imageTrack');
-            const slides = Array.from(imageTrack.children);
-            const prevButton = document.querySelector('.milkybar-prev');
-            const nextButton = document.querySelector('.milkybar-next');
-            const milkybarDots = document.getElementById('milkybarDots');
-            const dragonNameElement = document.getElementById('dragonName');
-            const dragonDescriptionElement = document.getElementById('dragonDescription');
-            const mediaOverlay = document.getElementById('mediaOverlay');
-            const overlayContent = document.getElementById('overlayContent');
+        const dragonData = [
+            {
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/b/b8/HTTYD_Gronckle.png/revision/latest/scale-to-width-down/1000?cb=20171031142609' },
+                back: { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', poster: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/b/be/DTV_cg_toothless_05-1st_image.png/revision/latest/scale-to-width/360?cb=20150708054601', text: 'NARUTO SHIPUDDEN' },
+                name: 'GRONCKLE',
+                description: 'The Gronckle is a slow, bumbling dragon that buzzes around clumsily like a bumblebee. Despite its awkward appearance, it has a powerful digestive system that allows it to eat rocks and produce molten lava.'
+            },
+            {
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/3/3f/HTTYD_Hideous_Zippleback.png/revision/latest/scale-to-width-down/1000?cb=20140807192912' },
+                back: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/1/1e/HTTYD_Hideous_Zippleback_Profile.png/revision/latest?cb=20140807192913', text: 'Each head of a Hideous Zippleback has a distinct role: one produces gas, the other ignites it. This two-headed dragon communicates through a series of hisses and growls between its heads, often leading to comical arguments. They are surprisingly agile in the air, using their two tails for balance. Despite their intimidating appearance, they can be quite playful once trained, often engaging in mischievous pranks.' },
+                name: 'HIDEOUS ZIPPLEBACK',
+                description: 'The Hideous Zippleback is a two-headed dragon where the two heads are like squabbling, bickering twins. One head breathes flammable gas while the other creates sparks to ignite it, making them a dangerous combination.'
+            },
+            {
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/9/9a/Toothless_HTTYD.png/revision/latest/scale-to-width-down/1000?cb=20140807192856' },
+                back: { type: 'video', src: 'https://www.w3schools.com/html/movie.mp4', poster: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/7/76/HTTYD_Night_Fury_Profile.png/revision/latest?cb=20140807192857', text: 'Night Furies are incredibly rare and known for their unmatched speed and plasma blasts. Their sleek, dark scales allow them to blend seamlessly into the night sky, making them nearly invisible. They are highly intelligent and bond deeply with their riders, displaying loyalty and fierce protectiveness. Their plasma blasts are extremely powerful and precise, capable of destroying targets with pinpoint accuracy. Finding a Night Fury is considered a legendary feat.' },
+                name: 'NIGHT FURY',
+                description: 'The Night Fury is the most elusive and mysterious of all dragons. With incredible speed and stealth capabilities, it was considered the unholy offspring of lightning and death itself before being understood.'
+            },
+            {
+                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/5/5b/HTTYD_Deadly_Nadder.png/revision/latest/scale-to-width-down/1000?cb=20140807192845' },
+                back: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/3/3f/HTTYD_Deadly_Nadder_Profile.png/revision/latest?cb=20140807192846', text: 'Deadly Nadders are vain but beautiful dragons, famous for their venomous spines and keen sense of smell. They have a distinctive, bright coloration and a large, expressive face. Their long, sharp tail spines can be launched with great force, acting as a potent defensive mechanism. Despite their beauty, they are quick to anger and possess a "blinding class" attack where they temporarily blind opponents with a flash of light from their eyes. They are highly agile flyers and intelligent hunters.' },
+                name: 'DEADLY NADDA',
+                description: 'The Deadly Nadder is covered in sharp spines that it can shoot like arrows when threatened. Despite its defensive capabilities, it is actually quite friendly and intelligent when properly trained.'
+            }
+        ];
 
-            let currentIndex = 0;
-            let isAnimating = false;
-            const autoSlideIntervalTime = 5000; // 5 seconds
-            let autoSlideTimer;
+        const imageTrack = document.getElementById('imageTrack');
+        const infoSectionsContainer = document.getElementById('infoSections');
+        const dotsContainer = document.getElementById('milkybarDots');
+        const prevButton = document.getElementById('milkybarPrev');
+        const nextButton = document.getElementById('milkybarNext');
+        const mediaOverlay = document.getElementById('mediaOverlay');
+        const overlayContentWrapper = document.getElementById('overlayContentWrapper');
 
-            // Dragon data - structured for easy access
-            const dragons = [
-                {
-                    name: "TOOTHLESS",
-                    description: "The rarest, most intelligent, and fastest of all known dragons, the Night Fury is distinguishable by its sleek, dark scales, cat-like eyes, and formidable plasma blast. Toothless is Hiccup's loyal companion and the last known Night Fury.",
-                    frontImage: "https://i.ibb.co/L5hS0hP/IMG-20240728-193026.png",
-                    backImage: "https://i.ibb.co/tZ51cK0/IMG-20240728-193051.png",
-                    backText: "NIGHT FURY"
-                },
-                {
-                    name: "STORMFLY",
-                    description: "A beautiful and proud Deadly Nadder, known for its incredible speed, precision, and venomous tail spines. Stormfly is Astrid's dragon and is fiercely loyal, often showing affection in unexpected ways.",
-                    frontImage: "https://i.ibb.co/3k5f1qL/IMG-20240728-193134.png",
-                    backImage: "https://i.ibb.co/FWSs35L/IMG-20240728-193155.png",
-                    backText: "DEADLY NADER"
-                },
-                {
-                    name: "MEATLUG",
-                    description: "A loyal and affectionate Gronckle, known for her sturdy build and ability to eat and digest rocks, which she then regurgitates as lava blasts. Meatlug is Fishlegs's dragon and has a surprisingly gentle nature.",
-                    frontImage: "https://i.ibb.co/P4w8kXj/IMG-20240728-193237.png",
-                    backImage: "https://i.ibb.co/P99L73B/IMG-20240728-193259.png",
-                    backText: "GRONCKLE"
-                },
-                {
-                    name: "BARF & BELCH",
-                    description: "A mischievous and chaotic Hideous Zippleback with two heads, one producing highly flammable gas and the other igniting it. They are Snotlout and Tuffnut's shared dragon, often causing hilarious mayhem.",
-                    frontImage: "https://i.ibb.co/y4L2s5b/IMG-20240728-193335.png",
-                    backImage: "https://i.ibb.co/k2D8YpM/IMG-20240728-193356.png",
-                    backText: "HIDEUS ZIPPLEBACK"
-                },
-                {
-                    name: "HOOKFANG",
-                    description: "A hot-headed and proud Monstrous Nightmare, identifiable by its bright red scales and ability to ignite itself in flames. Hookfang is Snotlout's dragon, sharing a fiery and often competitive relationship.",
-                    frontImage: "https://i.ibb.co/7Y3X9c9/IMG-20240728-193437.png",
-                    backImage: "https://i.ibb.co/R221wFp/IMG-20240728-193502.png",
-                    backText: "MONSTROUS NIGHTMARE"
-                },
-                {
-                    name: "CLOUDJUMPER",
-                    description: "Valka's majestic Stormcutter, a four-winged dragon known for its wise and gentle demeanor. Cloudjumper is a powerful and intelligent dragon, capable of soaring gracefully through the skies.",
-                    frontImage: "https://i.ibb.co/wCLwTgn/IMG-20240728-193531.png",
-                    backImage: "https://i.ibb.co/Hq4X24k/IMG-20240728-193557.png",
-                    backText: "STORM CUTTER"
-                },
-                {
-                    name: "SKULLCRUSHER",
-                    description: "Stoick's loyal Rumblehorn, a formidable Tracker Class dragon with a keen sense of smell and powerful horn. Skullcrusher is known for his strength and protective nature.",
-                    frontImage: "https://i.ibb.co/rQf2y68/IMG-20240728-193630.png",
-                    backImage: "https://i.ibb.co/q7RkM9L/IMG-20240728-193652.png",
-                    backText: "RUMBLEHORN"
-                },
-                {
-                    name: "GRUMP",
-                    description: "Gobber's lazy but lovable Hotburple, known for its deep snores, love of naps, and ability to produce molten lava. Despite his lethargy, Grump is a powerful and loyal companion.",
-                    frontImage: "https://i.ibb.co/ZzF44x7/IMG-20240728-193721.png",
-                    backImage: "https://i.ibb.co/C0f907r/IMG-20240728-193740.png",
-                    backText: "HOTBURPLE"
-                },
-                {
-                    name: "BEWILDERBEAST",
-                    description: "An Alpha Class dragon, massive and awe-inspiring, capable of controlling other dragons with its hypnotic gaze. The Bewilderbeast is a true king of dragons, a force of nature.",
-                    frontImage: "https://i.ibb.co/V95wYwM/IMG-20240728-193809.png",
-                    backImage: "https://i.ibb.co/2h2gQ5Y/IMG-20240728-193836.png",
-                    backText: "ALPHA DRAGON"
-                },
-                {
-                    name: "CRIMSON GOREGUTTER",
-                    description: "A colossal Stoker Class dragon with immense strength and thick hide, known for its powerful fire blasts and protective nature. One of the largest dragons ever seen.",
-                    frontImage: "https://i.ibb.co/1KkM26D/IMG-20240728-193902.png",
-                    backImage: "https://i.ibb.co/hL7g6N9/IMG-20240728-193922.png",
-                    backText: "CRIMSON GOREGUTTER"
-                },
-                {
-                    name: "LIGHT FURY",
-                    description: "A rare and elusive dragon, similar in appearance to a Night Fury but with shimmering white scales. She possesses the ability to disappear into the sky and fire plasma blasts.",
-                    frontImage: "https://i.ibb.co/q1z6L52/IMG-20240728-193952.png",
-                    backImage: "https://i.ibb.co/Vp8p36L/IMG-20240728-194017.png",
-                    backText: "LIGHT FURY"
-                },
-                {
-                    name: "NIGHT LIGHTS",
-                    description: "The adorable hybrid offspring of Toothless and the Light Fury: Dart, Pouncer, and Ruffrunner. They inherit traits from both parents, making them fast, playful, and capable of unique plasma attacks.",
-                    frontImage: "https://i.ibb.co/Mh03mBq/IMG-20240728-194042.png",
-                    backImage: "https://i.ibb.co/ZJ90z63/IMG-20240728-194101.png",
-                    backText: "NIGHT LIGHTS"
+        let currentIndex = 0;
+        let slideFullWidth = 0;
+        let videoTimeUpdateIntervals = {}; // To store intervals for saving video time
+
+        // Keys for localStorage
+        const LOCAL_STORAGE_CURRENT_INDEX = 'milkybarCarouselCurrentIndex';
+        const LOCAL_STORAGE_FLIPPED_STATE = 'milkybarCarouselFlippedState'; // Stores an object like {0: true, 1: false}
+        const LOCAL_STORAGE_VIDEO_TIME = 'milkybarCarouselVideoTime_'; // Suffix with index
+        const LOCAL_STORAGE_OVERLAY_VISIBLE = 'milkybarCarouselOverlayVisible';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_SRC = 'milkybarCarouselOverlaySrc';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_TYPE = 'milkybarCarouselOverlayType';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME = 'milkybarCarouselOverlayCurrentTime';
+
+
+        function initCarousel() {
+            imageTrack.innerHTML = '';
+            infoSectionsContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            // Retrieve saved states
+            currentIndex = parseInt(localStorage.getItem(LOCAL_STORAGE_CURRENT_INDEX) || '0');
+            let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+            if (Object.keys(savedFlippedState).length !== dragonData.length) {
+                // If data schema changed or first load, reset flipped state
+                savedFlippedState = {};
+                dragonData.forEach((_, i) => savedFlippedState[i] = false);
+                localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+            }
+
+            dragonData.forEach((dragon, index) => {
+                const imageSlide = document.createElement('div');
+                imageSlide.className = 'image-slide';
+                imageSlide.dataset.index = index;
+
+                const frame = document.createElement('div');
+                frame.className = 'dragon-frame';
+
+                const frameInner = document.createElement('div');
+                frameInner.className = 'dragon-frame-inner';
+
+                const front = document.createElement('div');
+                front.className = 'dragon-front';
+
+                let frontContentElement;
+                if (dragon.front.type === 'video') {
+                    frontContentElement = document.createElement('video');
+                    frontContentElement.src = dragon.front.src;
+                    frontContentElement.loop = true;
+                    frontContentElement.playsInline = true;
+                    frontContentElement.muted = true; // Always muted on front
+                    if (dragon.front.poster) frontContentElement.poster = dragon.front.poster;
+                    // Preload metadata to avoid errors on first play attempts
+                    frontContentElement.preload = 'metadata';
+                } else {
+                    frontContentElement = document.createElement('img');
+                    frontContentElement.src = dragon.front.src;
                 }
-            ];
+                frontContentElement.alt = dragon.name;
+                frontContentElement.className = 'dragon-content';
+                frontContentElement.dataset.type = dragon.front.type;
 
-            // Function to set --vh for mobile viewport height consistency
-            const setVhVariable = () => {
-                let vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-            };
+                const back = document.createElement('div');
+                back.className = 'dragon-back';
 
-            // Set initially and on resize
-            setVhVariable();
-            window.addEventListener('resize', setVhVariable);
+                let backContentElement;
+                if (dragon.back.type === 'video') {
+                    backContentElement = document.createElement('video');
+                    backContentElement.src = dragon.back.src;
+                    backContentElement.loop = true;
+                    backContentElement.playsInline = true;
+                    backContentElement.muted = true; // Start muted, unmuted when flipped
+                    backContentElement.controls = true;
+                    backContentElement.controlsList = "nodownload nofullscreen";
+                    if (dragon.back.poster) backContentElement.poster = dragon.back.poster;
+                    backContentElement.preload = 'metadata'; // Preload metadata
 
-
-            function updateCarousel() {
-                if (isAnimating) return;
-                isAnimating = true;
-
-                const offset = -currentIndex * (slides[0].offsetWidth + (parseFloat(getComputedStyle(slides[0]).paddingLeft) * 2));
-                imageTrack.style.transform = `translateX(${offset}px)`;
-
-                slides.forEach((slide, index) => {
-                    slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
-                    slide.style.opacity = '0';
-                    slide.style.pointerEvents = 'none';
-
-                    // Reset all dragon-frames to not-flipped state
-                    const dragonFrame = slide.querySelector('.dragon-frame');
-                    if (dragonFrame) {
-                        dragonFrame.classList.remove('flipped');
+                    // Restore video playback time
+                    const savedVideoTime = parseFloat(localStorage.getItem(LOCAL_STORAGE_VIDEO_TIME + index) || '0');
+                    if (savedVideoTime > 0) {
+                        backContentElement.currentTime = savedVideoTime;
                     }
 
-                    if (index === currentIndex) {
-                        slide.classList.add('current');
-                        slide.style.opacity = '1';
-                        slide.style.pointerEvents = 'auto';
-                    } else if (index === (currentIndex - 1 + slides.length) % slides.length) {
-                        slide.classList.add('prev');
-                        slide.style.opacity = '0.5';
-                        slide.style.pointerEvents = 'auto';
-                    } else if (index === (currentIndex + 1) % slides.length) {
-                        slide.classList.add('next');
-                        slide.style.opacity = '0.5';
-                        slide.style.pointerEvents = 'auto';
-                    } else if (index === (currentIndex - 2 + slides.length) % slides.length) {
-                        slide.classList.add('far-prev');
-                        slide.style.opacity = '0.1';
-                    } else if (index === (currentIndex + 2) % slides.length) {
-                        slide.classList.add('far-next');
-                        slide.style.opacity = '0.1';
-                    }
-                });
+                    // Save video playback time periodically and on events
+                    const saveVideoTime = () => {
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, backContentElement.currentTime.toString());
+                    };
 
-                updateDots();
-                updateInfo();
-
-                // Wait for the transition to end before allowing next animation
-                imageTrack.addEventListener('transitionend', () => {
-                    isAnimating = false;
-                }, { once: true });
-            }
-
-            function goToSlide(index) {
-                currentIndex = index;
-                resetAutoSlide();
-                updateCarousel();
-            }
-
-            function updateDots() {
-                milkybarDots.innerHTML = '';
-                slides.forEach((_, index) => {
-                    const dot = document.createElement('span');
-                    dot.classList.add('milkybar-dot');
-                    if (index === currentIndex) {
-                        dot.classList.add('active');
-                    }
-                    dot.addEventListener('click', () => goToSlide(index));
-                    milkybarDots.appendChild(dot);
-                });
-            }
-
-            function updateInfo() {
-                const currentDragon = dragons[currentIndex];
-                dragonNameElement.textContent = currentDragon.name;
-                dragonDescriptionElement.textContent = currentDragon.description;
-            }
-
-            function startAutoSlide() {
-                stopAutoSlide(); // Clear any existing timer
-                autoSlideTimer = setInterval(() => {
-                    currentIndex = (currentIndex + 1) % slides.length;
-                    updateCarousel();
-                }, autoSlideIntervalTime);
-            }
-
-            function stopAutoSlide() {
-                if (autoSlideTimer) {
-                    clearInterval(autoSlideTimer);
-                    autoSlideTimer = null;
-                }
-            }
-
-            function resetAutoSlide() {
-                stopAutoSlide();
-                startAutoSlide();
-            }
-
-            prevButton.addEventListener('click', () => {
-                if (isAnimating) return;
-                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                resetAutoSlide();
-                updateCarousel();
-                // Add temporary glow for touch devices
-                if (!window.matchMedia('(hover: hover)').matches) {
-                    prevButton.classList.add('glow-active');
-                    setTimeout(() => prevButton.classList.remove('glow-active'), 1200);
-                }
-            });
-
-            nextButton.addEventListener('click', () => {
-                if (isAnimating) return;
-                currentIndex = (currentIndex + 1) % slides.length;
-                resetAutoSlide();
-                updateCarousel();
-                // Add temporary glow for touch devices
-                if (!window.matchMedia('(hover: hover)').matches) {
-                    nextButton.classList.add('glow-active');
-                    setTimeout(() => nextButton.classList.remove('glow-active'), 1200);
-                }
-            });
-
-            // Flip card functionality and overlay
-            slides.forEach((slide, index) => {
-                const dragonFrame = slide.querySelector('.dragon-frame');
-                const dragonFront = slide.querySelector('.dragon-front');
-                const dragonBack = slide.querySelector('.dragon-back');
-                const backImage = slide.querySelector('.dragon-back .dragon-content'); // Get the image on the back
-                const dragonBackText = slide.querySelector('.dragon-back-text');
-
-                // Ensure initial back text visibility is correct
-                if (dragonBackText) {
-                    dragonBackText.style.opacity = '0'; // Hide by default
-                }
-
-                dragonFrame.addEventListener('click', (event) => {
-                    // Prevent flipping if clicked on nav buttons (if they overlap)
-                    if (event.target.closest('.milkybar-nav')) {
-                        return;
-                    }
-
-                    if (index === currentIndex) {
-                        stopAutoSlide(); // Stop auto-slide when a card is flipped
-                        dragonFrame.classList.toggle('flipped');
-                        // Show/hide back text based on flip state
-                        if (dragonFrame.classList.contains('flipped')) {
-                             setTimeout(() => {
-                                 if (dragonBackText) dragonBackText.style.opacity = '1';
-                             }, 300); // Delay showing text slightly after flip starts
-                        } else {
-                             if (dragonBackText) dragonBackText.style.opacity = '0';
-                             resetAutoSlide(); // Resume auto-slide when card is unflipped
+                    backContentElement.addEventListener('play', () => {
+                        // Clear any existing interval for this video
+                        if (videoTimeUpdateIntervals[index]) {
+                            clearInterval(videoTimeUpdateIntervals[index]);
                         }
-                    } else {
-                        goToSlide(index); // If not current, navigate to it
-                    }
-                });
+                        // Set interval to save time every 5 seconds
+                        videoTimeUpdateIntervals[index] = setInterval(saveVideoTime, 5000);
+                    });
+                    backContentElement.addEventListener('pause', () => {
+                        clearInterval(videoTimeUpdateIntervals[index]); // Clear interval on pause
+                        saveVideoTime(); // Save immediately on pause
+                    });
+                    backContentElement.addEventListener('ended', () => {
+                        clearInterval(videoTimeUpdateIntervals[index]); // Clear interval on end
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset on end
+                    });
 
-                // Image zoom functionality
-                if (backImage) {
-                    backImage.addEventListener('click', (event) => {
-                        if (dragonFrame.classList.contains('flipped')) {
-                            event.stopPropagation(); // Prevent the card from un-flipping when zooming
-                            openMediaOverlay(backImage.src, 'image');
-                        }
+                } else {
+                    backContentElement = document.createElement('img');
+                    backContentElement.src = dragon.back.src;
+                }
+                backContentElement.alt = `${dragon.name} back view`;
+                backContentElement.className = 'dragon-content';
+                backContentElement.dataset.type = dragon.back.type;
+                backContentElement.dataset.src = dragon.back.src; // Store original src for overlay
+
+                back.appendChild(backContentElement);
+
+                // Add the floating text area
+                if (dragon.back.text) {
+                    const backText = document.createElement('div');
+                    backText.className = 'dragon-back-text';
+                    backText.textContent = dragon.back.text;
+                    back.appendChild(backText);
+                }
+
+                // Add double click to zoom for images only
+                if (dragon.back.type === 'image') {
+                    backContentElement.addEventListener('dblclick', (e) => {
+                        e.stopPropagation();
+                        showMediaInOverlay(backContentElement.src, backContentElement.dataset.type);
                     });
                 }
-            });
 
-            function openMediaOverlay(src, type) {
-                overlayContent.src = src;
-                overlayContent.setAttribute('data-type', type);
-                if (type === 'image') {
-                    overlayContent.classList.add('zoomable-image');
-                } else {
-                    overlayContent.classList.remove('zoomable-image');
+                front.appendChild(frontContentElement);
+                frameInner.appendChild(front);
+                frameInner.appendChild(back);
+                frame.appendChild(frameInner);
+
+                // Restore flipped state immediately after creation
+                if (savedFlippedState[index]) {
+                    frame.classList.add('flipped');
                 }
-                mediaOverlay.classList.add('visible');
-            }
 
-            mediaOverlay.addEventListener('click', () => {
-                closeMediaOverlay();
+                frame.addEventListener('click', function(e) {
+                    if (imageSlide.classList.contains('current')) {
+                        e.stopPropagation();
+                        const isFlippingToBack = !this.classList.contains('flipped');
+                        this.classList.toggle('flipped');
+
+                        const currentBackVideo = this.querySelector('.dragon-back video');
+                        const currentFrontVideo = this.querySelector('.dragon-front video');
+
+                        if (isFlippingToBack) {
+                            hideMediaOverlay(); // Ensure overlay is hidden when flipping to back
+                            if (currentBackVideo) {
+                                currentBackVideo.muted = false; // Unmute when flipped to back
+                                currentBackVideo.play().catch(error => console.warn("Autoplay with sound was prevented:", error));
+                            }
+                            if (currentFrontVideo) currentFrontVideo.pause();
+                        } else { // Flipped back to front
+                            if (currentBackVideo) {
+                                currentBackVideo.pause();
+                                currentBackVideo.currentTime = 0; // Reset video on flip back
+                                currentBackVideo.muted = true;
+                                localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
+                            }
+                            if (currentFrontVideo) {
+                                frontContentElement.muted = true; // Ensure front video is muted
+                                currentFrontVideo.play().catch(error => console.warn("Front video autoplay prevented:", error));
+                            }
+                        }
+                        // Save flipped state
+                        savedFlippedState[index] = this.classList.contains('flipped');
+                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+
+                    } else {
+                        goToSlide(parseInt(imageSlide.dataset.index));
+                    }
+                });
+
+                imageSlide.appendChild(frame);
+                imageTrack.appendChild(imageSlide);
+
+                const dot = document.createElement('div');
+                dot.className = 'milkybar-dot';
+                dot.dataset.index = index;
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
             });
 
-            function closeMediaOverlay() {
-                mediaOverlay.classList.remove('visible');
-                overlayContent.src = ''; // Clear src
-            }
+            const infoSectionContent = document.createElement('div');
+            infoSectionContent.className = 'info-section';
+            infoSectionsContainer.appendChild(infoSectionContent);
 
-            // Keyboard navigation
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'ArrowLeft') {
-                    prevButton.click();
-                } else if (event.key === 'ArrowRight') {
-                    nextButton.click();
-                } else if (event.key === 'Escape') {
-                    if (mediaOverlay.classList.contains('visible')) {
-                        closeMediaOverlay();
+            updateCarousel();
+        }
+
+        function showMediaInOverlay(src, type, initialTime = 0) {
+            overlayContentWrapper.innerHTML = '';
+            let mediaElement;
+
+            if (type === 'video') {
+                mediaElement = document.createElement('video');
+                mediaElement.src = src;
+                mediaElement.loop = true;
+                mediaElement.playsInline = true;
+                mediaElement.controls = true;
+                mediaElement.controlsList = "nodownload nofullscreen";
+                mediaElement.muted = false; // Unmute in overlay
+                mediaElement.preload = 'auto'; // Preload for better experience in overlay
+
+                if (initialTime > 0) {
+                    mediaElement.currentTime = initialTime;
+                }
+
+                mediaElement.addEventListener('play', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                });
+                mediaElement.addEventListener('pause', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                });
+                mediaElement.addEventListener('ended', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, '0');
+                });
+                mediaElement.addEventListener('timeupdate', () => {
+                    if (Math.floor(mediaElement.currentTime) % 5 === 0 && mediaElement.lastSavedTime !== Math.floor(mediaElement.currentTime)) {
+                        localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                        mediaElement.lastSavedTime = Math.floor(mediaElement.currentTime);
+                    }
+                });
+
+                // Ensure video starts playing if it was playing when overlay was opened
+                mediaElement.play().catch(e => console.warn("Overlay video autoplay prevented:", e));
+
+            } else { // image
+                mediaElement = document.createElement('img');
+                mediaElement.src = src;
+                mediaElement.classList.add('zoomable-image');
+                mediaElement.addEventListener('dblclick', hideMediaOverlay);
+            }
+            mediaElement.className = 'overlay-content';
+            mediaElement.dataset.type = type; // Store type
+            mediaElement.dataset.src = src;   // Store src
+
+            overlayContentWrapper.appendChild(mediaElement);
+            mediaOverlay.classList.add('visible');
+
+            // Save overlay state
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_VISIBLE, 'true');
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC, src);
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE, type);
+        }
+
+        function hideMediaOverlay() {
+            mediaOverlay.classList.remove('visible');
+            const overlayVideo = overlayContentWrapper.querySelector('video');
+            if (overlayVideo) {
+                overlayVideo.pause();
+                // We don't reset currentTime here if the user closed it, they might want to continue
+            }
+            overlayContentWrapper.innerHTML = '';
+            // Clear overlay state from localStorage
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_VISIBLE);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME);
+        }
+
+        function restoreOverlayState() {
+            const isOverlayVisible = localStorage.getItem(LOCAL_STORAGE_OVERLAY_VISIBLE) === 'true';
+            if (isOverlayVisible) {
+                const src = localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC);
+                const type = localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE);
+                const currentTime = parseFloat(localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME) || '0');
+                if (src && type) {
+                    showMediaInOverlay(src, type, currentTime);
+                } else {
+                    hideMediaOverlay(); // Fallback if data is incomplete
+                }
+            }
+        }
+
+        function cleanUpAllMedia() {
+            document.querySelectorAll('.image-slide').forEach(slide => {
+                const index = parseInt(slide.dataset.index);
+                const frame = slide.querySelector('.dragon-frame');
+                const frontVideo = slide.querySelector('.dragon-front video');
+                const backVideo = slide.querySelector('.dragon-back video');
+                
+                const isCurrentSlide = slide.classList.contains('current');
+                const isFlipped = frame.classList.contains('flipped');
+
+                // Clear any ongoing video time update intervals
+                if (videoTimeUpdateIntervals[index]) {
+                    clearInterval(videoTimeUpdateIntervals[index]);
+                    delete videoTimeUpdateIntervals[index];
+                }
+
+                if (frontVideo) {
+                    frontVideo.pause();
+                    frontVideo.muted = true;
+                    // No need to reset currentTime for front video, it's decorative
+                }
+
+                if (backVideo) {
+                    if (isCurrentSlide && isFlipped) {
+                        // If it's the current, flipped card, do not pause or reset.
+                        // It's meant to be actively playing.
+                        backVideo.muted = false; // Ensure it's unmuted
                     } else {
-                        // Unflip the current card if it's flipped
-                        const currentDragonFrame = slides[currentIndex].querySelector('.dragon-frame');
-                        if (currentDragonFrame && currentDragonFrame.classList.contains('flipped')) {
-                            currentDragonFrame.classList.remove('flipped');
-                            const dragonBackText = currentDragonFrame.querySelector('.dragon-back-text');
-                            if (dragonBackText) dragonBackText.style.opacity = '0';
-                            resetAutoSlide(); // Resume auto-slide
-                        }
+                        backVideo.pause();
+                        backVideo.currentTime = 0; // Reset video to start
+                        backVideo.muted = true;
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
+                    }
+                }
+
+                // If a card is not the current slide OR is current but not flipped, unflip it.
+                // This ensures only the active, potentially flipped card remains in that state.
+                if (!isCurrentSlide || (isCurrentSlide && !isFlipped)) {
+                    frame.classList.remove('flipped');
+                    let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+                    savedFlippedState[index] = false;
+                    localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+                }
+            });
+            hideMediaOverlay(); // Always hide overlay when navigating carousel
+        }
+
+
+        function updateInfoSection() {
+            const infoSectionContent = document.querySelector('.info-section');
+            const currentDragon = dragonData[currentIndex];
+            infoSectionContent.innerHTML = `
+                <h2 class="dragon-name">${currentDragon.name}</h2>
+                <p class="dragon-description">${currentDragon.description}</p>
+            `;
+        }
+
+        function updateCarousel() {
+            const imageSlides = document.querySelectorAll('.image-slide');
+            const dots = document.querySelectorAll('.milkybar-dot');
+
+            if (imageSlides.length === 0) return;
+            slideFullWidth = imageSlides[0].offsetWidth;
+
+            const carouselWidth = imageTrack.parentElement.offsetWidth;
+            const slidesCount = dragonData.length;
+
+            let translateXValue = (carouselWidth / 2) - (slideFullWidth / 2);
+            translateXValue -= currentIndex * slideFullWidth;
+
+            imageTrack.style.transform = `translateX(${translateXValue}px)`;
+            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentIndex));
+            updateInfoSection();
+
+            // Save current index to localStorage
+            localStorage.setItem(LOCAL_STORAGE_CURRENT_INDEX, currentIndex.toString());
+
+            imageSlides.forEach((slide, index) => {
+                slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
+
+                let distance = index - currentIndex;
+                if (distance > slidesCount / 2) distance -= slidesCount;
+                else if (distance < -slidesCount / 2) distance += slidesCount;
+
+                switch(distance) {
+                    case 0: slide.classList.add('current'); break;
+                    case 1: slide.classList.add('next'); break;
+                    case -1: slide.classList.add('prev'); break;
+                    case -2: slide.classList.add('far-prev'); break;
+                    case 2: slide.classList.add('far-next'); break;
+                }
+
+                const frontVideo = slide.querySelector('.dragon-front video');
+                const backVideo = slide.querySelector('.dragon-back video');
+                const frame = slide.querySelector('.dragon-frame');
+                const isFlipped = frame.classList.contains('flipped');
+
+
+                if (frontVideo) {
+                    frontVideo.muted = true; // Always muted on front
+                    if (slide.classList.contains('current') && !isFlipped) {
+                        frontVideo.play().catch(e=>console.warn("Front video autoplay prevented (current):", e));
+                    } else {
+                        frontVideo.pause();
+                    }
+                }
+
+                if (backVideo) {
+                    // Only manage back video if it's the current slide
+                    if (slide.classList.contains('current') && isFlipped) {
+                        backVideo.muted = false; // Unmute if current and flipped
+                        backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
+                    } else {
+                        // Pause and reset if not the current *active* back video
+                        backVideo.pause();
+                        backVideo.currentTime = 0;
+                        backVideo.muted = true;
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0'); // Reset saved time
                     }
                 }
             });
+        }
 
-
-            // Initial setup
+        function goToSlide(index) {
+            cleanUpAllMedia(); // Clean up all media states before changing slide
+            currentIndex = index;
             updateCarousel();
-            startAutoSlide(); // Start auto-sliding on load
+        }
+
+        function nextSlide() {
+            cleanUpAllMedia();
+            currentIndex = (currentIndex + 1) % dragonData.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            cleanUpAllMedia();
+            currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
+            updateCarousel();
+        }
+
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+        mediaOverlay.addEventListener('click', hideMediaOverlay);
+        overlayContentWrapper.addEventListener('click', e => e.stopPropagation());
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        imageTrack.addEventListener('touchstart', (e) => {
+            if (mediaOverlay.classList.contains('visible')) return; // Prevent swipe if overlay is open
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        imageTrack.addEventListener('touchend', (e) => {
+            if (mediaOverlay.classList.contains('visible')) return; // Prevent swipe if overlay is open
+            touchEndX = e.changedTouches[0].screenX;
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) nextSlide();
+            else if (touchEndX > touchStartX + threshold) prevSlide();
+        }, { passive: true });
+
+        document.addEventListener('keydown', (e) => {
+            if (mediaOverlay.classList.contains('visible')) {
+                if (e.key === 'Escape') hideMediaOverlay();
+                return; // Prevent carousel navigation if overlay is open
+            }
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') {
+                 // If a card is flipped, unflip it first. Otherwise, do nothing.
+                const currentFlippedCard = document.querySelector('.image-slide.current .dragon-frame.flipped');
+                if (currentFlippedCard) {
+                    currentFlippedCard.click(); // Simulate click to unflip
+                }
+            }
+        });
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            // MODIFICATION: The resize handler is now less aggressive to prevent page "resets" on mobile 
+            // when the address bar appears/disappears. It only recalculates positions instead of rebuilding the entire carousel.
+            resizeTimeout = setTimeout(() => {
+                updateCarousel(); // Only update positions and states
+            }, 200);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel(); // Initializes the carousel and restores basic states
+            updateCarousel(); // Ensures all current/prev/next classes are applied and media states are correct
+            restoreOverlayState(); // Restores the media overlay state if it was open
+
+            const isTouchDevice = window.matchMedia('(hover: none)').matches;
+            if(isTouchDevice) {
+                [prevButton, nextButton].forEach(button => {
+                    button.addEventListener('touchstart', () => button.classList.add('glow-active'));
+                    button.addEventListener('animationend', () => button.classList.remove('glow-active'));
+                });
+            }
         });
     </script>
 </body>
