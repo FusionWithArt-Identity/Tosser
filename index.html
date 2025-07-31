@@ -235,10 +235,10 @@
         /* Reflection Keyframes */
         @keyframes glass-reflection {
             0% {
-                transform: translateX(-120%) skewX(-20deg);
+                transform: translateX(-250%) skewX(-20deg); /* Start further left */
             }
             100% {
-                transform: translateX(220%) skewX(-20deg);
+                transform: translateX(350%) skewX(-20deg); /* End further right */
             }
         }
 
@@ -258,7 +258,7 @@
                 rgba(255, 255, 255, 0.08) 65%, /* Reduced peak opacity */
                 rgba(255, 255, 255, 0) 100%
             );
-            animation: glass-reflection 4s linear infinite; /* Increased duration for smoother movement */
+            animation: glass-reflection 6s linear infinite; /* Increased duration for smoother movement */
             z-index: -1; /* Ensures this is behind all content */
             pointer-events: none; /* Make sure it doesn't interfere with clicks */
             filter: blur(3px); /* Increased blur for a softer, more professional look */
