@@ -563,16 +563,21 @@
             transition: none; /* No transition for content, updated instantly */
         }
 
-        .dragon-name {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            font-weight: 800;
-            color: #6bd6ce;
-            margin-bottom: 15px;
-            text-transform: auto;
-            letter-spacing: 1px;
-            line-height: 1;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-        }
+       .dragon-name {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 800;
+    color: #B22222; /* Changed to Brick Red */
+    margin-bottom: 15px;
+    text-transform: auto;
+    letter-spacing: 1px;
+    line-height: 1;
+    /* Added white thin text border using text-shadow */
+    text-shadow: 
+        -1px -1px 0 #FFF,  /* Top-left white border */
+        1px -1px 0 #FFF,   /* Top-right white border */
+        -1px 1px 0 #FFF,   /* Bottom-left white border */
+        1px 1px 0 #FFF;    /* Bottom-right white border */
+}
 
         .dragon-description {
             font-size: clamp(1rem, 3vw, 1.2rem);
