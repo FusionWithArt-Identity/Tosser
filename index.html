@@ -284,26 +284,26 @@
             }
         }
 
-        /* Reflection pseudo-element */
+        /* Reflection pseudo-element (the glare effect) */
         .dragon-frame::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 50%;
+            width: 40%; /* Reduced width for a narrower, less aggressive glare */
             height: 100%;
             background: linear-gradient(
                 to right,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.2) 35%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0.2) 65%,
+                rgba(255, 255, 255, 0.08) 35%, /* Reduced peak opacity */
+                rgba(255, 255, 255, 0.15) 50%, /* Reduced peak opacity */
+                rgba(255, 255, 255, 0.08) 65%, /* Reduced peak opacity */
                 rgba(255, 255, 255, 0) 100%
             );
-            animation: glass-reflection 3s linear infinite;
+            animation: glass-reflection 4s linear infinite; /* Increased duration for smoother movement */
             z-index: -1; /* Ensures this is behind all content */
             pointer-events: none; /* Make sure it doesn't interfere with clicks */
-            filter: blur(1px); /* Add a subtle blur */
+            filter: blur(3px); /* Increased blur for a softer, more professional look */
             will-change: transform;
         }
 
@@ -382,11 +382,6 @@
                 6px 6px 20px rgba(204, 0, 0, 0.6),
                 8px 8px 30px rgba(204, 0, 0, 0.4);
         }
-    }
-
-    /* Apply the neon light trail animation */
-    .dragon-frame.flipped .dragon-back-text {
-        animation: neon-light-trail 4s infinite ease-in-out;
     }
 
 
@@ -997,9 +992,9 @@
                     backContentElement.src = dragon.back.src;
                     backContentElement.loop = true;
                     backContentElement.playsInline = true;
-                    backContentElement.muted = true; // Start muted, unmuted when flipped
                     backContentElement.controls = true;
                     backContentElement.controlsList = "nodownload nofullscreen";
+                    backContentElement.muted = true; // Start muted, unmuted when flipped
                     if (dragon.back.poster) backContentElement.poster = dragon.back.poster;
                     backContentElement.preload = 'metadata'; // Preload metadata
 
