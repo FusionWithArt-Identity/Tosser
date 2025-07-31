@@ -44,8 +44,9 @@
             width: 100%;
         }
 
+/* Styles for the main H1 element (the text container) */
 .milkybar-header h1 {
-    /* Base text properties */
+    /* Base text properties for size, case, spacing, etc. */
     font-size: clamp(1.8rem, 6vw, 3.5rem);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -54,148 +55,105 @@
     line-height: 1.2;
     text-align: center;
 
-    /* Apply 'Ninja Naruto' font */
+    /* Apply the custom 'Ninja Naruto' font */
     font-family: 'Ninja Naruto', sans-serif;
 
-    /* Enhanced Neon Tube text style with black border */
-    color: #f0f0f0; /* Slightly off-white for softer text core */
+    /* Text styling: color and inner/outer glow effects */
+    color: #f0f0f0; /* Soft off-white for the main text color */
     text-shadow:
-        /* Inner "tube" definition - black for contrast */
-        -2px -2px 0 #000,
-        2px 2px 0 #000,
-        2px -2px 0 #000,
-        -2px 2px 0 #000,
+        /* Inner "tube" definition (black border around letters for contrast) */
+        -2px -2px 0 #000,   /* Top-left */
+        2px 2px 0 #000,     /* Bottom-right */
+        2px -2px 0 #000,    /* Top-right */
+        -2px 2px 0 #000,    /* Bottom-left */
         
-        /* White inner glow - sharper and more intense */
+        /* White inner glow (makes the text appear lit from within) */
         0 0 4px #fff,
         0 0 10px #fff,
         
-        /* Purple outer glow - more vibrant but controlled spread */
+        /* Purple outer glow (the main neon light effect) */
         0 0 15px #bc13fe,
         0 0 25px #bc13fe,
         0 0 40px #bc13fe;
 
-    /* Removed static border and box-shadow from h1 to apply them via pseudo-element */
-    /* position: relative and overflow: hidden are still needed for the pseudo-element */
-    position: relative;
-    overflow: hidden;
+    /* Static border and its outer glow */
+    border: 0.2rem solid #fff; /* A thin white static border */
+    border-radius: 2rem;       /* Rounded corners for the border */
+    padding: 0.4em;            /* Padding around the text inside the border */
+    box-shadow: 
+        0 0 .2rem #fff,     /* Subtle white inner glow for the box */
+        0 0 .2rem #fff,
+        0 0 2rem #bc13fe,   /* Purple outer glow matching the text neon */
+        0 0 0.8rem #bc13fe,
+        0 0 2.8rem #bc13fe,
+        inset 0 0 1.3rem #bc13fe; /* Inset purple glow for depth */
 
-    /* Apply the revised flickering animation for the text */
+    /* Positioning and overflow settings for pseudo-elements */
+    position: relative; /* Essential for positioning any future pseudo-elements */
+    overflow: hidden;   /* Keeps content within the border-radius */
+    z-index: 1;         /* Ensures the h1 content and its static border are above other elements */
+
+    /* Animation for the text flickering effect */
     animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
-
-    /* Padding from original h1 for spacing, combined with the new pseudo-element's border */
-    padding: 0.4em;
-    border-radius: 2rem; /* Keep for overflow clipping */
-    z-index: 1; /* Ensure text is above the moving border pseudo-element */
 }
 
-/* Pseudo-element for the moving border */
-.milkybar-header h1::before {
-    content: '';
-    position: absolute;
-    top: -0.2rem; /* Matches the h1 border width to position directly on top */
-    left: -0.2rem;
-    right: -0.2rem;
-    bottom: -0.2rem;
-    z-index: -1; /* Place behind the text */
-    border-radius: 2.2rem; /* Slightly larger radius than h1 for continuous path */
-    
-    /* Set up the border using border-image with a gradient */
-    border: 0.2rem solid transparent; /* Required for border-image to work */
-    border-image: linear-gradient(
-        to right,
-        #bc13fe 0%, #bc13fe 5%, /* Light trail segment */
-        transparent 5%, transparent 15%, /* Discontinuous transparent segment */
-        #bc13fe 15%, #bc13fe 20%, /* Another light trail segment (optional, for more "lights") */
-        transparent 20%, transparent 100% /* Rest of the transparent border */
-    );
-    border-image-slice: 1; /* Ensure the entire border is covered */
-    border-image-repeat: stretch; /* Stretch the gradient across the border */
-
-    /* Add a subtle static box-shadow behind the moving border for continuity */
-    box-shadow: 0 0 .2rem #fff,
-                0 0 .2rem #fff,
-                0 0 2rem #bc13fe,
-                0 0 0.8rem #bc13fe,
-                0 0 2.8rem #bc13fe,
-                inset 0 0 1.3rem #bc13fe;
-
-    /* Animation for the border-image */
-    animation: border-light-trail 3s linear infinite; /* Adjusted speed for border movement */
-}
-
-
-/* Keyframes for the text flickering effect (no change here) */
+/* Keyframes for the text flickering effect */
 @keyframes neon-tube-flicker-enhanced {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        color: #f0f0f0;
+        color: #f0f0f0; /* Full text color */
         text-shadow:
-            -2px -2px 0 #000,
-            2px 2px 0 #000,
-            2px -2px 0 #000,
-            -2px 2px 0 #000,
-            0 0 4px #fff,
-            0 0 10px #fff,
-            0 0 15px #bc13fe,
-            0 0 25px #bc13fe,
-            0 0 40px #bc13fe;
+            -2px -2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+            0 0 4px #fff, 0 0 10px #fff,
+            0 0 15px #bc13fe, 0 0 25px #bc13fe, 0 0 40px #bc13fe;
     }
-
     20%, 24%, 55% {
-        color: rgba(240, 240, 240, 0.7);
+        color: rgba(240, 240, 240, 0.7); /* Dimmed text color for flicker */
         text-shadow:
-            -1px -1px 0 rgba(0,0,0,0.7),
-            1px 1px 0 rgba(0,0,0,0.7),
-            0 0 1px rgba(255,255,255,0.8),
-            0 0 5px rgba(255,255,255,0.6),
-            0 0 7px rgba(188,19,254,0.7),
-            0 0 15px rgba(188,19,254,0.5);
+            -1px -1px 0 rgba(0,0,0,0.7), 1px 1px 0 rgba(0,0,0,0.7), /* Dimmed black border */
+            0 0 1px rgba(255,255,255,0.8), 0 0 5px rgba(255,255,255,0.6), /* Dimmed white glow */
+            0 0 7px rgba(188,19,254,0.7), 0 0 15px rgba(188,19,254,0.5); /* Dimmed purple glow */
     }
-
     22%, 53% {
-        color: rgba(240, 240, 240, 0.9);
+        color: rgba(240, 240, 240, 0.9); /* Slightly less dimmed text for subtle variation */
         text-shadow:
-            -1.5px -1.5px 0 rgba(0,0,0,0.8),
-            1.5px 1.5px 0 rgba(0,0,0,0.8),
-            0 0 3px rgba(255,255,255,0.9),
-            0 0 8px rgba(255,255,255,0.7),
-            0 0 12px rgba(188,19,254,0.8),
-            0 0 25px rgba(188,19,254,0.6);
+            -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px 1.5px 0 rgba(0,0,0,0.8), /* Slightly less dimmed black border */
+            0 0 3px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7), /* Slightly less dimmed white glow */
+            0 0 12px rgba(188,19,254,0.8), 0 0 25px rgba(188,19,254,0.6); /* Slightly less dimmed purple glow */
     }
 }
 
-/* Keyframes for the border light trail animation */
-@keyframes border-light-trail {
-    0% {
-        border-image-source: linear-gradient(
-            to right,
-            #bc13fe 0%, #bc13fe 5%,
-            transparent 5%, transparent 15%,
-            #bc13fe 15%, #bc13fe 20%,
-            transparent 20%, transparent 100%
-        );
+/* Keyframes for Red Neon Light Trail Effect on the Floating Text */
+@keyframes neon-light-trail {
+    0%, 100% {
+        text-shadow:
+            0 0 5px #FFA500,   /* Red base glow */
+            0 0 10px #FFA500,
+            0 0 20px rgba(255, 0, 0, 0.6), /* Wider red glow */
+            0 0 30px rgba(255, 0, 0, 0.4);
     }
-    100% {
-        /* Shift the gradient along the border for movement */
-        border-image-source: linear-gradient(
-            to right,
-            transparent 0%, transparent 80%,
-            #bc13fe 80%, #bc13fe 85%,
-            transparent 85%, transparent 95%,
-            #bc13fe 95%, #bc13fe 100%
-        );
+    25% {
+        text-shadow:
+            -2px -2px 5px #FFA500, /* Lighter Red trail up-left */
+            -4px -4px 10px #FFA500,
+            -6px -6px 20px rgba(255, 51, 51, 0.6),
+            -8px -8px 30px rgba(255, 51, 51, 0.4);
+    }
+    50% {
+        text-shadow:
+            0 0 5px #FF0000,   /* Red base glow */
+            0 0 10px #FF0000,
+            0 0 20px rgba(255, 0, 0, 0.6),
+            0 0 30px rgba(255, 0, 0, 0.4);
+    }
+    75% {
+        text-shadow:
+            2px 2px 5px #FFA500, /* Darker Red trail down-right */
+            4px 4px 10px #FFA500,
+            6px 6px 20px rgba(204, 0, 0, 0.6),
+            8px 8px 30px rgba(204, 0, 0, 0.4);
     }
 }
 
-/* Keyframes for the moving border light trail */
-@keyframes border-trail-animate {
-    0% {
-        background-position: 0% 0%; /* Start position */
-    }
-    100% {
-        background-position: 100% 100%; /* End position for diagonal movement */
-    }
-}
         .milkybar-header p {
             color: #8c6d3e;
             font-size: clamp(1rem, 3vw, 1.5rem);
@@ -352,38 +310,37 @@
         }
 
 
-/* Updated Keyframes for Red Neon Light Trail Effect on Text */
-    @keyframes neon-light-trail {
-        0%, 100% {
-            text-shadow:
-                0 0 5px #FFA500,   /* Red base glow */
-                0 0 10px #FFA500,
-                0 0 20px rgba(255, 0, 0, 0.6), /* Wider red glow */
-                0 0 30px rgba(255, 0, 0, 0.4);
-        }
-        25% {
-            text-shadow:
-                -2px -2px 5px #FFA500, /* Lighter Red trail up-left */
-                -4px -4px 10px #FFA500,
-                -6px -6px 20px rgba(255, 51, 51, 0.6),
-                -8px -8px 30px rgba(255, 51, 51, 0.4);
-        }
-        50% {
-            text-shadow:
-                0 0 5px #FF0000,   /* Red base glow */
-                0 0 10px #FF0000,
-                0 0 20px rgba(255, 0, 0, 0.6),
-                0 0 30px rgba(255, 0, 0, 0.4);
-        }
-        75% {
-            text-shadow:
-                2px 2px 5px #FFA500, /* Darker Red trail down-right */
-                4px 4px 10px #FFA500,
-                6px 6px 20px rgba(204, 0, 0, 0.6),
-                8px 8px 30px rgba(204, 0, 0, 0.4);
-        }
+/* Keyframes for Red Neon Light Trail Effect on the Floating Text */
+@keyframes neon-light-trail {
+    0%, 100% {
+        text-shadow:
+            0 0 5px #FFA500,   /* Red base glow */
+            0 0 10px #FFA500,
+            0 0 20px rgba(255, 0, 0, 0.6), /* Wider red glow */
+            0 0 30px rgba(255, 0, 0, 0.4);
     }
-
+    25% {
+        text-shadow:
+            -2px -2px 5px #FFA500, /* Lighter Red trail up-left */
+            -4px -4px 10px #FFA500,
+            -6px -6px 20px rgba(255, 51, 51, 0.6),
+            -8px -8px 30px rgba(255, 51, 51, 0.4);
+    }
+    50% {
+        text-shadow:
+            0 0 5px #FF0000,   /* Red base glow */
+            0 0 10px #FF0000,
+            0 0 20px rgba(255, 0, 0, 0.6),
+            0 0 30px rgba(255, 0, 0, 0.4);
+    }
+    75% {
+        text-shadow:
+            2px 2px 5px #FFA500, /* Darker Red trail down-right */
+            4px 4px 10px #FFA500,
+            6px 6px 20px rgba(204, 0, 0, 0.6),
+            8px 8px 30px rgba(204, 0, 0, 0.4);
+    }
+}
 
         .dragon-frame.flipped {
             transform: translateY(-5px) scale(1.02) translateZ(50px);
@@ -474,7 +431,7 @@
             width: calc(100% - 20px); /* Adjust width to fit within padding */
             max-height: 50%; /* Limit height to prevent excessive overlap with media */
             background: rgba(0, 0, 0, 0.6); /* Slightly darker background */
-	    Font-family: FBI;
+	    Font-family: FBI; /* Assuming 'FBI' font is available or imported */
             color: White; /* Text color matching header */
             padding: 5px 8px;
             border-radius: 8px;
@@ -488,12 +445,15 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             z-index: 2; /* Ensure it's above the media but below reflections/other overlays */
             opacity: 0; /* Hidden by default */
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.3s ease-in-out; /* Keep transition for showing/hiding */
 
             /* Make it scrollable without scrollbars */
             overflow-y: auto; /* Enable vertical scrolling when content overflows */
             -ms-overflow-style: none; /* IE and Edge */
             scrollbar-width: none; /* Firefox */
+
+            /* Apply the neon light trail animation to the floating text */
+            animation: neon-light-trail 4s infinite ease-in-out;
         }
 
         /* Hide scrollbar for Chrome, Safari and Opera */
