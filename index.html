@@ -66,11 +66,11 @@
         2px 2px 0 #000,     /* Bottom-right */
         2px -2px 0 #000,    /* Top-right */
         -2px 2px 0 #000,    /* Bottom-left */
-        
+
         /* White inner glow (makes the text appear lit from within) */
         0 0 4px #fff,
         0 0 10px #fff,
-        
+
         /* Purple outer glow (the main neon light effect) */
         0 0 15px #bc13fe,
         0 0 25px #bc13fe,
@@ -80,7 +80,7 @@
     border: 0.2rem solid #fff; /* A thin white static border */
     border-radius: 2rem;       /* Rounded corners for the border */
     padding: 0.4em;            /* Padding around the text inside the border */
-    box-shadow: 
+    box-shadow:
         0 0 .2rem #fff,     /* Subtle white inner glow for the box */
         0 0 .2rem #fff,
         0 0 2rem #bc13fe,   /* Purple outer glow matching the text neon */
@@ -235,38 +235,40 @@
             will-change: transform;
         }
 
-        /* Reflection Keyframes */
+        /* Reflection Keyframes - Commented Out
         @keyframes glass-reflection {
             0% {
-                transform: translateX(-250%) skewX(-20deg); /* Start further left */
+                transform: translateX(-250%) skewX(-20deg);
             }
             100% {
-                transform: translateX(350%) skewX(-20deg); /* End further right */
+                transform: translateX(350%) skewX(-20deg);
             }
         }
+        */
 
-        /* Reflection pseudo-element (the glare effect) */
+        /* Reflection pseudo-element (the glare effect) - Commented Out
         .dragon-frame::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 40%; /* Reduced width for a narrower, less aggressive glare */
+            width: 40%;
             height: 100%;
             background: linear-gradient(
                 to right,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.08) 35%, /* Reduced peak opacity */
-                rgba(255, 255, 255, 0.15) 50%, /* Reduced peak opacity */
-                rgba(255, 255, 255, 0.08) 65%, /* Reduced peak opacity */
+                rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.08) 65%,
                 rgba(255, 255, 255, 0) 100%
             );
-            animation: glass-reflection 6s linear infinite; /* Increased duration for smoother movement */
-            z-index: -1; /* Ensures this is behind all content */
-            pointer-events: none; /* Make sure it doesn't interfere with clicks */
-            filter: blur(3px); /* Increased blur for a softer, more professional look */
+            animation: glass-reflection 6s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(3px);
             will-change: transform;
         }
+        */
 
 
         @keyframes glowing-colors {
@@ -1171,7 +1173,7 @@
                 const frame = slide.querySelector('.dragon-frame');
                 const frontVideo = slide.querySelector('.dragon-front video');
                 const backVideo = slide.querySelector('.dragon-back video');
-                
+
                 const isCurrentSlide = slide.classList.contains('current');
                 const isFlipped = frame.classList.contains('flipped');
 
@@ -1293,6 +1295,7 @@
             currentIndex = index;
             updateCarousel();
         }
+
 
         function nextSlide() {
             cleanUpAllMedia();
