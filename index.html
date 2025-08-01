@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Naruto Webpage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+	    @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            /* Ensures consistent height on mobile browsers */
+            height: -webkit-fill-available;
+        }
+
+        body {
+            background-color: Black;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            overflow-x: hidden;
+            /* Allow vertical scrolling only if necessary */
+            overflow-y: auto;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .milkybar-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Use viewport height for vertical padding to adapt to screen height */
+            padding: 2vh 10px;
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center the content block vertically, especially on taller screens */
+            justify-content: center;
+        }
+
+        .milkybar-header {
+            text-align: center;
+            margin-bottom: 15px;
+	    margin-top: 30px;
+            padding: 0 5px;
+            width: 100%;
+        }
+
+        /* Styles for the main H1 element */
+        .milkybar-header h1 {
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
+            font-family: 'Ninja Naruto', sans-serif;
+            color: #f0f0f0;
+            text-shadow:
+                -2px -2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+                0 0 4px #fff, 0 0 10px #fff,
+                0 0 15px #bc13fe, 0 0 25px #bc13fe, 0 0 40px #bc13fe;
+            border: 0.2rem solid #fff;
+            border-radius: 2rem;
+            padding: 0.4em;
+            box-shadow:
+                0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #bc13fe,
+                0 0 0.8rem #bc13fe, 0 0 2.8rem #bc13fe, inset 0 0 1.3rem #bc13fe;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes neon-tube-flicker-enhanced {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                color: #f0f0f0;
+                text-shadow:
+                    -2px -2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+                    0 0 4px #fff, 0 0 10px #fff,
+                    0 0 15px #bc13fe, 0 0 25px #bc13fe, 0 0 40px #bc13fe;
+            }
+            20%, 24%, 55% {
+                color: rgba(240, 240, 240, 0.7);
+                text-shadow:
+                    -1px -1px 0 rgba(0,0,0,0.7), 1px 1px 0 rgba(0,0,0,0.7),
+                    0 0 1px rgba(255,255,255,0.8), 0 0 5px rgba(255,255,255,0.6),
+                    0 0 7px rgba(188,19,254,0.7), 0 0 15px rgba(188,19,254,0.5);
+            }
+            22%, 53% {
+                color: rgba(240, 240, 240, 0.9);
+                text-shadow:
+                    -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px 1.5px 0 rgba(0,0,0,0.8),
+                    0 0 3px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7),
+                    0 0 12px rgba(188,19,254,0.8), 0 0 25px rgba(188,19,254,0.6);
+            }
+        }
+
+        .milkybar-header p {
+            color: #a37f48;
+            font-size: clamp(1.5rem, 3vw, 1.5rem);
+            font-weight: bold;
+            line-height: 1.3;
+            /* Use viewport height for flexible margin */
+            margin-top: 5vh;
+	    margin-bottom: 0;
+        }
+
+        .dragon-carousel {
+            width: 100%;
+            max-width: 800px;
+            margin: 50 auto;
+            position: relative;
+        }
+
+        .carousel-visuals-wrapper {
+            position: relative;
+        }
+
+        .image-carousel {
+            position: relative;
+            width: 100%;
+            height: auto;
+            /* Use clamp() for a flexible min-height based on viewport height */
+            min-height: clamp(350px, 50vh, 450px); /* Increased min-height */
+            margin: 1vh auto;
+            perspective: 1200px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            padding: 70px 0; /* Increased padding */
+        }
+
+        .image-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+
+        .image-slide {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-style: preserve-3d;
+            opacity: 0;
+            pointer-events: none;
+            will-change: transform, opacity, filter;
+            padding: 0 10px;
+        }
+
+        .dragon-frame {
+            width: clamp(200px, 45vw, 300px); /* Increased width */
+            height: clamp(250px, 40vh, 400px); /* Increased height */
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.6s ease-in-out, border-color 0.6s ease-in-out;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+                        0 0 10px rgba(255, 255, 255, 0.3);
+            will-change: transform;
+        }
+
+        /* Glare effect */
+        @keyframes glass-reflection {
+            0% { transform: translateX(-250%) skewX(-20deg); }
+            100% { transform: translateX(350%) skewX(-20deg); }
+        }
+
+        .dragon-frame::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient( to right,
+                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: glass-reflection 6s linear infinite;
+            z-index: 1; /* Changed from -1 to 1 */
+            pointer-events: none;
+            /* Removed filter: blur(3px); */
+            will-change: transform;
+        }
+
+        @keyframes glowing-colors {
+            0% {
+                border-color: rgba(255, 0, 255, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(255, 0, 255, 0.6), 0 0 20px 5px rgba(255, 0, 255, 0.4),
+                    0 0 30px 10px rgba(255, 0, 255, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            25% {
+                border-color: rgba(0, 255, 255, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(0, 255, 255, 0.6), 0 0 20px 5px rgba(0, 255, 255, 0.4),
+                    0 0 30px 10px rgba(0, 255, 255, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            50% {
+                border-color: rgba(255, 255, 0, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(255, 255, 0, 0.6), 0 0 20px 5px rgba(255, 255, 0, 0.4),
+                    0 0 30px 10px rgba(255, 255, 0, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            75% {
+                border-color: rgba(0, 255, 0, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(0, 255, 0, 0.6), 0 0 20px 5px rgba(0, 255, 0, 0.4),
+                    0 0 30px 10px rgba(0, 255, 0, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            100% {
+                border-color: rgba(255, 0, 255, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(255, 0, 255, 0.6), 0 0 20px 5px rgba(255, 0, 255, 0.4),
+                    0 0 30px 10px rgba(255, 0, 255, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+        }
+
+        @keyframes neon-light-trail {
+            0%, 100% { text-shadow: 0 0 5px #FFA500, 0 0 10px #FFA500, 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4); }
+            25% { text-shadow: -2px -2px 5px #FFA500, -4px -4px 10px #FFA500, -6px -6px 20px rgba(255, 51, 51, 0.6), -8px -8px 30px rgba(255, 51, 51, 0.4); }
+            50% { text-shadow: 0 0 5px #FF0000, 0 0 10px #FF0000, 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4); }
+            75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
+        }
+
+        .dragon-frame.flipped {
+            transform: translateY(-5px) scale(1.02) translateZ(50px);
+            z-index: 20;
+            animation: glowing-colors 5s infinite alternate ease-in-out;
+        }
+
+        .dragon-frame-inner {
+            position: relative; width: 100%; height: 100%;
+            transform-style: preserve-3d; transition: transform 0.6s; will-change: transform;
+        }
+
+        .dragon-frame.flipped .dragon-frame-inner { transform: rotateY(180deg); }
+
+        .dragon-front, .dragon-back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            top: 0; left: 0; display: flex;
+        }
+
+        .dragon-front {
+            transition: opacity 0.3s ease 0.3s;
+            align-items: center; justify-content: center;
+        }
+
+        .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
+
+        .dragon-back {
+            transform: rotateY(180deg); background: transparent; overflow: hidden;
+            flex-direction: column; align-items: center; justify-content: flex-start;
+            padding: 10px 5px 5px 5px; gap: 8px;
+        }
+
+        .dragon-content {
+            width: 100%; max-height: calc(100% - 40px);
+            object-fit: contain; display: block; position: relative;
+            z-index: 1; background-color: transparent; border-radius: 10px;
+        }
+
+        .dragon-back img.dragon-content { cursor: zoom-in; }
+
+        .dragon-back .dragon-content {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4), 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 8px rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dragon-back-text {
+            position: absolute; top: 60%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 20px); max-height: 50%;
+            background: rgba(0, 0, 0, 0.6); Font-family: FBI; color: White;
+            padding: 5px 8px; border-radius: 8px;
+            font-size: clamp(1.6rem, 5.5vw, 3rem);
+            text-align: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 2; opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none;
+            animation: neon-light-trail 4s infinite ease-in-out;
+        }
+
+        .dragon-back-text::-webkit-scrollbar { display: none; }
+        .dragon-frame.flipped .dragon-back-text { opacity: 1; }
+
+        .image-slide.current {
+            transform: translateZ(0) scale(1.1);
+            opacity: 1; z-index: 10; pointer-events: auto;
+        }
+        .image-slide.current .dragon-frame:not(.flipped) {
+            transform: translateY(-15px);
+            animation: static-glowing 2s infinite alternate ease-in-out;
+            box-shadow: 0 10px 30px rgba(140, 109, 62, 0.4);
+        }
+
+        .image-slide.prev { transform: translateZ(-100px) rotateY(15deg); opacity: 0.5; z-index: 5; pointer-events: auto; }
+        .image-slide.next { transform: translateZ(-100px) rotateY(-15deg); opacity: 0.5; z-index: 5; pointer-events: auto; }
+
+        .image-slide.prev .dragon-frame:not(.flipped),
+        .image-slide.next .dragon-frame:not(.flipped) {
+            transform: none; animation: none; border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .image-slide.far-prev { transform: translateZ(-250px) rotateY(25deg); opacity: 0.1; z-index: 2; pointer-events: none; }
+        .image-slide.far-next { transform: translateZ(-250px) rotateY(-25deg); opacity: 0.1; z-index: 2; pointer-events: none; }
+
+        .image-slide.far-prev .dragon-frame:not(.flipped),
+        .image-slide.far-next .dragon-frame:not(.flipped) {
+            transform: none; animation: none; border-color: rgba(255, 255, 255, 0.2); box-shadow: none;
+        }
+
+        @keyframes static-glowing {
+            0% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
+            50% { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.6); }
+            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
+        }
+
+        .info-section-wrapper {
+            width: 100%; max-width: 600px;
+            /* Flexible vertical margin */
+            margin: 2vh auto 1vh auto;
+            text-align: center; position: relative; z-index: 10;
+            /* Add min-height to prevent layout jumps on content change */
+            min-height: 100px;
+        }
+
+        .info-section { opacity: 1; height: auto; overflow: visible; transition: none; }
+
+       .dragon-name {
+            font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 800;
+            color: #B22222; margin-bottom: 15px; text-transform: auto;
+            letter-spacing: 1px; line-height: 1;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+        }
+
+        .dragon-description {
+            font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.4;
+            color: #6bd6ce; max-width: 600px; margin: 10 auto; font-weight: 500;
+        }
+
+       .milkybar-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: clamp(45px, 10vw, 60px); height: clamp(45px, 10vw, 60px);
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid rgba(140, 109, 62, 0.5); border-radius: 50%;
+            cursor: pointer; font-size: clamp(1.3rem, 4vw, 2rem); color: #8c6d3e;
+            z-index: 30; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+            overflow: hidden; transition: all 0.5s ease; text-shadow: 0 0 5px #8c6d3e; outline: none;
+        }
+
+        .milkybar-nav::before {
+            content: ''; position: absolute; top: -100%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient( 0deg, transparent, transparent 40%, rgba(140, 109, 62, 0.5) );
+            transform: rotate(-45deg); transition: all 0.5s ease;
+            opacity: 0; z-index: 1; border-radius: 50%; pointer-events: none;
+        }
+
+        .milkybar-nav i { position: relative; z-index: 2; }
+
+        .milkybar-nav:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 0 20px rgba(140, 109, 62, 0.7), 0 0 40px rgba(140, 109, 62, 0.4);
+            border-color: rgba(140, 109, 62, 0.8);
+        }
+
+        .milkybar-nav:hover::before { opacity: 1; transform: rotate(-45deg) translateY(120%); }
+
+        .milkybar-nav:active {
+            transform: translateY(-50%) scale(0.95);
+            box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+            border-color: rgba(140, 109, 62, 0.5);
+        }
+        .milkybar-nav:active::before { opacity: 1; transform: rotate(-45deg) translateY(120%); }
+
+        .milkybar-nav:focus-visible { outline: 2px solid rgba(140, 109, 62, 0.8); outline-offset: 3px; }
+
+        .milkybar-nav:not(:hover):not(:active):not(:focus-visible) {
+            transform: translateY(-50%) scale(1);
+            box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+            border-color: rgba(140, 109, 62, 0.5);
+        }
+        .milkybar-nav:not(:hover):not(:active):not(:focus-visible)::before { opacity: 0; transform: rotate(-45deg) translateY(-100%); }
+
+        @keyframes temporary-glow {
+            0%, 75% {
+                box-shadow: 0 0 15px rgba(140, 109, 62, 0.7), 0 0 30px rgba(140, 109, 62, 0.4);
+                border-color: rgba(140, 109, 62, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+                border-color: rgba(140, 109, 62, 0.5);
+            }
+        }
+
+        @media (hover: none) {
+            .milkybar-nav:hover {
+                transform: translateY(-50%) scale(1);
+                box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+                border-color: rgba(140, 109, 62, 0.5);
+            }
+            .milkybar-nav.glow-active {
+                animation: temporary-glow 1.2s forwards;
+            }
+        }
+
+        .milkybar-prev { left: 5px; }
+        .milkybar-next { right: 5px; }
+
+        .milkybar-dots {
+            display: flex; justify-content: center;
+            /* Reduced flexible margin */
+            margin: 1vh 0;
+            flex-wrap: wrap; padding: 0 10px;
+        }
+
+        .milkybar-dot {
+            width: clamp(10px, 2.5vw, 14px); height: clamp(10px, 2.5vw, 14px);
+            margin: 5px; background-color: #f0d9a7; border-radius: 50%;
+            cursor: pointer; transition: all 0.3s ease; border: 2px solid #d4a017;
+        }
+
+        .milkybar-dot.active {
+            background-color: #d4a017; transform: scale(1.2);
+        }
+
+        .media-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease-in-out; cursor: zoom-out;
+        }
+
+        .media-overlay.visible {
+            opacity: 1; pointer-events: auto;
+        }
+
+        .media-overlay .overlay-content {
+            max-width: 90vw; max-height: 90vh; object-fit: contain; cursor: default;
+        }
+
+        .media-overlay .overlay-content.zoomable-image {
+            cursor: zoom-out;
+        }
+
+        .media-overlay .overlay-content[data-type="video"] {
+            cursor: auto;
+        }
+
+        /* --- RESPONSIVE FIXES --- */
+        /* Base responsive adjustments for slide widths */
+        @media (max-width: 575px) {
+            .image-slide { width: 100%; }
+        }
+
+        @media (min-width: 576px) {
+            .image-slide { width: 50%; }
+            .milkybar-prev { left: -15px; }
+            .milkybar-next { right: -15px; }
+        }
+
+        @media (min-width: 768px) {
+            .image-slide { width: 33.333%; }
+            .milkybar-prev { left: -25px; }
+            .milkybar-next { right: -25px; }
+        }
+
+        @media (min-width: 992px) {
+            .image-slide { width: 25%; }
+            .milkybar-prev { left: -30px; }
+            .milkybar-next { right: -30px; }
+        }
+
+        /* NEW: Media Query for shorter screens to prevent content overflow */
+        @media (max-height: 720px) {
+            .milkybar-container {
+                padding: 1vh 10px; /* Further reduce vertical padding */
+                justify-content: center; /* Align to center to give content more space */
+            }
+            .milkybar-header h1 {
+                font-size: clamp(1.6rem, 5vw, 2.5rem); /* Slightly smaller font */
+                padding: 0.3em;
+            }
+            .milkybar-header p {
+                margin-top: 5vh; /* Adjust margin-top for smaller screens */
+                font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+            }
+            .image-carousel {
+                min-height: clamp(300px, 45vh, 400px); /* Adjusted min-height */
+                margin: 0.5vh auto;
+            }
+            .dragon-frame {
+                height: clamp(220px, 35vh, 350px); /* Adjusted card height */
+            }
+            .info-section-wrapper {
+                margin: 1vh auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="milkybar-container">
+        <header class="milkybar-header">
+            <h1>The Dragon Gallery</h1>
+            <p>Unleash the Power Within: Explore Legendary Creatures!</p>
+        </header>
+        <section class="dragon-carousel">
+            <div class="carousel-visuals-wrapper">
+                <div class="image-carousel">
+                    <div class="image-track">
+                        <div class="image-slide" data-id="0">
+                            <div class="dragon-frame">
+                                <div class="dragon-frame-inner">
+                                    <div class="dragon-front">
+                                        <img src="image_1d1554.png" alt="Dragon Image 1" class="dragon-content">
+                                    </div>
+                                    <div class="dragon-back">
+                                        <img src="image_1d1554.png" alt="Dragon Image 1" class="dragon-content">
+                                        <div class="dragon-back-text">
+                                            <h3>Ignis, the Fire Serpent</h3>
+                                            <p>A majestic beast of scorching flames, Ignis guards the volcanic peaks, its scales shimmering with the heat of a thousand suns.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-slide" data-id="1">
+                            <div class="dragon-frame">
+                                <div class="dragon-frame-inner">
+                                    <div class="dragon-front">
+                                        <img src="image_1d726f.png" alt="Dragon Image 2" class="dragon-content">
+                                    </div>
+                                    <div class="dragon-back">
+                                        <img src="image_1d726f.png" alt="Dragon Image 2" class="dragon-content">
+                                        <div class="dragon-back-text">
+                                            <h3>Aqua, the Ocean Weaver</h3>
+                                            <p>Deep within the abyssal trenches, Aqua glides gracefully, controlling tides and storms with a flick of its cerulean tail.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-slide" data-id="2">
+                            <div class="dragon-frame">
+                                <div class="dragon-frame-inner">
+                                    <div class="dragon-front">
+                                        <img src="image_1e5ba9.png" alt="Dragon Image 3" class="dragon-content">
+                                    </div>
+                                    <div class="dragon-back">
+                                        <img src="image_1e5ba9.png" alt="Dragon Image 3" class="dragon-content">
+                                        <div class="dragon-back-text">
+                                            <h3>Terra, the Earth Guardian</h3>
+                                            <p>Rooted to the ancient forests, Terra commands the very earth, its roar shaking mountains and nurturing life with equal might.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="milkybar-nav milkybar-prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+                <button class="milkybar-nav milkybar-next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="milkybar-dots"></div>
+        </section>
+        <section class="info-section-wrapper">
+            <h2 class="dragon-name"></h2>
+            <p class="dragon-description"></p>
+        </section>
+    </div>
+
+    <div class="media-overlay">
+        <img src="" alt="Zoomed image" class="overlay-content zoomable-image">
+    </div>
+
+    <script>
+        const imageTrack = document.querySelector('.image-track');
+        const slides = Array.from(document.querySelectorAll('.image-slide'));
+        const prevButton = document.querySelector('.milkybar-prev');
+        const nextButton = document.querySelector('.milkybar-next');
+        const dotsContainer = document.querySelector('.milkybar-dots');
+        const dragonNameElement = document.querySelector('.dragon-name');
+        const dragonDescriptionElement = document.querySelector('.dragon-description');
+        const mediaOverlay = document.querySelector('.media-overlay');
+        const overlayContent = document.querySelector('.media-overlay .overlay-content');
+
+        let currentIndex = 0;
+        let isTransitioning = false;
+
+        const dragonData = [
+            {
+                name: "Ignis, the Fire Serpent",
+                description: "A majestic beast of scorching flames, Ignis guards the volcanic peaks, its scales shimmering with the heat of a thousand suns."
+            },
+            {
+                name: "Aqua, the Ocean Weaver",
+                description: "Deep within the abyssal trenches, Aqua glides gracefully, controlling tides and storms with a flick of its cerulean tail."
+            },
+            {
+                name: "Terra, the Earth Guardian",
+                description: "Rooted to the ancient forests, Terra commands the very earth, its roar shaking mountains and nurturing life with equal might."
+            }
+        ];
+
+        function initCarousel() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
+                slide.style.order = index; // Reset order
+
+                // Reset flipped state for all cards
+                const dragonFrame = slide.querySelector('.dragon-frame');
+                if (dragonFrame.classList.contains('flipped')) {
+                    dragonFrame.classList.remove('flipped');
+                }
+            });
+            updateCarousel();
+            createDots();
+        }
+
+        function updateCarousel() {
+            isTransitioning = true;
+            const totalSlides = slides.length;
+            const trackWidth = imageTrack.offsetWidth;
+            const slideWidth = slides[0].offsetWidth + 20; // Assuming 10px padding on each side of slide
+
+            // Calculate translation for centering the current slide
+            let offset = 0;
+            if (totalSlides > 0) {
+                // Adjust offset to center the current slide visually, accounting for various slide widths
+                const currentSlide = slides[currentIndex];
+                const currentSlideOffset = currentSlide.offsetLeft - imageTrack.offsetLeft;
+                offset = (trackWidth / 2) - (currentSlideOffset + (currentSlide.offsetWidth / 2));
+            }
+
+            imageTrack.style.transform = `translateX(${offset}px)`;
+
+            slides.forEach((slide, index) => {
+                slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
+
+                const dragonFrame = slide.querySelector('.dragon-frame');
+                // Ensure dragonFrame is always present before trying to modify its classes
+                if (dragonFrame) {
+                    dragonFrame.classList.remove('flipped'); // Unflip all cards on slide change
+                }
+
+                const diff = index - currentIndex;
+                if (diff === 0) {
+                    slide.classList.add('current');
+                    updateInfo(currentIndex);
+                } else if (diff === -1 || diff === totalSlides - 1) {
+                    slide.classList.add('prev');
+                } else if (diff === 1 || diff === -totalSlides + 1) {
+                    slide.classList.add('next');
+                } else if (diff === -2 || diff === totalSlides - 2) {
+                    slide.classList.add('far-prev');
+                } else if (diff === 2 || diff === -totalSlides + 2) {
+                    slide.classList.add('far-next');
+                } else {
+                    // Hide slides that are too far away
+                    slide.style.opacity = '0';
+                    slide.style.pointerEvents = 'none';
+                    // Reset transform for far-away slides to prevent visual glitches
+                    slide.style.transform = 'translateZ(-500px) scale(0.5)';
+                }
+            });
+
+            updateDots();
+
+            // Set a timeout to re-enable transitions after the current one completes
+            imageTrack.addEventListener('transitionend', () => {
+                isTransitioning = false;
+            }, { once: true });
+        }
+
+
+        function nextSlide() {
+            if (isTransitioning) return;
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            if (isTransitioning) return;
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.classList.add('milkybar-dot');
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.milkybar-dot').forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function updateInfo(index) {
+            dragonNameElement.textContent = dragonData[index].name;
+            dragonDescriptionElement.textContent = dragonData[index].description;
+        }
+
+        function showMediaOverlay(src, type) {
+            overlayContent.src = src;
+            overlayContent.dataset.type = type;
+            if (type === 'image') {
+                overlayContent.classList.add('zoomable-image');
+            } else {
+                overlayContent.classList.remove('zoomable-image');
+            }
+            mediaOverlay.classList.add('visible');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when overlay is open
+        }
+
+        function hideMediaOverlay() {
+            mediaOverlay.classList.remove('visible');
+            overlayContent.src = ''; // Clear src to stop video/audio if any
+            overlayContent.removeAttribute('data-type');
+            document.body.style.overflow = ''; // Restore scrolling
+            sessionStorage.removeItem('overlayVisible');
+            sessionStorage.removeItem('overlaySrc');
+            sessionStorage.removeItem('overlayType');
+        }
+
+        function saveOverlayState() {
+            if (mediaOverlay.classList.contains('visible')) {
+                sessionStorage.setItem('overlayVisible', 'true');
+                sessionStorage.setItem('overlaySrc', overlayContent.src);
+                sessionStorage.setItem('overlayType', overlayContent.dataset.type || 'image');
+            } else {
+                sessionStorage.removeItem('overlayVisible');
+                sessionStorage.removeItem('overlaySrc');
+                sessionStorage.removeItem('overlayType');
+            }
+            sessionStorage.setItem('carouselIndex', currentIndex);
+        }
+
+        function restoreOverlayState() {
+            const wasOverlayVisible = sessionStorage.getItem('overlayVisible');
+            const savedSrc = sessionStorage.getItem('overlaySrc');
+            const savedType = sessionStorage.getItem('overlayType');
+            const savedIndex = sessionStorage.getItem('carouselIndex');
+
+            if (savedIndex !== null) {
+                currentIndex = parseInt(savedIndex, 10);
+            }
+
+            if (wasOverlayVisible === 'true' && savedSrc) {
+                showMediaOverlay(savedSrc, savedType);
+            }
+            updateCarousel(); // Ensure carousel state is also restored
+        }
+
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+
+        // Event delegation for flipping cards and opening media overlay
+        imageTrack.addEventListener('click', (e) => {
+            const dragonFrame = e.target.closest('.dragon-frame');
+            if (dragonFrame && dragonFrame.closest('.image-slide.current')) {
+                // If it's the current slide's dragon frame
+                const isFlipped = dragonFrame.classList.toggle('flipped');
+                if (isFlipped) {
+                    // Only show text when flipped
+                    const backText = dragonFrame.querySelector('.dragon-back-text');
+                    if (backText) {
+                        // This class will handle opacity via CSS transition
+                        backText.classList.add('visible');
+                    }
+                } else {
+                    const backText = dragonFrame.querySelector('.dragon-back-text');
+                    if (backText) {
+                        // Hide text when unflipped
+                        backText.classList.remove('visible');
+                    }
+                }
+            } else if (e.target.classList.contains('dragon-content') && e.target.closest('.dragon-frame.flipped')) {
+                // If clicking an image inside a flipped card, open overlay
+                const src = e.target.src;
+                const type = e.target.tagName === 'IMG' ? 'image' : 'video'; // Assuming only images or videos are content
+                showMediaOverlay(src, type);
+            }
+        });
+
+        mediaOverlay.addEventListener('click', hideMediaOverlay);
+
+        // Keyboard navigation and overlay close with Escape
+        document.addEventListener('keydown', (e) => {
+            if (mediaOverlay.classList.contains('visible')) {
+                if (e.key === 'Escape') hideMediaOverlay();
+                return;
+            }
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') {
+                const currentFlippedCard = document.querySelector('.image-slide.current .dragon-frame.flipped');
+                if (currentFlippedCard) {
+                    currentFlippedCard.click();
+                }
+            }
+        });
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                initCarousel();
+                updateCarousel();
+                restoreOverlayState();
+            }, 200);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel();
+            updateCarousel();
+            restoreOverlayState();
+
+            const isTouchDevice = window.matchMedia('(hover: none)').matches;
+            if(isTouchDevice) {
+                [prevButton, nextButton].forEach(button => {
+                    button.addEventListener('touchstart', () => button.classList.add('glow-active'));
+                    button.addEventListener('animationend', () => button.classList.remove('glow-active'));
+                });
+            }
+        });
+    </script>
+</body>
+</html>
