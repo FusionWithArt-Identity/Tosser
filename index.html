@@ -292,19 +292,29 @@
         }
 
         .dragon-back-text {
-            width: 100%; 
-            margin-top: auto;
-            margin-bottom: 55px; /* MODIFICATION: Added margin to push the text up from the bottom */
+            width: 100%;
+            margin-top: 0; /* Let flexbox handle positioning */
+            margin-bottom: 0; /* Remove fixed bottom margin */
+            flex-grow: 1; /* Allow the text box to grow and fill available space */
+            min-height: 0; /* Crucial for allowing overflow/scrolling in a flex child */
             max-height: 100%;
-            background: rgba(0, 0, 0, 0.6); Font-family: FBI; color: White;
-            padding: 5px 8px; border-radius: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            font-family: FBI;
+            color: White;
+            padding: 5px 8px;
+            border-radius: 8px;
             font-size: clamp(1.6rem, 2vw, 3rem);
-            text-align: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            z-index: 2; opacity: 0;
+            z-index: 2;
+            opacity: 0;
             transition: opacity 0.3s ease-in-out;
-            overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
             animation: neon-light-trail 4s infinite ease-in-out;
         }
 
@@ -1044,6 +1054,3 @@
     </script>
 </body>
 </html>
-
-
-
