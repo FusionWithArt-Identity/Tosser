@@ -288,22 +288,25 @@
             transition: all 0.3s ease-in-out;
         }
 
-        .dragon-back-text {
-            position: absolute; top: 60%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: calc(100% - 20px); max-height: 50%;
-            background: rgba(0, 0, 0, 0.6); Font-family: FBI; color: White;
-            padding: 5px 8px; border-radius: 8px;
-            font-size: clamp(1.6rem, 5.5vw, 3rem);
-            text-align: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            z-index: 2; opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none;
-            animation: neon-light-trail 4s infinite ease-in-out;
-        }
+       .dragon-back-text {
+    /* REMOVE these lines to disable absolute positioning: */
+    /* position: absolute; top: 60%; left: 50%; */
+    /* transform: translate(-50%, -50%); */
 
+    width: 100%; /* Change width to fit within the parent's padding */
+    margin-top: auto; /* This will push the text to the bottom, creating a gap above it */
+    max-height: 50%; /* Keep this to limit text height */
+    background: rgba(0, 0, 0, 0.6); Font-family: FBI; color: White;
+    padding: 5px 8px; border-radius: 8px;
+    font-size: clamp(1.6rem, 5.5vw, 3rem);
+    text-align: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 2; opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none;
+    animation: neon-light-trail 4s infinite ease-in-out;
+}
         .dragon-back-text::-webkit-scrollbar { display: none; }
         .dragon-frame.flipped .dragon-back-text { opacity: 1; }
 
@@ -556,9 +559,9 @@
                 description: 'The basic Sharingan grants heightened perception, allowing users to anticipate movements, copy techniques, and see chakra flow, giving them a significant edge in battle.'
             },
             {
-                front: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/3/3f/HTTYD_Hideous_Zippleback.png/revision/latest/scale-to-width-down/1000?cb=20140807192912' },
+                front: { type: 'image', src: 'https://i.pinimg.com/736x/2a/e9/7b/2ae97b8d043fff88272b8834b02fa2e4.jpg' },
                 back: { type: 'image', src: 'https://static.wikia.nocookie.net/howtotrainyourdragon/images/1/1e/HTTYD_Hideous_Zippleback_Profile.png/revision/latest?cb=20140807192913', text: '___' },
-                name: 'HIDEOUS ZIPPLEBACK',
+                name: 'Itachi's Sharingan',
                 description: 'The Hideous Zippleback is a two-headed dragon where the two heads are like squabbling, bickering twins. One head breathes flammable gas while the other creates sparks to ignite it, making them a dangerous combination.'
             },
             {
@@ -1041,6 +1044,7 @@
 </body>
 
 </html>
+
 
 
 
