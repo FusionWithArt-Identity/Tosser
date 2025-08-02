@@ -289,8 +289,10 @@
         }
 
         .dragon-back-text {
-            position: absolute; top: 75%; left: 50%; /* Changed from 65% to 75% to increase gap on larger screens and fix overlap */
-            transform: translate(-50%, -50%);
+            position: absolute;
+            bottom: 10%; /* Changed from 'top' to 'bottom' for more consistent positioning */
+            left: 50%;
+            transform: translate(-50%, 0); /* Adjusted transform as positioning from bottom */
             width: calc(100% - 20px); max-height: 50%;
             background: rgba(0, 0, 0, 0.6); Font-family: FBI; color: White;
             padding: 5px 8px; border-radius: 8px;
