@@ -293,18 +293,15 @@
 
         .dragon-back-text {
             width: 100%;
-            margin-top: 0;
-            margin-bottom: 0;
-            flex-grow: 1;
-            min-height: 0;
+            margin-top: 0; /* Let flexbox handle positioning */
+            margin-bottom: 0; /* Remove fixed bottom margin */
+            flex-grow: 1; /* Allow the text box to grow and fill available space */
+            min-height: 0; /* Crucial for allowing overflow/scrolling in a flex child */
             max-height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background: rgba(0, 0, 0, 0.6);
             font-family: FBI;
             color: White;
-            padding: 10px 8px; /* MODIFICATION: Increased vertical padding to prevent clipping */
+            padding: 5px 8px;
             border-radius: 8px;
             font-size: clamp(1.6rem, 2vw, 3rem);
             text-align: center;
