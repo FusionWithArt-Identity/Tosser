@@ -304,8 +304,7 @@
             background: rgba(0, 0, 0, 0.6);
             font-family: FBI;
             color: White;
-            padding: 8px; /* MODIFICATION: Increased padding */
-            line-height: 1.1; /* MODIFICATION: Added line-height to prevent clipping */
+            padding: 10px 8px; /* MODIFICATION: Increased vertical padding to prevent clipping */
             border-radius: 8px;
             font-size: clamp(1.6rem, 2vw, 3rem);
             text-align: center;
@@ -921,7 +920,7 @@
             const dots = document.querySelectorAll('.milkybar-dot');
 
             if (imageSlides.length === 0) return;
-            slideFullwidth = imageSlides[0].offsetWidth;
+            slideFullWidth = imageSlides[0].offsetWidth;
 
             const carouselWidth = imageTrack.parentElement.offsetWidth;
             const slidesCount = dragonData.length;
