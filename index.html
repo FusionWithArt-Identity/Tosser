@@ -293,18 +293,22 @@
 
         .dragon-back-text {
             width: 100%;
-            margin-top: 0; /* Let flexbox handle positioning */
-            margin-bottom: 0; /* Remove fixed bottom margin */
-            flex-grow: 1; /* Allow the text box to grow and fill available space */
-            min-height: 0; /* Crucial for allowing overflow/scrolling in a flex child */
+            margin-top: 0;
+            margin-bottom: 0;
+            flex-grow: 1;
+            min-height: 0;
             max-height: 100%;
+            /* MODIFICATION FOR CENTERING */
+            display: flex;
+            align-items: center; /* Vertical center */
+            justify-content: center; /* Horizontal center */
             background: rgba(0, 0, 0, 0.6);
             font-family: FBI;
             color: White;
             padding: 5px 8px;
             border-radius: 8px;
             font-size: clamp(1.6rem, 2vw, 3rem);
-            text-align: center;
+            text-align: center; /* Fallback for horizontal alignment */
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
