@@ -181,6 +181,33 @@
             will-change: transform;
         }
 
+        /* Glare/Reflection Effect */
+        .dragon-frame::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 50%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1); /* Adjusted for a softer reflection */
+            transform: rotate(60deg);
+            animation: glass-reflection 3s infinite ease-in-out;
+            pointer-events: none; /* Allows clicks to pass through */
+        }
+
+        @keyframes glass-reflection {
+            0% {
+                transform: translateX(-100%) rotate(60deg);
+            }
+            50% {
+                transform: translateX(100%) rotate(60deg);
+            }
+            100% {
+                transform: translateX(-100%) rotate(60deg);
+            }
+        }
+
+
         @keyframes glowing-colors {
             0% {
                 border-color: rgba(255, 0, 255, 0.8);
