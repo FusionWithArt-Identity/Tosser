@@ -298,17 +298,17 @@
             flex-grow: 1;
             min-height: 0;
             max-height: 100%;
-            /* MODIFICATION FOR CENTERING */
             display: flex;
-            align-items: center; /* Vertical center */
-            justify-content: center; /* Horizontal center */
+            align-items: center;
+            justify-content: center;
             background: rgba(0, 0, 0, 0.6);
             font-family: FBI;
             color: White;
-            padding: 5px 8px;
+            padding: 8px; /* MODIFICATION: Increased padding */
+            line-height: 1.1; /* MODIFICATION: Added line-height to prevent clipping */
             border-radius: 8px;
             font-size: clamp(1.6rem, 2vw, 3rem);
-            text-align: center; /* Fallback for horizontal alignment */
+            text-align: center;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -921,7 +921,7 @@
             const dots = document.querySelectorAll('.milkybar-dot');
 
             if (imageSlides.length === 0) return;
-            slideFullWidth = imageSlides[0].offsetWidth;
+            slideFullwidth = imageSlides[0].offsetWidth;
 
             const carouselWidth = imageTrack.parentElement.offsetWidth;
             const slidesCount = dragonData.length;
