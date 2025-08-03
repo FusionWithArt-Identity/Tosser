@@ -275,9 +275,9 @@
             padding: 10px 5px 5px 5px; gap: 8px;
         }
 
-     .dragon-content {
+.dragon-content {
     width: 100%;
-    /* General rule for all content, no fixed max-height here */
+    /* Default is no fixed max-height to allow flexibility */
     display: block;
     position: relative;
     z-index: 1;
@@ -285,15 +285,13 @@
     border-radius: 10px;
 }
 
-/* --- The following rules are the key modifications --- */
-
-/* Specific rule for the front of the card to make the image fit dynamically */
+/* This is the key modification: make the front image fill the entire container */
 .dragon-front .dragon-content {
-    height: 100%; /* Ensures the image container fills the entire front of the card */
-    object-fit: contain; /* Scales the image to fit without cropping */
+    height: 100%; /* Ensures the image container takes the full height of the front face */
+    object-fit: cover; /* This makes the image fill the entire container, which may crop parts */
 }
 
-/* Specific rule for the back of the card to maintain the text space */
+/* This rule ensures the content on the back card behaves as it did originally */
 .dragon-back .dragon-content {
     max-height: calc(100% - 40px); /* Re-applies the height constraint for the back content */
     object-fit: contain; /* Ensures back image/video fits within its allotted space */
@@ -302,6 +300,8 @@
     background: rgba(255, 255, 255, 0.05);
     transition: all 0.3s ease-in-out;
 }
+
+	    
         .dragon-back img.dragon-content { cursor: zoom-in; }
 
         .dragon-back .dragon-content {
@@ -1090,5 +1090,6 @@
     </script>
 </body>
 </html>
+
 
 
