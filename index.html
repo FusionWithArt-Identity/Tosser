@@ -111,7 +111,7 @@
             font-size: clamp(1.5rem, 3vw, 1.5rem);
             font-weight: bold;
             line-height: 1.3;
-            margin: clamp(20px, 8vh, 50px) 0 clamp(5px, 2vh, 10px) 0; /* Adjusted for responsiveness */
+            margin: 50px 0 10px 0; /* Increased top margin */
         }
 
         .dragon-carousel {
@@ -135,7 +135,7 @@
             perspective: 1200px;
             overflow: hidden;
             transform-style: preserve-3d;
-            padding: clamp(30px, 10vh, 60px) 0; /* Adjusted for responsiveness */
+            padding: 60px 0; /* Significantly increased padding to prevent cropping */
         }
 
         .image-track {
@@ -271,8 +271,7 @@
         .dragon-back {
             transform: rotateY(180deg); background: transparent; overflow: hidden;
             flex-direction: column; align-items: center; justify-content: flex-start;
-            padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 15px); /* Adjusted for responsiveness */
-            gap: 8px;
+            padding: 10px 5px 5px 5px; gap: 8px;
         }
 
         .dragon-content {
@@ -300,7 +299,7 @@
             background: rgba(0, 0, 0, 0.6);
             font-family: FBI;
             color: White;
-            padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 15px); /* Adjusted for responsiveness */
+            padding: 5px 8px;
             border-radius: 8px;
             font-size: clamp(1.6rem, 2vw, 3rem);
             text-align: center;
@@ -355,7 +354,7 @@
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            margin: clamp(5px, 2vh, 10px) auto; /* Adjusted for responsiveness */
+            margin: 10px auto; /* Changed from 40px to 10px */
             text-align: center; position: relative; z-index: 10;
             /* Add min-height to prevent layout jumps on content change */
             min-height: 100px;
@@ -446,13 +445,12 @@
         .milkybar-dots {
             display: flex; justify-content: center;
             margin: 0; /* Removed flexible margin */
-            flex-wrap: wrap; padding: 0 clamp(5px, 2vw, 10px); /* Adjusted for responsiveness */
+            flex-wrap: wrap; padding: 0 10px;
         }
 
         .milkybar-dot {
             width: clamp(10px, 2.5vw, 14px); height: clamp(10px, 2.5vw, 14px);
-            margin: clamp(3px, 1vw, 5px); /* Adjusted for responsiveness */
-            background-color: #f0d9a7; border-radius: 50%;
+            margin: 5px; background-color: #f0d9a7; border-radius: 50%;
             cursor: pointer; transition: all 0.3s ease; border: 2px solid #d4a017;
         }
 
@@ -475,7 +473,15 @@
         /* --- RESPONSIVE FIXES --- */
 
         /* Base responsive adjustments for slide widths */
-        @media (max-width: 575px) { .image-slide { width: 100%; } }
+        @media (max-width: 575px) {
+            .image-slide {
+                width: 100%;
+            }
+            .dragon-frame {
+                height: auto;
+                aspect-ratio: 3 / 5;
+            }
+        }
         @media (min-width: 576px) {
             .image-slide { width: 50%; }
             .milkybar-prev { left: -15px; } .milkybar-next { right: -15px; }
@@ -489,8 +495,8 @@
             .milkybar-prev { left: -30px; } .milkybar-next { right: -30px; }
         }
 
-        /* NEW: Media Query for shorter screens to prevent content overflow */
-        @media (max-height: 720px) {
+        /* NEW: Media Query for shorter, wider screens to prevent content overflow */
+        @media (max-height: 720px) and (min-width: 576px) {
             .milkybar-container {
                 padding: 0.5vh 10px; /* Further reduced vertical padding for shorter screens */
                 justify-content: center; /* Align to center to give content more space */
@@ -500,18 +506,18 @@
                 padding: 0.3em;
             }
             .milkybar-header p {
-                margin: clamp(15px, 6vh, 40px) 0 clamp(3px, 1.5vh, 8px) 0; /* Adjusted for shorter screens */
+                /* Removed margin overrides to use the consistent base style */
                 font-size: clamp(1.2rem, 2.5vw, 1.4rem);
             }
             .image-carousel {
                 min-height: clamp(250px, 55vh, 550px); /* Adjusted min-height to provide more space */
-                padding: clamp(20px, 8vh, 40px) 0; /* Adjusted for shorter screens */
+                /* Removed margin and padding overrides to use base style */
             }
             .dragon-frame {
                 height: clamp(250px, 45vh, 450px); /* Adjusted card height for shorter screens */
             }
             .info-section-wrapper {
-                margin: clamp(3px, 1.5vh, 8px) auto; /* Adjusted for shorter screens */
+                /* Removed margin override to use the consistent base style */
                 min-height: 80px;
             }
             .dragon-name {
@@ -522,16 +528,13 @@
                 font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             }
             .milkybar-dots {
-                padding: 0 clamp(3px, 1.5vw, 8px); /* Adjusted for shorter screens */
-            }
-            .milkybar-dot {
-                margin: clamp(2px, 0.8vw, 4px); /* Adjusted for shorter screens */
+                /* Removed margin override to use the consistent base style */
             }
         }
         /* Mobile-specific adjustments for the back text padding */
         @media (max-width: 767px) {
             .dragon-back-text {
-                padding-top: clamp(10px, 3vw, 15px); /* Adjusted for responsiveness */
+                padding-top: 15px; /* Added more space at the top for smaller screens */
             }
         }
     </style>
