@@ -275,11 +275,28 @@
             padding: 10px 5px 5px 5px; gap: 8px;
         }
 
-        .dragon-content {
-            width: 100%; max-height: calc(100% - 40px);
-            object-fit: contain; display: block; position: relative;
-            z-index: 1; background-color: transparent; border-radius: 10px;
-        }
+      .dragon-content {
+    width: 100%;
+    max-height: 100%; /* Allows content to expand to full height */
+    object-fit: contain;
+    display: block;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+/* --- New, more specific rules to fill the front card with the image --- */
+.dragon-front .dragon-content {
+    height: 100%; /* Ensures the image container takes the full height of the front face */
+    object-fit: cover; /* This makes the image fill the entire container */
+}
+
+/* --- Modified rule for the back content to keep its layout --- */
+.dragon-back .dragon-content {
+    max-height: calc(100% - 40px); /* Re-applies the height restriction for the back card's content */
+    object-fit: contain;
+}
 
         .dragon-back img.dragon-content { cursor: zoom-in; }
 
@@ -1069,3 +1086,4 @@
     </script>
 </body>
 </html>
+
