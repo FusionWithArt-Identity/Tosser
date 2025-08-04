@@ -136,8 +136,8 @@
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* Default padding for desktop */
-            padding: 60px 0;
+            /* Default padding for desktop, increased to give more room for scaling */
+            padding: 80px 0;
         }
 
         .image-track {
@@ -240,10 +240,10 @@
             50% { text-shadow: 0 0 5px #FF0000, 0 0 10px #FF0000, 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4); }
             75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
         }
-
-        /* The scaling for the flipped card on DESKTOP is now set to a smaller, non-cropping value */
+        
+        /* The primary fix for the desktop cropping issue: A reduced scale value */
         .dragon-frame.flipped {
-            transform: translateY(-5px) scale(1.5) translateZ(50px);
+            transform: translateY(-5px) scale(1.2) translateZ(50px);
             z-index: 20;
             animation: glowing-colors 5s infinite alternate ease-in-out;
             padding-bottom: 5px;
