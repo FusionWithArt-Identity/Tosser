@@ -111,14 +111,14 @@
             font-size: clamp(1.5rem, 3vw, 1.5rem);
             font-weight: bold;
             line-height: 1.3;
-            margin: 50px 0 10px 0; /* Increased top margin */
+            margin: 0; /* Reduced top margin to 0 to remove gap */
         }
 
         .dragon-carousel {
             width: 100%;
             max-width: 800px;
             margin: 0 auto; /* Ensured no extra margin */
-            margin-top: 20px; /* Added to push the carousel down */
+            margin-top: 40px; /* Adjusted to lower the carousel more */
             position: relative;
         }
 
@@ -356,7 +356,7 @@
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            margin: 5px auto; /* Reduced margin to shrink gap */
+            margin: 0 auto; /* Removed all margin to fix gap */
             text-align: center; position: relative; z-index: 10;
             min-height: 100px;
         }
@@ -501,7 +501,7 @@
         /* New rules to fix the gap for narrow screens */
         @media (max-width: 480px) {
             .info-section-wrapper {
-                margin: 2px auto; /* Further reduced margin for very narrow screens */
+                margin: 0 auto; /* Removed all margin for very narrow screens */
             }
             .milkybar-header h1 {
                 font-size: clamp(1.4rem, 5vw, 2.5rem);
