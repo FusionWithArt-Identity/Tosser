@@ -474,23 +474,20 @@
         /* --- RESPONSIVE FIXES --- */
 
         /* Base responsive adjustments for slide widths */
-        @media (max-width: 575px) {
+        @media (max-width: 767px) {
             .image-slide {
-                width: 100%;
+                width: 33.333%; /* Displays 3 cards on mobile screens */
             }
             .dragon-frame {
                 height: auto;
                 aspect-ratio: 3 / 5;
             }
             .image-carousel {
-                min-height: 420px; /* Adjusted to fit card + new padding */
-                padding: 60px 0;   /* Increased padding to prevent glow cropping */
+                min-height: 420px;
+                padding: 60px 0;
             }
         }
-        @media (min-width: 576px) {
-            .image-slide { width: 50%; }
-            .milkybar-prev { left: -15px; } .milkybar-next { right: -15px; }
-        }
+        /* The following rules ensure the carousel adapts for larger screens */
         @media (min-width: 768px) {
             .image-slide { width: 33.333%; }
             .milkybar-prev { left: -25px; } .milkybar-next { right: -25px; }
@@ -499,6 +496,7 @@
             .image-slide { width: 25%; }
             .milkybar-prev { left: -30px; } .milkybar-next { right: -30px; }
         }
+
 
         /* NEW: Media Query for shorter, wider screens to prevent content overflow */
         @media (max-height: 720px) and (min-width: 576px) {
@@ -1069,8 +1067,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
