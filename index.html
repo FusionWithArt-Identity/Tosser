@@ -241,8 +241,9 @@
             75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
         }
 
+        /* The scaling for the flipped card on DESKTOP is now set to a smaller, non-cropping value */
         .dragon-frame.flipped {
-            transform: translateY(-5px) scale(1.9) translateZ(50px);
+            transform: translateY(-5px) scale(1.5) translateZ(50px);
             z-index: 20;
             animation: glowing-colors 5s infinite alternate ease-in-out;
             padding-bottom: 5px;
@@ -470,8 +471,11 @@
         .media-overlay .overlay-content[data-type="video"] { cursor: auto; }
 
         /* --- RESPONSIVE FIXES --- */
-
-        /* Mobile-specific adjustments to fix cropping */
+        /*
+            This media query now specifically overrides the flipped card's scale
+            and the carousel's padding only for small screens (mobiles),
+            leaving the desktop styles untouched.
+        */
         @media (max-width: 767px) {
             .image-carousel {
                 /* Increased top padding for mobile to prevent cropping */
@@ -486,6 +490,10 @@
             }
             .dragon-back-text {
                 padding-top: 15px;
+            }
+            /* The specific fix for the flipped card scale on mobile */
+            .dragon-frame.flipped {
+                transform: translateY(-5px) scale(1.9) translateZ(50px);
             }
         }
         /* Desktop-specific layout rules for medium and larger screens */
