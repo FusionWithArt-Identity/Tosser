@@ -872,42 +872,34 @@
             }
         }
 
-        function cleanUpAllMedia(skipCurrent = false) {
-            document.querySelectorAll('.image-slide').forEach(slide => {
-                const index = parseInt(slide.dataset.index);
-                const frame = slide.querySelector('.dragon-frame');
-                const frontVideo = slide.querySelector('.dragon-front video');
-                const backVideo = slide.querySelector('.dragon-back video');
-                const isCurrentSlide = slide.classList.contains('current');
+        function cleanUpMedia(slide) {
+            const frame = slide.querySelector('.dragon-frame');
+            const frontVideo = slide.querySelector('.dragon-front video');
+            const backVideo = slide.querySelector('.dragon-back video');
+            const index = parseInt(slide.dataset.index);
 
+            if (frame.classList.contains('flipped')) {
+                frame.classList.remove('flipped');
+                let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+                savedFlippedState[index] = false;
+                localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+            }
+
+            if (frontVideo) {
+                frontVideo.pause();
+                frontVideo.currentTime = 0;
+                frontVideo.muted = true;
+            }
+            if (backVideo) {
+                backVideo.pause();
+                backVideo.currentTime = 0;
+                backVideo.muted = true;
+                localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
                 if (videoTimeUpdateIntervals[index]) {
                     clearInterval(videoTimeUpdateIntervals[index]);
                     delete videoTimeUpdateIntervals[index];
                 }
-
-                // Only handle media and flipping for non-current slides or when explicitly told to
-                if (!isCurrentSlide || skipCurrent) {
-                    if (frame.classList.contains('flipped')) {
-                        frame.classList.remove('flipped');
-                        let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
-                        savedFlippedState[index] = false;
-                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
-                    }
-
-                    if (frontVideo) {
-                        frontVideo.pause();
-                        frontVideo.currentTime = 0;
-                        frontVideo.muted = true;
-                    }
-                    if (backVideo) {
-                        backVideo.pause();
-                        backVideo.currentTime = 0;
-                        backVideo.muted = true;
-                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
-                    }
-                }
-            });
-            hideMediaOverlay();
+            }
         }
 
         function updateInfoSection() {
@@ -922,6 +914,7 @@
         function updateCarousel() {
             const imageSlides = document.querySelectorAll('.image-slide');
             const dots = document.querySelectorAll('.milkybar-dot');
+            let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
 
             if (imageSlides.length === 0) return;
             slideFullWidth = imageSlides[0].offsetWidth;
@@ -939,6 +932,11 @@
             localStorage.setItem(LOCAL_STORAGE_CURRENT_INDEX, currentIndex.toString());
 
             imageSlides.forEach((slide, index) => {
+                const isCurrentSlide = index === currentIndex;
+                const frame = slide.querySelector('.dragon-frame');
+                const frontVideo = slide.querySelector('.dragon-front video');
+                const backVideo = slide.querySelector('.dragon-back video');
+                
                 slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
 
                 let distance = index - currentIndex;
@@ -953,50 +951,63 @@
                     case 2: slide.classList.add('far-next'); break;
                 }
 
-                const frontVideo = slide.querySelector('.dragon-front video');
-                const backVideo = slide.querySelector('.dragon-back video');
-                const frame = slide.querySelector('.dragon-frame');
-                const isFlipped = frame.classList.contains('flipped');
-
-
-                if (frontVideo) {
-                    frontVideo.muted = true;
-                    if (slide.classList.contains('current') && !isFlipped) {
-                        frontVideo.play().catch(e=>console.warn("Front video autoplay prevented (current):", e));
-                    } else {
-                        frontVideo.pause();
+                if (!isCurrentSlide) {
+                    // Reset flipped state and media for all non-current slides
+                    if (frame.classList.contains('flipped')) {
+                        frame.classList.remove('flipped');
+                        savedFlippedState[index] = false;
                     }
-                }
+                    if (frontVideo) frontVideo.pause();
+                    if (backVideo) backVideo.pause();
+                } else {
+                    // Handle current slide
+                    const isFlipped = savedFlippedState[index];
+                    if (isFlipped && !frame.classList.contains('flipped')) {
+                        frame.classList.add('flipped');
+                    }
+                    if (!isFlipped && frame.classList.contains('flipped')) {
+                         frame.classList.remove('flipped');
+                    }
 
-                if (backVideo) {
-                    if (slide.classList.contains('current') && isFlipped) {
-                        backVideo.muted = false;
-                        backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
-                    } else {
-                        backVideo.pause();
-                        backVideo.currentTime = 0;
-                        backVideo.muted = true;
-                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
+                    if (frontVideo) {
+                        frontVideo.muted = true;
+                        if (!isFlipped) {
+                            frontVideo.play().catch(e=>console.warn("Front video autoplay prevented (current):", e));
+                        } else {
+                            frontVideo.pause();
+                        }
+                    }
+
+                    if (backVideo) {
+                        if (isFlipped) {
+                            backVideo.muted = false;
+                            backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
+                        } else {
+                            backVideo.pause();
+                            backVideo.currentTime = 0;
+                            backVideo.muted = true;
+                            localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
+                        }
                     }
                 }
             });
+            localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
         }
 
         function goToSlide(index) {
-            cleanUpAllMedia();
             currentIndex = index;
             updateCarousel();
         }
 
 
         function nextSlide() {
-            cleanUpAllMedia();
+            hideMediaOverlay(); // Ensure no overlay is visible
             currentIndex = (currentIndex + 1) % dragonData.length;
             updateCarousel();
         }
 
         function prevSlide() {
-            cleanUpAllMedia();
+            hideMediaOverlay(); // Ensure no overlay is visible
             currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
             updateCarousel();
         }
