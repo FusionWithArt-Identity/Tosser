@@ -43,8 +43,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Center the content block vertically, especially on taller screens */
-            justify-content: center;
+            /* MODIFIED: Align content to the top to allow for manual spacing control. */
+            justify-content: flex-start;
         }
 
         .milkybar-header {
@@ -117,7 +117,7 @@
         .dragon-carousel {
             width: 100%;
             max-width: 800px;
-            margin: 20px auto 0; /* MODIFIED: Lowered carousel from header */
+            margin: 20px auto 0; /* MODIFIED: Lowers carousel from header */
             position: relative;
         }
 
@@ -350,12 +350,12 @@
         @keyframes static-glowing {
             0% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
             50% { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.6); }
-            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
+            100% { border-color: rgba(255, 215, 0, 0.8); box-schadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
         }
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            /* MODIFIED: Negative top margin to aggressively reduce gap with carousel. */
+            /* MODIFIED: Negative margin pulls section up, reducing the gap. */
             margin: -40px auto 10px;
             text-align: center; position: relative; z-index: 10;
             min-height: 100px;
