@@ -111,14 +111,13 @@
             font-size: clamp(1.5rem, 3vw, 1.5rem);
             font-weight: bold;
             line-height: 1.3;
-            margin: 50px 0 10px 0; /* Original desktop margin */
+            margin: 50px 0 10px 0; /* Increased top margin */
         }
 
         .dragon-carousel {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            margin-top: 20px; /* Original desktop margin */
+            margin: 20px auto 0; /* MODIFIED: Lowered carousel from header */
             position: relative;
         }
 
@@ -137,8 +136,8 @@
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* Default padding for desktop, increased to give more room for scaling */
-            padding: 80px 0;
+            /* MODIFIED: Reduced bottom padding to lessen gap with info section */
+            padding: 80px 0 10px;
         }
 
         .image-track {
@@ -351,12 +350,12 @@
         @keyframes static-glowing {
             0% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
             50% { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.6); }
-            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 255, 255, 0.4); }
+            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
         }
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            margin: 10px auto; /* Original desktop margin */
+            margin: 10px auto;
             text-align: center; position: relative; z-index: 10;
             min-height: 100px;
         }
@@ -478,18 +477,9 @@
             leaving the desktop styles untouched.
         */
         @media (max-width: 767px) {
-            .milkybar-header p {
-                margin: 10px 0; /* Reduced top and bottom margin for the paragraph on mobile */
-            }
-            .dragon-carousel {
-                margin-top: 25px; /* Pushed the carousel down on mobile */
-            }
-            .info-section-wrapper {
-                margin: 0 auto; /* Removed the top margin to reduce the gap */
-            }
             .image-carousel {
-                /* Increased top padding for mobile to prevent cropping */
-                padding: 120px 0 60px 0;
+                /* MODIFIED: Increased top padding for mobile to prevent cropping, reduced bottom */
+                padding: 120px 0 10px 0;
             }
             .dragon-frame {
                 height: auto;
@@ -506,20 +496,6 @@
                 transform: translateY(-5px) scale(1.9) translateZ(50px);
             }
         }
-        
-        /* New rules to fix the gap for narrow screens */
-        @media (max-width: 480px) {
-            .info-section-wrapper {
-                margin: 0 auto; /* Removed all margin for very narrow screens */
-            }
-            .milkybar-header h1 {
-                font-size: clamp(1.4rem, 5vw, 2.5rem);
-            }
-            .image-carousel {
-                padding-top: 100px; /* Reduced padding to make room */
-            }
-        }
-
         /* Desktop-specific layout rules for medium and larger screens */
         @media (min-width: 768px) {
             .image-slide { width: 33.333%; }
