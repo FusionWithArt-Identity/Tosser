@@ -131,12 +131,13 @@
             height: auto;
             /* Use clamp() for a flexible min-height based on viewport height */
             min-height: clamp(400px, 75vh, 750px); /* Adjusted min-height to provide more space */
-            margin: 0 auto; /* Adjusted to decrease gap */
+            margin: 0 auto;
             perspective: 1200px;
-            overflow-x: hidden; /* Allow vertical overflow for glow effect */
-            overflow-y: visible; /* Allow vertical overflow for glow effect */
+            overflow-x: hidden;
+            overflow-y: visible;
             transform-style: preserve-3d;
-            padding: 60px 0; /* Significantly increased padding to prevent cropping */
+            /* FIX: Increased padding to prevent cropping of scaled/raised cards */
+            padding: clamp(60px, 10vh, 100px) 0;
         }
 
         .image-track {
@@ -353,9 +354,8 @@
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            margin: 10px auto; /* Changed from 40px to 10px */
+            margin: 10px auto;
             text-align: center; position: relative; z-index: 10;
-            /* Add min-height to prevent layout jumps on content change */
             min-height: 100px;
         }
 
@@ -443,7 +443,7 @@
 
         .milkybar-dots {
             display: flex; justify-content: center;
-            margin: 0; /* Removed flexible margin */
+            margin: 0;
             flex-wrap: wrap; padding: 0 10px;
         }
 
@@ -474,7 +474,7 @@
         /* Base responsive adjustments for slide widths */
         @media (max-width: 767px) {
             .image-slide {
-                width: 33.333%; /* Displays 3 cards on mobile screens */
+                width: 33.333%;
             }
             .dragon-frame {
                 height: auto;
@@ -482,7 +482,8 @@
             }
             .image-carousel {
                 min-height: 420px;
-                padding: 60px 0;
+                /* FIX: Increased padding to handle mobile scaling better */
+                padding: 80px 0;
             }
         }
         /* The following rules ensure the carousel adapts for larger screens */
@@ -499,26 +500,25 @@
         /* NEW: Media Query for shorter, wider screens to prevent content overflow */
         @media (max-height: 720px) and (min-width: 576px) {
             .milkybar-container {
-                padding: 0.5vh 10px; /* Further reduced vertical padding for shorter screens */
-                justify-content: center; /* Align to center to give content more space */
+                padding: 0.5vh 10px;
+                justify-content: center;
             }
             .milkybar-header h1 {
-                font-size: clamp(1.6rem, 5vw, 2.5rem); /* Slightly smaller font */
+                font-size: clamp(1.6rem, 5vw, 2.5rem);
                 padding: 0.3em;
             }
             .milkybar-header p {
-                /* Removed margin overrides to use the consistent base style */
                 font-size: clamp(1.2rem, 2.5vw, 1.4rem);
             }
             .image-carousel {
-                min-height: clamp(250px, 55vh, 550px); /* Adjusted min-height to provide more space */
-                /* Removed margin and padding overrides to use base style */
+                min-height: clamp(250px, 55vh, 550px);
+                /* FIX: Increased padding to prevent cropping on shorter landscape screens */
+                padding: clamp(60px, 10vh, 100px) 0;
             }
             .dragon-frame {
-                height: clamp(250px, 45vh, 450px); /* Adjusted card height for shorter screens */
+                height: clamp(250px, 45vh, 450px);
             }
             .info-section-wrapper {
-                /* Removed margin override to use the consistent base style */
                 min-height: 80px;
             }
             .dragon-name {
@@ -528,14 +528,11 @@
             .dragon-description {
                 font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             }
-            .milkybar-dots {
-                /* Removed margin override to use the consistent base style */
-            }
         }
         /* Mobile-specific adjustments for the back text padding */
         @media (max-width: 767px) {
             .dragon-back-text {
-                padding-top: 15px; /* Added more space at the top for smaller screens */
+                padding-top: 15px;
             }
         }
     </style>
@@ -936,7 +933,7 @@
                 const frame = slide.querySelector('.dragon-frame');
                 const frontVideo = slide.querySelector('.dragon-front video');
                 const backVideo = slide.querySelector('.dragon-back video');
-                
+
                 slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
 
                 let distance = index - currentIndex;
@@ -1001,13 +998,13 @@
 
 
         function nextSlide() {
-            hideMediaOverlay(); // Ensure no overlay is visible
+            hideMediaOverlay();
             currentIndex = (currentIndex + 1) % dragonData.length;
             updateCarousel();
         }
 
         function prevSlide() {
-            hideMediaOverlay(); // Ensure no overlay is visible
+            hideMediaOverlay();
             currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
             updateCarousel();
         }
