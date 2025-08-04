@@ -136,8 +136,8 @@
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* MODIFIED: Reduced bottom padding to lessen gap with info section */
-            padding: 80px 0 10px;
+            /* Default padding for desktop, increased to give more room for scaling */
+            padding: 80px 0;
         }
 
         .image-track {
@@ -355,7 +355,8 @@
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            margin: 10px auto;
+            /* MODIFIED: Negative top margin to aggressively reduce gap with carousel. */
+            margin: -40px auto 10px;
             text-align: center; position: relative; z-index: 10;
             min-height: 100px;
         }
@@ -478,8 +479,8 @@
         */
         @media (max-width: 767px) {
             .image-carousel {
-                /* MODIFIED: Increased top padding for mobile to prevent cropping, reduced bottom */
-                padding: 120px 0 10px 0;
+                /* Increased top padding for mobile to prevent cropping */
+                padding: 120px 0 60px 0;
             }
             .dragon-frame {
                 height: auto;
