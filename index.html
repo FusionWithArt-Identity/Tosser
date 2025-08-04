@@ -117,7 +117,7 @@
         .dragon-carousel {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto; /* Ensured no extra margin */
+            margin: 20px auto 0; /* MODIFIED: Lowered carousel from header */
             position: relative;
         }
 
@@ -136,8 +136,8 @@
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* Default padding for desktop, increased to give more room for scaling */
-            padding: 80px 0;
+            /* MODIFIED: Reduced bottom padding to lessen gap with info section */
+            padding: 80px 0 10px;
         }
 
         .image-track {
@@ -478,8 +478,8 @@
         */
         @media (max-width: 767px) {
             .image-carousel {
-                /* Increased top padding for mobile to prevent cropping */
-                padding: 120px 0 60px 0;
+                /* MODIFIED: Increased top padding for mobile to prevent cropping, reduced bottom */
+                padding: 120px 0 10px 0;
             }
             .dragon-frame {
                 height: auto;
