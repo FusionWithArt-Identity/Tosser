@@ -50,7 +50,7 @@
         .milkybar-header {
             text-align: center;
             margin-bottom: 0; /* Removed bottom margin to decrease gap below header */
-	    margin-top: 30px;
+	    margin-top: 1vh;
             padding: 0 5px;
             width: 100%;
         }
@@ -240,13 +240,12 @@
             75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
         }
 
-      .dragon-frame.flipped {
-    transform: translateY(-5px) scale(1.9) translateZ(50px);
-    z-index: 20;
-    animation: glowing-colors 5s infinite alternate ease-in-out;
-    padding-bottom: 5px;
-}
-
+        .dragon-frame.flipped {
+            transform: translateY(-5px) scale(1.9) translateZ(50px);
+            z-index: 20;
+            animation: glowing-colors 5s infinite alternate ease-in-out;
+            padding-bottom: 5px;
+        }
 
         .dragon-frame-inner {
             position: relative; width: 100%; height: 100%;
@@ -873,47 +872,43 @@
             }
         }
 
-        function cleanUpAllMedia() {
+        function cleanUpAllMedia(skipCurrent = false) {
             document.querySelectorAll('.image-slide').forEach(slide => {
                 const index = parseInt(slide.dataset.index);
                 const frame = slide.querySelector('.dragon-frame');
                 const frontVideo = slide.querySelector('.dragon-front video');
                 const backVideo = slide.querySelector('.dragon-back video');
-
                 const isCurrentSlide = slide.classList.contains('current');
-                const isFlipped = frame.classList.contains('flipped');
 
                 if (videoTimeUpdateIntervals[index]) {
                     clearInterval(videoTimeUpdateIntervals[index]);
                     delete videoTimeUpdateIntervals[index];
                 }
 
-                if (frontVideo) {
-                    frontVideo.pause();
-                    frontVideo.muted = true;
-                }
+                // Only handle media and flipping for non-current slides or when explicitly told to
+                if (!isCurrentSlide || skipCurrent) {
+                    if (frame.classList.contains('flipped')) {
+                        frame.classList.remove('flipped');
+                        let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+                        savedFlippedState[index] = false;
+                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+                    }
 
-                if (backVideo) {
-                    if (isCurrentSlide && isFlipped) {
-                        backVideo.muted = false;
-                    } else {
+                    if (frontVideo) {
+                        frontVideo.pause();
+                        frontVideo.currentTime = 0;
+                        frontVideo.muted = true;
+                    }
+                    if (backVideo) {
                         backVideo.pause();
                         backVideo.currentTime = 0;
                         backVideo.muted = true;
                         localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
                     }
                 }
-
-                if (!isCurrentSlide || (isCurrentSlide && !isFlipped)) {
-                    frame.classList.remove('flipped');
-                    let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
-                    savedFlippedState[index] = false;
-                    localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
-                }
             });
             hideMediaOverlay();
         }
-
 
         function updateInfoSection() {
             const infoSectionContent = document.querySelector('.info-section');
@@ -1066,5 +1061,3 @@
     </script>
 </body>
 </html>
-
-
