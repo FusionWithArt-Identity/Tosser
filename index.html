@@ -118,6 +118,7 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto; /* Ensured no extra margin */
+            margin-top: 20px; /* Added to push the carousel down */
             position: relative;
         }
 
@@ -350,12 +351,12 @@
         @keyframes static-glowing {
             0% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
             50% { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.6); }
-            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
+            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 255, 255, 0.4); }
         }
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            margin: 10px auto;
+            margin: 5px auto; /* Reduced margin to shrink gap */
             text-align: center; position: relative; z-index: 10;
             min-height: 100px;
         }
@@ -496,6 +497,20 @@
                 transform: translateY(-5px) scale(1.9) translateZ(50px);
             }
         }
+        
+        /* New rules to fix the gap for narrow screens */
+        @media (max-width: 480px) {
+            .info-section-wrapper {
+                margin: 2px auto; /* Further reduced margin for very narrow screens */
+            }
+            .milkybar-header h1 {
+                font-size: clamp(1.4rem, 5vw, 2.5rem);
+            }
+            .image-carousel {
+                padding-top: 100px; /* Reduced padding to make room */
+            }
+        }
+
         /* Desktop-specific layout rules for medium and larger screens */
         @media (min-width: 768px) {
             .image-slide { width: 33.333%; }
