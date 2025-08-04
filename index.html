@@ -482,18 +482,28 @@
             }
             .image-carousel {
                 min-height: 420px;
-                /* FIX: Increased padding on top for mobile to prevent cropping */
-                padding: 90px 0 60px 0;
+                /* FIX: Increased top padding for mobile to prevent cropping */
+                padding: 120px 0 60px 0;
             }
         }
         /* The following rules ensure the carousel adapts for larger screens */
         @media (min-width: 768px) {
             .image-slide { width: 33.333%; }
             .milkybar-prev { left: -25px; } .milkybar-next { right: -25px; }
+            .milkybar-nav {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
         }
         @media (min-width: 992px) {
             .image-slide { width: 25%; }
             .milkybar-prev { left: -30px; } .milkybar-next { right: -30px; }
+            .milkybar-nav {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
         }
 
 
@@ -513,7 +523,7 @@
             .image-carousel {
                 min-height: clamp(250px, 55vh, 550px);
                 /* FIX: Increased padding on top for shorter screens to prevent cropping */
-                padding: clamp(60px, 10vh, 100px) 0 60px 0;
+                padding-top: 100px;
             }
             .dragon-frame {
                 height: clamp(250px, 45vh, 450px);
