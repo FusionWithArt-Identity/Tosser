@@ -245,8 +245,8 @@
             top: 0; left: 0; display: flex;
         }
         
-        /* === MODIFIED: Glare effect and background styles are now on a pseudo-element of the frame-inner to affect both sides === */
-        .dragon-frame-inner::after {
+        /* === RESTORED ORIGINAL FRONT GLAR EFFECT === */
+        .dragon-front::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -257,18 +257,14 @@
             );
             transform: translateX(-250%) skewX(-20deg);
             animation: glass-reflection 4s linear infinite;
-            z-index: 3; /* Layer on top of both sides */
+            z-index: 3;
             pointer-events: none;
             filter: blur(3px);
             will-change: transform;
-            
-            /* To make the reflection visible on the back, we need to make it 
-               "double-sided" in 3D space, just like the frame-inner itself */
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
         }
-        /* A separate pseudo-element is created for the back-face to have a proper reflection */
-        .dragon-frame-inner::before {
+        
+        /* === ADDED GLAR EFFECT FOR THE BACK FACE === */
+        .dragon-back::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -277,14 +273,12 @@
                 rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
                 rgba(255, 255, 255, 0) 100%
             );
-            transform: rotateY(180deg) translateX(-250%) skewX(-20deg);
+            transform: translateX(-250%) skewX(-20deg);
             animation: glass-reflection 4s linear infinite;
             z-index: 3;
             pointer-events: none;
             filter: blur(3px);
             will-change: transform;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
         }
         /* END MODIFIED */
 
@@ -1164,4 +1158,4 @@
         ************************************************************************/
     </script>
 </body>
-</html>s
+</html>
