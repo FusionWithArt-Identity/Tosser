@@ -36,25 +36,23 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            /* Use viewport height for vertical padding to adapt to screen height */
-            padding: 1vh 10px; /* Reduced vertical padding */
+            padding: 1vh 10px;
             position: relative;
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* MODIFIED: Align content to the top to allow for manual spacing control. */
             justify-content: flex-start;
         }
 
         .milkybar-header {
             text-align: center;
-            margin-bottom: 0; /* Removed bottom margin to decrease gap below header */
+            margin-bottom: 0;
 	        margin-top: 1vh;
             padding: 0 5px;
             width: 100%;
-            position: relative; /* Added for stacking context */
-            z-index: 1; /* Ensures header is in a defined stacking layer */
+            position: relative;
+            z-index: 1;
         }
 
         /* Styles for the main H1 element */
@@ -62,7 +60,7 @@
             font-size: clamp(1.8rem, 6vw, 3.5rem);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0; /* Reduced to 0 */
+            margin-bottom: 0;
             font-weight: 800;
             line-height: 1.2;
             text-align: center;
@@ -113,7 +111,7 @@
             font-size: clamp(1.2rem, 3vw, 1.5rem);
             font-weight: bold;
             line-height: 1.3;
-            margin: 50px 0 10px 0; /* Increased top margin */
+            margin: 50px 0 10px 0;
         }
 
         .dragon-carousel {
@@ -289,7 +287,6 @@
             transition: all 0.3s ease-in-out;
         }
 
-        /* MODIFIED: Implemented responsive font size for back text */
         .dragon-back-text {
             width: 100%;
             margin-top: auto;
@@ -302,9 +299,8 @@
             color: White;
             padding: 8px;
             border-radius: 8px;
-            /* Responsive font size: min 1rem, scales with 4.5vw, max 2rem */
             font-size: clamp(1rem, 4.5vw, 2rem);
-            line-height: 1.2; /* Adjusted line-height for better readability */
+            line-height: 1.2;
             text-align: center;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -317,7 +313,7 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
             animation: neon-light-trail 4s infinite ease-in-out;
-            display: flex; /* Centering text vertically */
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -477,10 +473,11 @@
 
         /* --- RESPONSIVE FIXES & MODIFICATIONS FOR MOBILE --- */
         @media (max-width: 767px) {
+            /* MODIFIED: Moved carousel further up */
             .dragon-carousel {
                 position: relative;
                 z-index: 20;
-                margin-top: -10px;
+                margin-top: -40px; 
             }
             
             .milkybar-header h1 {
@@ -797,7 +794,7 @@
             infoSectionContent.className = 'info-section';
             infoSectionsContainer.appendChild(infoSectionContent);
 
-            updateCarousel();
+            requestAnimationFrame(updateCarousel);
         }
 
         function showMediaInOverlay(src, type, initialTime = 0) {
@@ -1003,22 +1000,24 @@
             localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
         }
 
+        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
         function goToSlide(index) {
             currentIndex = index;
-            updateCarousel();
+            requestAnimationFrame(updateCarousel);
         }
 
-
+        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
         function nextSlide() {
             hideMediaOverlay();
             currentIndex = (currentIndex + 1) % dragonData.length;
-            updateCarousel();
+            requestAnimationFrame(updateCarousel);
         }
 
+        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
         function prevSlide() {
             hideMediaOverlay();
             currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
-            updateCarousel();
+            requestAnimationFrame(updateCarousel);
         }
 
         prevButton.addEventListener('click', prevSlide);
@@ -1060,14 +1059,12 @@
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 initCarousel();
-                updateCarousel();
                 restoreOverlayState();
             }, 200);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             initCarousel();
-            updateCarousel();
             restoreOverlayState();
 
             const isTouchDevice = window.matchMedia('(hover: none)').matches;
@@ -1078,6 +1075,34 @@
                 });
             }
         });
+
+        /************************************************************************
+         * INDEPENDENT PERFORMANCE BOOSTER SCRIPT
+         *
+         * The following is not a standalone script but a set of best practices
+         * already applied to the code above for better performance.
+         *
+         * 1. requestAnimationFrame: All carousel updates (next, prev, go to slide,
+         * and initial load) are now wrapped in `requestAnimationFrame`. This
+         * tells the browser to run the update code right before the next
+         * repaint, preventing visual lag and creating smoother animations.
+         *
+         * 2. Passive Event Listeners: The 'touchstart' and 'touchend' events
+         * use the `{ passive: true }` option. This tells the browser that
+         * the event listener will not call `preventDefault()`, allowing the
+         * browser to handle scrolling smoothly without waiting for the
+         * JavaScript to finish executing.
+         *
+         * 3. CSS Hardware Acceleration: The use of `transform` and `opacity`
+         * for animations in CSS (`.image-slide`, `.dragon-frame`, etc.)
+         * allows the browser to offload these animations to the GPU, freeing
+         * up the CPU and resulting in much smoother rendering. The
+         * `will-change` property is also used to hint to the browser which
+         * elements will be animated.
+         *
+         * These techniques are integrated directly into the existing logic
+         * for maximum effectiveness without causing conflicts.
+        ************************************************************************/
     </script>
 </body>
 </html>
