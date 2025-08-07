@@ -259,10 +259,27 @@
             top: 0; left: 0; display: flex;
         }
 
+        /* === MODIFICATION START === */
         .dragon-front {
             transition: opacity 0.3s ease 0.3s;
-            align-items: center; justify-content: center;
+            align-items: center;
+            justify-content: center;
+            /* Added styles for the blurred background effect */
+            background-size: cover;
+            background-position: center;
         }
+
+        /* New pseudo-element for the blurred layer */
+        .dragon-front::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: inherit; /* Inherits background from .dragon-front */
+            filter: blur(20px) brightness(0.7);
+            transform: scale(1.2); /* Prevents blurred edges from appearing inside the frame */
+            z-index: 0; /* Places the blur behind the main image */
+        }
+        /* === MODIFICATION END === */
 
         .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
 
@@ -279,12 +296,14 @@
         }
         
         /* === MODIFICATION START === */
-        /* This new rule targets only the front image of the card */
+        /* This rule ensures the main front image is displayed fully over the blurred background */
         .dragon-front .dragon-content {
-            height: 100%;
-            max-height: 100%; /* Override the general rule */
-            object-fit: cover; /* This makes the image fill the container */
-            border-radius: 15px; /* Match the frame's border-radius for a seamless look */
+            position: relative;   /* Needed to apply z-index */
+            z-index: 1;           /* Places image on top of the ::before pseudo-element */
+            max-height: 100%;     /* Overrides the base rule to allow full height */
+            height: 100%;         /* Ensures the container for the contained image is full size */
+            border-radius: 0;     /* The outer frame handles the border radius */
+            object-fit: contain;  /* THIS IS THE KEY: shows the full image without cropping or stretching */
         }
         /* === MODIFICATION END === */
 
@@ -663,6 +682,13 @@
 
                 const front = document.createElement('div');
                 front.className = 'dragon-front';
+                
+                // === MODIFICATION START ===
+                // Set the background image on the front of the card for the blur effect
+                if (dragon.front.type === 'image') {
+                    front.style.backgroundImage = `url('${dragon.front.src}')`;
+                }
+                // === MODIFICATION END ===
 
                 let frontContentElement;
                 if (dragon.front.type === 'video') {
