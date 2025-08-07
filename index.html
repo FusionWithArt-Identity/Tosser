@@ -131,15 +131,14 @@
             position: relative;
             width: 100%;
             height: auto;
-            /* Use clamp() for a flexible min-height based on viewport height */
-            min-height: clamp(400px, 75vh, 750px); /* Adjusted min-height to provide more space */
+            min-height: clamp(400px, 75vh, 750px);
             margin: 0 auto;
             perspective: 1200px;
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* Default padding for desktop, increased to give more room for scaling */
-            padding: 80px 0;
+            /* UPDATED: Increased top padding to prevent glow cropping */
+            padding: 120px 0 80px;
         }
 
         .image-track {
@@ -487,7 +486,7 @@
             }
 
             .image-carousel {
-                /* Increased top padding for mobile to prevent cropping */
+                /* This now inherits the base style's 120px top padding but adjusts the bottom */
                 padding: 120px 0 60px 0;
             }
             .dragon-frame {
@@ -535,8 +534,8 @@
             }
             .image-carousel {
                 min-height: clamp(250px, 55vh, 550px);
-                /* This padding rule is specific to this screen size */
-                padding-top: 100px;
+                /* UPDATED: This padding rule is specific to this screen size and now matches the base style */
+                padding-top: 120px;
             }
             .dragon-frame {
                 height: clamp(250px, 45vh, 450px);
