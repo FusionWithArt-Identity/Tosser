@@ -185,6 +185,12 @@
             100% { transform: translateX(350%) skewX(-20deg); }
         }
 
+        /* New keyframes for the back of the card glare */
+        @keyframes glass-reflection-back {
+            0% { transform: translateX(-250%) skewX(-20deg); }
+            100% { transform: translateX(350%) skewX(-20deg); }
+        }
+
         @keyframes glowing-colors {
             0% {
                 border-color: rgba(255, 0, 255, 0.8);
@@ -224,7 +230,7 @@
             50% { text-shadow: 0 0 5px #FF0000, 0 0 10px #FF0000, 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4); }
             75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
         }
-        
+
         .dragon-frame.flipped {
             transform: translateY(-5px) scale(1.2) translateZ(50px);
             z-index: 20;
@@ -244,44 +250,6 @@
             backface-visibility: hidden; -webkit-backface-visibility: hidden;
             top: 0; left: 0; display: flex;
         }
-        
-        /* === RESTORED ORIGINAL FRONT GLAR EFFECT === */
-        .dragon-front::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient( to right,
-                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
-                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: translateX(-250%) skewX(-20deg);
-            animation: glass-reflection 4s linear infinite;
-            z-index: 3;
-            pointer-events: none;
-            filter: blur(3px);
-            will-change: transform;
-        }
-        
-        /* === ADDED GLAR EFFECT FOR THE BACK FACE === */
-        .dragon-back::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient( to right,
-                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
-                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: translateX(-250%) skewX(-20deg);
-            animation: glass-reflection 4s linear infinite;
-            z-index: 3;
-            pointer-events: none;
-            filter: blur(3px);
-            will-change: transform;
-        }
-        /* END MODIFIED */
-
 
         .dragon-front {
             transition: opacity 0.3s ease 0.3s;
@@ -290,7 +258,7 @@
             background-size: cover;
             background-position: center;
         }
-        
+
         /* Blurred background layer */
         .dragon-front::before {
             content: '';
@@ -302,6 +270,43 @@
             z-index: 0; /* Layer 0: Bottom */
         }
         
+        /* === MODIFICATION START === */
+        /* Glare effect is now on .dragon-front to control its layer order */
+        .dragon-front::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient( to right,
+                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: glass-reflection 4s linear infinite;
+            z-index: 1; /* Layer 1: Middle (on top of blur) */
+            pointer-events: none;
+            filter: blur(3px);
+            will-change: transform;
+        }
+
+        /* ADDED: Glare effect for the back of the card */
+        .dragon-frame.flipped .dragon-back::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient( to right,
+                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: glass-reflection-back 4s linear infinite;
+            transform: rotateY(180deg);
+            pointer-events: none;
+            filter: blur(3px);
+            will-change: transform;
+            z-index: 3; /* Ensure it's on top of the content */
+        }
+        /* === MODIFICATION END === */
+
         .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
 
         .dragon-back {
@@ -525,7 +530,7 @@
             .dragon-carousel {
                 position: relative;
                 z-index: 20;
-                margin-top: -40px; 
+                margin-top: -40px;
             }
             
             .milkybar-header h1 {
