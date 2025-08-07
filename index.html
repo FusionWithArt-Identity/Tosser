@@ -185,12 +185,6 @@
             100% { transform: translateX(350%) skewX(-20deg); }
         }
 
-        /* New keyframes for the back of the card glare */
-        @keyframes glass-reflection-back {
-            0% { transform: translateX(-250%) skewX(-20deg); }
-            100% { transform: translateX(350%) skewX(-20deg); }
-        }
-
         @keyframes glowing-colors {
             0% {
                 border-color: rgba(255, 0, 255, 0.8);
@@ -270,10 +264,8 @@
             z-index: 0; /* Layer 0: Bottom */
         }
         
-        /* === MODIFICATION START === */
-        /* Glare effect is now on .dragon-front to control its layer order */
-        .dragon-front::after {
-            content: '';
+        /* The single glare effect element, now a sibling to front/back faces */
+        .dragon-glare {
             position: absolute;
             top: 0; left: 0; width: 40%; height: 100%;
             background: linear-gradient( to right,
@@ -282,30 +274,11 @@
                 rgba(255, 255, 255, 0) 100%
             );
             animation: glass-reflection 4s linear infinite;
-            z-index: 1; /* Layer 1: Middle (on top of blur) */
+            z-index: 1; /* Layer 1: Behind content */
             pointer-events: none;
             filter: blur(3px);
             will-change: transform;
         }
-
-        /* ADDED: Glare effect for the back of the card */
-        .dragon-frame.flipped .dragon-back::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 40%; height: 100%;
-            background: linear-gradient( to right,
-                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
-                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            animation: glass-reflection-back 4s linear infinite;
-            transform: rotateY(180deg);
-            pointer-events: none;
-            filter: blur(3px);
-            will-change: transform;
-            z-index: 3; /* Ensure it's on top of the content */
-        }
-        /* === MODIFICATION END === */
 
         .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
 
@@ -318,7 +291,8 @@
         .dragon-content {
             width: 100%; max-height: calc(100% - 40px);
             object-fit: contain; display: block; position: relative;
-            z-index: 1; background-color: transparent; border-radius: 10px;
+            z-index: 2; /* Layer 2: On top of glare */
+            background-color: transparent; border-radius: 10px;
         }
         
         /* Main image layer */
@@ -359,7 +333,7 @@
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            z-index: 2;
+            z-index: 2; /* Layer 2: On top of glare */
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
             overflow-y: auto;
@@ -703,6 +677,11 @@
 
                 const frameInner = document.createElement('div');
                 frameInner.className = 'dragon-frame-inner';
+                
+                // === MODIFIED: Add a single glare element here ===
+                const glare = document.createElement('div');
+                glare.className = 'dragon-glare';
+                frameInner.appendChild(glare);
 
                 const front = document.createElement('div');
                 front.className = 'dragon-front';
@@ -807,6 +786,8 @@
                         e.stopPropagation();
                         const isFlippingToBack = !this.classList.contains('flipped');
                         this.classList.toggle('flipped');
+                        savedFlippedState[index] = this.classList.contains('flipped');
+                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
 
                         const currentBackVideo = this.querySelector('.dragon-back video');
                         const currentFrontVideo = this.querySelector('.dragon-front video');
@@ -830,9 +811,6 @@
                                 currentFrontVideo.play().catch(error => console.warn("Front video autoplay prevented:", error));
                             }
                         }
-                        savedFlippedState[index] = this.classList.contains('flipped');
-                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
-
                     } else {
                         goToSlide(parseInt(imageSlide.dataset.index));
                     }
@@ -935,37 +913,7 @@
                 }
             }
         }
-
-        function cleanUpMedia(slide) {
-            const frame = slide.querySelector('.dragon-frame');
-            const frontVideo = slide.querySelector('.dragon-front video');
-            const backVideo = slide.querySelector('.dragon-back video');
-            const index = parseInt(slide.dataset.index);
-
-            if (frame.classList.contains('flipped')) {
-                frame.classList.remove('flipped');
-                let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
-                savedFlippedState[index] = false;
-                localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
-            }
-
-            if (frontVideo) {
-                frontVideo.pause();
-                frontVideo.currentTime = 0;
-                frontVideo.muted = true;
-            }
-            if (backVideo) {
-                backVideo.pause();
-                backVideo.currentTime = 0;
-                backVideo.muted = true;
-                localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
-                if (videoTimeUpdateIntervals[index]) {
-                    clearInterval(videoTimeUpdateIntervals[index]);
-                    delete videoTimeUpdateIntervals[index];
-                }
-            }
-        }
-
+        
         function updateInfoSection() {
             const infoSectionContent = document.querySelector('.info-section');
             const currentDragon = dragonData[currentIndex];
@@ -974,7 +922,8 @@
                 <p class="dragon-description">${currentDragon.description}</p>
             `;
         }
-
+        
+        // === MODIFIED: Simplified `updateCarousel` function for better performance ===
         function updateCarousel() {
             const imageSlides = document.querySelectorAll('.image-slide');
             const dots = document.querySelectorAll('.milkybar-dot');
@@ -998,9 +947,7 @@
             imageSlides.forEach((slide, index) => {
                 const isCurrentSlide = index === currentIndex;
                 const frame = slide.querySelector('.dragon-frame');
-                const frontVideo = slide.querySelector('.dragon-front video');
-                const backVideo = slide.querySelector('.dragon-back video');
-
+                
                 slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
 
                 let distance = index - currentIndex;
@@ -1015,63 +962,35 @@
                     case 2: slide.classList.add('far-next'); break;
                 }
 
-                if (!isCurrentSlide) {
-                    // Reset flipped state and media for all non-current slides
+                // Check for current slide and update flipped state if necessary
+                if (isCurrentSlide) {
+                    if (savedFlippedState[index] && !frame.classList.contains('flipped')) {
+                        frame.classList.add('flipped');
+                    } else if (!savedFlippedState[index] && frame.classList.contains('flipped')) {
+                        frame.classList.remove('flipped');
+                    }
+                } else {
+                    // Force non-current slides to not be flipped
                     if (frame.classList.contains('flipped')) {
                         frame.classList.remove('flipped');
                         savedFlippedState[index] = false;
-                    }
-                    if (frontVideo) frontVideo.pause();
-                    if (backVideo) backVideo.pause();
-                } else {
-                    // Handle current slide
-                    const isFlipped = savedFlippedState[index];
-                    if (isFlipped && !frame.classList.contains('flipped')) {
-                        frame.classList.add('flipped');
-                    }
-                    if (!isFlipped && frame.classList.contains('flipped')) {
-                         frame.classList.remove('flipped');
-                    }
-
-                    if (frontVideo) {
-                        frontVideo.muted = true;
-                        if (!isFlipped) {
-                            frontVideo.play().catch(e=>console.warn("Front video autoplay prevented (current):", e));
-                        } else {
-                            frontVideo.pause();
-                        }
-                    }
-
-                    if (backVideo) {
-                        if (isFlipped) {
-                            backVideo.muted = false;
-                            backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
-                        } else {
-                            backVideo.pause();
-                            backVideo.currentTime = 0;
-                            backVideo.muted = true;
-                            localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
-                        }
                     }
                 }
             });
             localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
         }
 
-        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
         function goToSlide(index) {
             currentIndex = index;
             requestAnimationFrame(updateCarousel);
         }
 
-        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
         function nextSlide() {
             hideMediaOverlay();
             currentIndex = (currentIndex + 1) % dragonData.length;
             requestAnimationFrame(updateCarousel);
         }
 
-        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
         function prevSlide() {
             hideMediaOverlay();
             currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
@@ -1133,34 +1052,6 @@
                 });
             }
         });
-
-        /************************************************************************
-         * INDEPENDENT PERFORMANCE BOOSTER SCRIPT
-         *
-         * The following is not a standalone script but a set of best practices
-         * already applied to the code above for better performance.
-         *
-         * 1. requestAnimationFrame: All carousel updates (next, prev, go to slide,
-         * and initial load) are now wrapped in `requestAnimationFrame`. This
-         * tells the browser to run the update code right before the next
-         * repaint, preventing visual lag and creating smoother animations.
-         *
-         * 2. Passive Event Listeners: The 'touchstart' and 'touchend' events
-         * use the `{ passive: true }` option. This tells the browser that
-         * the event listener will not call `preventDefault()`, allowing the
-         * browser to handle scrolling smoothly without waiting for the
-         * JavaScript to finish executing.
-         *
-         * 3. CSS Hardware Acceleration: The use of `transform` and `opacity`
-         * for animations in CSS (`.image-slide`, `.dragon-frame`, etc.)
-         * allows the browser to offload these animations to the GPU, freeing
-         * up the CPU and resulting in much smoother rendering. The
-         * `will-change` property is also used to hint to the browser which
-         * elements will be animated.
-         *
-         * These techniques are integrated directly into the existing logic
-         * for maximum effectiveness without causing conflicts.
-        ************************************************************************/
     </script>
 </body>
 </html>
