@@ -110,7 +110,7 @@
 
         .milkybar-header p {
             color: #a37f48;
-            font-size: clamp(1.5rem, 3vw, 1.5rem);
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             font-weight: bold;
             line-height: 1.3;
             margin: 50px 0 10px 0; /* Increased top margin */
@@ -119,7 +119,7 @@
         .dragon-carousel {
             width: 100%;
             max-width: 800px;
-            margin: 20px auto 0; /* MODIFIED: Lowers carousel from header */
+            margin: 20px auto 0;
             position: relative;
         }
 
@@ -137,7 +137,6 @@
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* REVERTED: Original padding for desktop view */
             padding: 80px 0;
         }
 
@@ -165,8 +164,8 @@
         }
 
         .dragon-frame {
-            width: clamp(180px, 40vw, 300px); /* Further reduced max width for a narrower, more portrait look */
-            height: clamp(350px, 70vh, 700px); /* Significantly increased height for a very portrait look */
+            width: clamp(180px, 40vw, 300px);
+            height: clamp(350px, 70vh, 700px);
             position: relative;
             overflow: hidden;
             border-radius: 15px;
@@ -242,7 +241,6 @@
             75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
         }
         
-        /* The primary fix for the desktop cropping issue: A reduced scale value */
         .dragon-frame.flipped {
             transform: translateY(-5px) scale(1.2) translateZ(50px);
             z-index: 20;
@@ -291,19 +289,22 @@
             transition: all 0.3s ease-in-out;
         }
 
+        /* MODIFIED: Implemented responsive font size for back text */
         .dragon-back-text {
             width: 100%;
-            margin-top: 0; /* Let flexbox handle positioning */
-            margin-bottom: 0; /* Remove fixed bottom margin */
-            flex-grow: 1; /* Allow the text box to grow and fill available space */
-            min-height: 0; /* Crucial for allowing overflow/scrolling in a flex child */
+            margin-top: auto;
+            margin-bottom: 5px;
+            flex-grow: 1;
+            min-height: 0;
             max-height: 100%;
             background: rgba(0, 0, 0, 0.6);
             font-family: FBI;
             color: White;
-            padding: 5px 8px;
+            padding: 8px;
             border-radius: 8px;
-            font-size: clamp(1.6rem, 2vw, 3rem);
+            /* Responsive font size: min 1rem, scales with 4.5vw, max 2rem */
+            font-size: clamp(1rem, 4.5vw, 2rem);
+            line-height: 1.2; /* Adjusted line-height for better readability */
             text-align: center;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -316,6 +317,9 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
             animation: neon-light-trail 4s infinite ease-in-out;
+            display: flex; /* Centering text vertically */
+            align-items: center;
+            justify-content: center;
         }
 
         .dragon-back-text::-webkit-scrollbar { display: none; }
@@ -326,7 +330,7 @@
             opacity: 1; z-index: 10; pointer-events: auto;
         }
         .image-slide.current .dragon-frame:not(.flipped) {
-            transform: translateY(-5px); /* Kept original upward translation as per user request */
+            transform: translateY(-5px);
             animation: static-glowing 2s infinite alternate ease-in-out;
             box-shadow: 0 10px 30px rgba(140, 109, 62, 0.4);
         }
@@ -356,7 +360,6 @@
 
         .info-section-wrapper {
             width: 100%; max-width: 600px;
-            /* MODIFIED: Negative margin pulls section up, reducing the gap. */
             margin: -40px auto 10px;
             text-align: center; position: relative; z-index: 10;
             min-height: 100px;
@@ -474,21 +477,18 @@
 
         /* --- RESPONSIVE FIXES & MODIFICATIONS FOR MOBILE --- */
         @media (max-width: 767px) {
-            /* MODIFIED: Move carousel up */
             .dragon-carousel {
                 position: relative;
-                z-index: 20; /* Elevates carousel above the header */
-                margin-top: -10px; /* Moves carousel up */
+                z-index: 20;
+                margin-top: -10px;
             }
             
-            /* MODIFIED: Reduce header padding on mobile */
             .milkybar-header h1 {
-                padding: 0.25em; /* Reduced padding */
+                padding: 0.25em;
             }
             
-            /* MODIFIED: Increase top padding on mobile to create more space above cards */
             .image-carousel {
-                padding: 180px 0 60px 0; /* Increased top padding */
+                padding: 180px 0 60px 0;
             }
             .dragon-frame {
                 height: auto;
@@ -497,17 +497,13 @@
             .image-slide {
                 width: 33.333%;
             }
-            .dragon-back-text {
-                padding-top: 15px;
-            }
-            /* The specific fix for the flipped card scale on mobile */
+            
             .dragon-frame.flipped {
                 transform: translateY(-5px) scale(1.9) translateZ(50px);
             }
             
-            /* MODIFIED: Move info section further up */
             .info-section-wrapper {
-                margin-top: -140px; /* Adjusted to move it further up */
+                margin-top: -140px;
             }
         }
         /* Desktop-specific layout rules for medium and larger screens */
@@ -520,7 +516,7 @@
             .milkybar-prev { left: -30px; } .milkybar-next { right: -30px; }
         }
 
-        /* NEW: Media Query for shorter, wider screens (e.g., landscape mobile, some tablets) */
+        /* Query for shorter, wider screens (e.g., landscape mobile) */
         @media (max-height: 720px) and (min-width: 576px) {
             .milkybar-container {
                 padding: 0.5vh 10px;
@@ -535,7 +531,6 @@
             }
             .image-carousel {
                 min-height: clamp(250px, 55vh, 550px);
-                /* REVERTED: Original padding rule for this view */
                 padding-top: 100px;
             }
             .dragon-frame {
