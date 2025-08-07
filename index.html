@@ -274,9 +274,19 @@
 
         .dragon-content {
             width: 100%; max-height: calc(100% - 40px);
-            object-fit: fill; display: block; position: relative;
+            object-fit: contain; display: block; position: relative;
             z-index: 1; background-color: transparent; border-radius: 10px;
         }
+        
+        /* === MODIFICATION START === */
+        /* This new rule targets only the front image of the card */
+        .dragon-front .dragon-content {
+            height: 100%;
+            max-height: 100%; /* Override the general rule */
+            object-fit: cover; /* This makes the image fill the container */
+            border-radius: 15px; /* Match the frame's border-radius for a seamless look */
+        }
+        /* === MODIFICATION END === */
 
         .dragon-back img.dragon-content { cursor: zoom-in; }
 
@@ -1106,4 +1116,3 @@
     </script>
 </body>
 </html>
-
