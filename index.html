@@ -281,6 +281,24 @@
             filter: blur(3px);
             will-change: transform;
         }
+
+        /* NEW: Glare effect for the back of the card, mimicking the front */
+        .dragon-back::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient( to right,
+                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: glass-reflection 4s linear infinite;
+            /* Positioned behind back content (z-index: 1) and text (z-index: 2) */
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(3px);
+            will-change: transform;
+        }
         /* === MODIFICATION END === */
 
         .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
@@ -289,6 +307,8 @@
             transform: rotateY(180deg); background: transparent; overflow: hidden;
             flex-direction: column; align-items: center; justify-content: flex-start;
             padding: 10px 5px 5px 5px; gap: 8px;
+            /* ADDED: To clip the new glare effect correctly */
+            border-radius: 15px;
         }
 
         .dragon-content {
