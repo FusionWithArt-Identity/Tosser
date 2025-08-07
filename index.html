@@ -472,27 +472,23 @@
         .media-overlay .overlay-content.zoomable-image { cursor: zoom-out; }
         .media-overlay .overlay-content[data-type="video"] { cursor: auto; }
 
-        /* --- RESPONSIVE FIXES --- */
-        /*
-            This media query now specifically overrides the flipped card's scale
-            and the carousel's padding only for small screens (mobiles),
-            leaving the desktop styles untouched.
-        */
+        /* --- RESPONSIVE FIXES & MODIFICATIONS FOR MOBILE --- */
         @media (max-width: 767px) {
-            /* UPDATED: Z-index fix */
+            /* MODIFIED: Move carousel up */
             .dragon-carousel {
                 position: relative;
                 z-index: 20; /* Elevates carousel above the header */
+                margin-top: -10px; /* Moves carousel up */
             }
             
-            /* UPDATED: Reduce header padding on mobile */
+            /* MODIFIED: Reduce header padding on mobile */
             .milkybar-header h1 {
-                padding: 0.3em;
+                padding: 0.25em; /* Reduced padding */
             }
             
-            /* UPDATED: Significantly increase top padding on mobile to prevent glow cropping */
+            /* MODIFIED: Increase top padding on mobile to create more space above cards */
             .image-carousel {
-                padding: 160px 0 60px 0;
+                padding: 180px 0 60px 0; /* Increased top padding */
             }
             .dragon-frame {
                 height: auto;
@@ -509,8 +505,9 @@
                 transform: translateY(-5px) scale(1.9) translateZ(50px);
             }
             
+            /* MODIFIED: Move info section further up */
             .info-section-wrapper {
-                margin-top: -120px;
+                margin-top: -140px; /* Adjusted to move it further up */
             }
         }
         /* Desktop-specific layout rules for medium and larger screens */
