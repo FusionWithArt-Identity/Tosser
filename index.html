@@ -137,8 +137,8 @@
             overflow-x: hidden;
             overflow-y: visible;
             transform-style: preserve-3d;
-            /* UPDATED: Increased top padding to prevent glow cropping */
-            padding: 120px 0 80px;
+            /* REVERTED: Original padding for desktop view */
+            padding: 80px 0;
         }
 
         .image-track {
@@ -484,10 +484,15 @@
                 position: relative;
                 z-index: 20; /* Elevates carousel above the header */
             }
-
+            
+            /* UPDATED: Reduce header padding on mobile */
+            .milkybar-header h1 {
+                padding: 0.3em;
+            }
+            
+            /* UPDATED: Significantly increase top padding on mobile to prevent glow cropping */
             .image-carousel {
-                /* This now inherits the base style's 120px top padding but adjusts the bottom */
-                padding: 120px 0 60px 0;
+                padding: 160px 0 60px 0;
             }
             .dragon-frame {
                 height: auto;
@@ -504,9 +509,8 @@
                 transform: translateY(-5px) scale(1.9) translateZ(50px);
             }
             
-            /* UPDATED: Move info section even more up from the bottom */
             .info-section-wrapper {
-                margin-top: -120px; /* Further increased negative margin to pull the section higher */
+                margin-top: -120px;
             }
         }
         /* Desktop-specific layout rules for medium and larger screens */
@@ -534,8 +538,8 @@
             }
             .image-carousel {
                 min-height: clamp(250px, 55vh, 550px);
-                /* UPDATED: This padding rule is specific to this screen size and now matches the base style */
-                padding-top: 120px;
+                /* REVERTED: Original padding rule for this view */
+                padding-top: 100px;
             }
             .dragon-frame {
                 height: clamp(250px, 45vh, 450px);
