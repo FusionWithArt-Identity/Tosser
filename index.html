@@ -179,24 +179,10 @@
             will-change: transform;
         }
 
-        /* Glare effect */
+        /* Glare effect keyframes remain the same */
         @keyframes glass-reflection {
             0% { transform: translateX(-250%) skewX(-20deg); }
             100% { transform: translateX(350%) skewX(-20deg); }
-        }
-
-        .dragon-frame::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 40%; height: 100%;
-            background: linear-gradient( to right,
-                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
-                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            animation: glass-reflection 4s linear infinite;
-            z-index: -1; pointer-events: none; filter: blur(3px);
-            will-change: transform;
         }
 
         @keyframes glowing-colors {
@@ -259,25 +245,41 @@
             top: 0; left: 0; display: flex;
         }
 
-        /* === MODIFICATION START === */
         .dragon-front {
             transition: opacity 0.3s ease 0.3s;
             align-items: center;
             justify-content: center;
-            /* Added styles for the blurred background effect */
             background-size: cover;
             background-position: center;
         }
 
-        /* New pseudo-element for the blurred layer */
+        /* Blurred background layer */
         .dragon-front::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: inherit; /* Inherits background from .dragon-front */
+            background: inherit;
             filter: blur(20px) brightness(0.7);
-            transform: scale(1.2); /* Prevents blurred edges from appearing inside the frame */
-            z-index: 0; /* Places the blur behind the main image */
+            transform: scale(1.2);
+            z-index: 0; /* Layer 0: Bottom */
+        }
+        
+        /* === MODIFICATION START === */
+        /* Glare effect is now on .dragon-front to control its layer order */
+        .dragon-front::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient( to right,
+                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: glass-reflection 4s linear infinite;
+            z-index: 1; /* Layer 1: Middle (on top of blur) */
+            pointer-events: none;
+            filter: blur(3px);
+            will-change: transform;
         }
         /* === MODIFICATION END === */
 
@@ -295,17 +297,15 @@
             z-index: 1; background-color: transparent; border-radius: 10px;
         }
         
-        /* === MODIFICATION START === */
-        /* This rule ensures the main front image is displayed fully over the blurred background */
+        /* Main image layer */
         .dragon-front .dragon-content {
-            position: relative;   /* Needed to apply z-index */
-            z-index: 1;           /* Places image on top of the ::before pseudo-element */
-            max-height: 100%;     /* Overrides the base rule to allow full height */
-            height: 100%;         /* Ensures the container for the contained image is full size */
-            border-radius: 0;     /* The outer frame handles the border radius */
-            object-fit: contain;  /* THIS IS THE KEY: shows the full image without cropping or stretching */
+            position: relative;
+            z-index: 2;         /* Layer 2: Top (on top of glare and blur) */
+            max-height: 100%;
+            height: 100%;
+            border-radius: 0;
+            object-fit: contain;
         }
-        /* === MODIFICATION END === */
 
         .dragon-back img.dragon-content { cursor: zoom-in; }
 
@@ -683,12 +683,10 @@
                 const front = document.createElement('div');
                 front.className = 'dragon-front';
                 
-                // === MODIFICATION START ===
                 // Set the background image on the front of the card for the blur effect
                 if (dragon.front.type === 'image') {
                     front.style.backgroundImage = `url('${dragon.front.src}')`;
                 }
-                // === MODIFICATION END ===
 
                 let frontContentElement;
                 if (dragon.front.type === 'video') {
