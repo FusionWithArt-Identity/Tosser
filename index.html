@@ -258,10 +258,13 @@
             backface-visibility: hidden; -webkit-backface-visibility: hidden;
             top: 0; left: 0; display: flex;
         }
-
+        /* --- MODIFIED: Added a semi-transparent background and blur to the front side of the card --- */
         .dragon-front {
             transition: opacity 0.3s ease 0.3s;
             align-items: center; justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
@@ -277,8 +280,6 @@
             object-fit: contain; display: block; position: relative;
             z-index: 1; background-color: transparent; border-radius: 10px;
         }
-        
-        /* The front image rule has been removed to restore original behavior */
 
         .dragon-back img.dragon-content { cursor: zoom-in; }
 
