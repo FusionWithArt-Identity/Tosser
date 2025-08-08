@@ -179,13 +179,13 @@
             will-change: transform;
         }
         
-        /* Glare effect */
+        /* Glare effect on back of card */
         @keyframes glass-reflection {
             0% { transform: translateX(-250%) skewX(-20deg); }
             100% { transform: translateX(350%) skewX(-20deg); }
         }
 
-        .dragon-frame::after {
+        .dragon-back::after {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 40%; height: 100%;
@@ -195,7 +195,9 @@
                 rgba(255, 255, 255, 0) 100%
             );
             animation: glass-reflection 4s linear infinite;
-            z-index: -1; pointer-events: none; filter: blur(3px);
+            z-index: 3;
+            pointer-events: none;
+            filter: blur(3px);
             will-change: transform;
         }
 
