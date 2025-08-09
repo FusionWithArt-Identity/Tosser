@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Naruto Webpage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            /* Ensures consistent height on mobile browsers */
+            height: -webkit-fill-available;
+        }
+
+        body {
+            background-color: Black;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            overflow-x: hidden;
+            /* Allow vertical scrolling only if necessary */
+            overflow-y: auto;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .milkybar-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1vh 10px;
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .milkybar-header {
+            text-align: center;
+            margin-bottom: 0;
+            margin-top: 1vh;
+            padding: 0 5px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Styles for the main H1 element */
+        .milkybar-header h1 {
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
+            font-family: 'Ninja Naruto', sans-serif;
+            color: #f0f0f0;
+            text-shadow:
+                -2px -2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+                0 0 4px #fff, 0 0 10px #fff,
+                0 0 15px #bc13fe, 0 0 25px #bc13fe, 0 0 40px #bc13fe;
+            border: 0.2rem solid #fff;
+            border-radius: 2rem;
+            padding: 0.4em;
+            box-shadow:
+                0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #bc13fe,
+                0 0 0.8rem #bc13fe, 0 0 2.8rem #bc13fe, inset 0 0 1.3rem #bc13fe;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: neon-tube-flicker-enhanced 1.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes neon-tube-flicker-enhanced {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                color: #f0f0f0;
+                text-shadow:
+                    -2px -2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+                    0 0 4px #fff, 0 0 10px #fff,
+                    0 0 15px #bc13fe, 0 0 25px #bc13fe, 0 0 40px #bc13fe;
+            }
+            20%, 24%, 55% {
+                color: rgba(240, 240, 240, 0.7);
+                text-shadow:
+                    -1px -1px 0 rgba(0,0,0,0.7), 1px 1px 0 rgba(0,0,0,0.7),
+                    0 0 1px rgba(255,255,255,0.8), 0 0 5px rgba(255,255,255,0.6),
+                    0 0 7px rgba(188,19,254,0.7), 0 0 15px rgba(188,19,254,0.5);
+            }
+            22%, 53% {
+                color: rgba(240, 240, 240, 0.9);
+                text-shadow:
+                    -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px 1.5px 0 rgba(0,0,0,0.8),
+                    0 0 3px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7),
+                    0 0 12px rgba(188,19,254,0.8), 0 0 25px rgba(188,19,254,0.6);
+            }
+        }
+
+        .milkybar-header p {
+            color: #a37f48;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: bold;
+            line-height: 1.3;
+            margin: 50px 0 10px 0;
+        }
+
+        .dragon-carousel {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto 0;
+            position: relative;
+        }
+
+        .carousel-visuals-wrapper {
+            position: relative;
+        }
+
+        .image-carousel {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: clamp(400px, 75vh, 750px);
+            margin: 0 auto;
+            perspective: 1200px;
+            overflow-x: hidden;
+            overflow-y: visible;
+            transform-style: preserve-3d;
+            padding: 80px 0;
+        }
+
+        .image-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+
+        .image-slide {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-style: preserve-3d;
+            opacity: 0;
+            pointer-events: none;
+            will-change: transform, opacity, filter;
+            padding: 0 10px;
+        }
+
+        .dragon-frame {
+            width: clamp(180px, 40vw, 300px);
+            height: clamp(350px, 70vh, 700px);
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.6s ease-in-out, border-color 0.6s ease-in-out;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+                        0 0 10px rgba(255, 255, 255, 0.3);
+            will-change: transform;
+        }
+
+        /* Glare effect keyframes remain the same */
+        @keyframes glass-reflection {
+            0% { transform: translateX(-250%) skewX(-20deg); }
+            100% { transform: translateX(350%) skewX(-20deg); }
+        }
+
+        @keyframes glowing-colors {
+            0% {
+                border-color: rgba(255, 0, 255, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(255, 0, 255, 0.6), 0 0 20px 5px rgba(255, 0, 255, 0.4),
+                    0 0 30px 10px rgba(255, 0, 255, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            25% {
+                border-color: rgba(0, 255, 255, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(0, 255, 255, 0.6), 0 0 20px 5px rgba(0, 255, 255, 0.4),
+                    0 0 30px 10px rgba(0, 255, 255, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            50% {
+                border-color: rgba(255, 255, 0, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(255, 255, 0, 0.6), 0 0 20px 5px rgba(255, 255, 0, 0.4),
+                    0 0 30px 10px rgba(255, 255, 0, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            75% {
+                border-color: rgba(0, 255, 0, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(0, 255, 0, 0.6), 0 0 20px 5px rgba(0, 255, 0, 0.4),
+                    0 0 30px 10px rgba(0, 255, 0, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+            100% {
+                border-color: rgba(255, 0, 255, 0.8);
+                box-shadow:
+                    0 0 10px 2px rgba(255, 0, 255, 0.6), 0 0 20px 5px rgba(255, 0, 255, 0.4),
+                    0 0 30px 10px rgba(255, 0, 255, 0.2), 0 15px 40px rgba(140, 109, 62, 0.5);
+            }
+        }
+
+        @keyframes neon-light-trail {
+            0%, 100% { text-shadow: 0 0 5px #FFA500, 0 0 10px #FFA500, 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4); }
+            25% { text-shadow: -2px -2px 5px #FFA500, -4px -4px 10px #FFA500, -6px -6px 20px rgba(255, 51, 51, 0.6), -8px -8px 30px rgba(255, 51, 51, 0.4); }
+            50% { text-shadow: 0 0 5px #FF0000, 0 0 10px #FF0000, 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4); }
+            75% { text-shadow: 2px 2px 5px #FFA500, 4px 4px 10px #FFA500, 6px 6px 20px rgba(204, 0, 0, 0.6), 8px 8px 30px rgba(204, 0, 0, 0.4); }
+        }
+        
+        .dragon-frame.flipped {
+            transform: translateY(-5px) scale(1.2) translateZ(50px);
+            z-index: 20;
+            animation: glowing-colors 5s infinite alternate ease-in-out;
+            padding-bottom: 5px;
+        }
+
+        .dragon-frame-inner {
+            position: relative; width: 100%; height: 100%;
+            transform-style: preserve-3d; transition: transform 0.6s; will-change: transform;
+        }
+
+        .dragon-frame.flipped .dragon-frame-inner { transform: rotateY(180deg); }
+
+        .dragon-front, .dragon-back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            top: 0; left: 0; display: flex;
+        }
+
+        .dragon-front {
+            transition: opacity 0.3s ease 0.3s;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Blurred background layer */
+        .dragon-front::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: inherit;
+            filter: blur(20px) brightness(0.7);
+            transform: scale(1.2);
+            z-index: 0; /* Layer 0: Bottom */
+        }
+        
+        /* === MODIFICATION START === */
+        /* Glare effect is now on .dragon-front to control its layer order */
+        .dragon-front::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 40%; height: 100%;
+            background: linear-gradient( to right,
+                rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 35%,
+                rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 65%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: glass-reflection 4s linear infinite;
+            z-index: 1; /* Layer 1: Middle (on top of blur) */
+            pointer-events: none;
+            filter: blur(3px);
+            will-change: transform;
+        }
+        /* === MODIFICATION END === */
+
+        .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
+
+        .dragon-back {
+            transform: rotateY(180deg); background: transparent; overflow: hidden;
+            flex-direction: column; align-items: center; justify-content: flex-start;
+            padding: 10px 5px 5px 5px; gap: 8px;
+        }
+
+        .dragon-content {
+            width: 100%; max-height: calc(100% - 40px);
+            object-fit: contain; display: block; position: relative;
+            z-index: 1; background-color: transparent; border-radius: 10px;
+        }
+        
+        /* Main image layer */
+        .dragon-front .dragon-content {
+            position: relative;
+            z-index: 2;         /* Layer 2: Top (on top of glare and blur) */
+            max-height: 100%;
+            height: 100%;
+            border-radius: 0;
+            object-fit: contain;
+        }
+
+        .dragon-back img.dragon-content { cursor: zoom-in; }
+
+        .dragon-back .dragon-content {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4), 0px 0px 10px rgba(255, 255, 255, 0.6), inset 0px 0px 8px rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dragon-back-text {
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 5px;
+            flex-grow: 1;
+            min-height: 0;
+            max-height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            font-family: FBI;
+            color: White;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: clamp(1rem, 4.5vw, 2rem);
+            line-height: 1.2;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            animation: neon-light-trail 4s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dragon-back-text::-webkit-scrollbar { display: none; }
+        .dragon-frame.flipped .dragon-back-text { opacity: 1; }
+
+        .image-slide.current {
+            transform: translateZ(0) scale(1.1);
+            opacity: 1; z-index: 10; pointer-events: auto;
+        }
+        .image-slide.current .dragon-frame:not(.flipped) {
+            transform: translateY(-5px);
+            animation: static-glowing 2s infinite alternate ease-in-out;
+            box-shadow: 0 10px 30px rgba(140, 109, 62, 0.4);
+        }
+
+        .image-slide.prev { transform: translateZ(-100px) rotateY(15deg); opacity: 0.5; z-index: 5; pointer-events: auto; }
+        .image-slide.next { transform: translateZ(-100px) rotateY(-15deg); opacity: 0.5; z-index: 5; pointer-events: auto; }
+
+        .image-slide.prev .dragon-frame:not(.flipped),
+        .image-slide.next .dragon-frame:not(.flipped) {
+            transform: none; animation: none; border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .image-slide.far-prev { transform: translateZ(-250px) rotateY(25deg); opacity: 0.1; z-index: 2; pointer-events: none; }
+        .image-slide.far-next { transform: translateZ(-250px) rotateY(-25deg); opacity: 0.1; z-index: 2; pointer-events: none; }
+
+        .image-slide.far-prev .dragon-frame:not(.flipped),
+        .image-slide.far-next .dragon-frame:not(.flipped) {
+            transform: none; animation: none; border-color: rgba(255, 255, 255, 0.2); box-shadow: none;
+        }
+
+        @keyframes static-glowing {
+            0% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
+            50% { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.6); }
+            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 8px 1px rgba(255, 215, 0, 0.6), 0 0 15px 3px rgba(255, 215, 0, 0.4); }
+        }
+
+        .info-section-wrapper {
+            width: 100%; max-width: 600px;
+            margin: -40px auto 10px;
+            text-align: center; position: relative; z-index: 10;
+            min-height: 100px;
+        }
+
+        .info-section { opacity: 1; height: auto; overflow: visible; transition: none; }
+
+       .dragon-name {
+            font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 800;
+            color: #B22222; margin-bottom: 5px; text-transform: auto;
+            letter-spacing: 1px; line-height: 1;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+        }
+
+        .dragon-description {
+            font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.4;
+            color: #6bd6ce; max-width: 600px; margin: 10px auto; font-weight: 500;
+        }
+
+       .milkybar-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: clamp(45px, 10vw, 60px); height: clamp(45px, 10vw, 60px);
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid rgba(140, 109, 62, 0.5); border-radius: 50%;
+            cursor: pointer; font-size: clamp(1.3rem, 4vw, 2rem); color: #8c6d3e;
+            z-index: 30; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+            overflow: hidden; transition: all 0.5s ease; text-shadow: 0 0 5px #8c6d3e; outline: none;
+        }
+
+        .milkybar-nav::before {
+            content: ''; position: absolute; top: -100%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient( 0deg, transparent, transparent 40%, rgba(140, 109, 62, 0.5) );
+            transform: rotate(-45deg); transition: all 0.5s ease;
+            opacity: 0; z-index: 1; border-radius: 50%; pointer-events: none;
+        }
+
+        .milkybar-nav i { position: relative; z-index: 2; }
+
+        .milkybar-nav:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 0 20px rgba(140, 109, 62, 0.7), 0 0 40px rgba(140, 109, 62, 0.4);
+            border-color: rgba(140, 109, 62, 0.8);
+        }
+
+        .milkybar-nav:hover::before { opacity: 1; transform: rotate(-45deg) translateY(120%); }
+
+        .milkybar-nav:active {
+            transform: translateY(-50%) scale(0.95);
+            box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+            border-color: rgba(140, 109, 62, 0.5);
+        }
+        .milkybar-nav:active::before { opacity: 1; transform: rotate(-45deg) translateY(120%); }
+
+        .milkybar-nav:focus-visible { outline: 2px solid rgba(140, 109, 62, 0.8); outline-offset: 3px; }
+
+        .milkybar-nav:not(:hover):not(:active):not(:focus-visible) {
+            transform: translateY(-50%) scale(1);
+            box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+            border-color: rgba(140, 109, 62, 0.5);
+        }
+        .milkybar-nav:not(:hover):not(:active):not(:focus-visible)::before { opacity: 0; transform: rotate(-45deg) translateY(-100%); }
+
+        @keyframes temporary-glow {
+            0%, 75% {
+                box-shadow: 0 0 15px rgba(140, 109, 62, 0.7), 0 0 30px rgba(140, 109, 62, 0.4);
+                border-color: rgba(140, 109, 62, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+                border-color: rgba(140, 109, 62, 0.5);
+            }
+        }
+
+        @media (hover: none) {
+            .milkybar-nav:hover {
+                transform: translateY(-50%) scale(1);
+                box-shadow: 0 0 10px rgba(140, 109, 62, 0.3), 0 0 20px rgba(140, 109, 62, 0.1);
+                border-color: rgba(140, 109, 62, 0.5);
+            }
+            .milkybar-nav.glow-active { animation: temporary-glow 1.2s forwards; }
+        }
+
+        .milkybar-prev { left: 5px; }
+        .milkybar-next { right: 5px; }
+
+        .milkybar-dots {
+            display: flex; justify-content: center;
+            margin: 0;
+            flex-wrap: wrap; padding: 0 10px;
+        }
+
+        .milkybar-dot {
+            width: clamp(10px, 2.5vw, 14px); height: clamp(10px, 2.5vw, 14px);
+            margin: 5px; background-color: #f0d9a7; border-radius: 50%;
+            cursor: pointer; transition: all 0.3s ease; border: 2px solid #d4a017;
+        }
+
+        .milkybar-dot.active { background-color: #d4a017; transform: scale(1.2); }
+
+        .media-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease-in-out; cursor: zoom-out;
+        }
+
+        .media-overlay.visible { opacity: 1; pointer-events: auto; }
+        .media-overlay .overlay-content { max-width: 90vw; max-height: 90vh; object-fit: contain; cursor: default; }
+        .media-overlay .overlay-content.zoomable-image { cursor: zoom-out; }
+        .media-overlay .overlay-content[data-type="video"] { cursor: auto; }
+
+        /* --- RESPONSIVE FIXES & MODIFICATIONS FOR MOBILE --- */
+        @media (max-width: 767px) {
+            /* MODIFIED: Moved carousel further up */
+            .dragon-carousel {
+                position: relative;
+                z-index: 20;
+                margin-top: -40px; 
+            }
+            
+            .milkybar-header h1 {
+                padding: 0.25em;
+            }
+            
+            .image-carousel {
+                padding: 180px 0 60px 0;
+            }
+            .dragon-frame {
+                height: auto;
+                aspect-ratio: 3 / 5;
+            }
+            .image-slide {
+                width: 33.333%;
+            }
+            
+            .dragon-frame.flipped {
+                transform: translateY(-5px) scale(1.9) translateZ(50px);
+            }
+            
+            .info-section-wrapper {
+                margin-top: -140px;
+            }
+        }
+        /* Desktop-specific layout rules for medium and larger screens */
+        @media (min-width: 768px) {
+            .image-slide { width: 33.333%; }
+            .milkybar-prev { left: -25px; } .milkybar-next { right: -25px; }
+        }
+        @media (min-width: 992px) {
+            .image-slide { width: 25%; }
+            .milkybar-prev { left: -30px; } .milkybar-next { right: -30px; }
+        }
+
+        /* Query for shorter, wider screens (e.g., landscape mobile) */
+        @media (max-height: 720px) and (min-width: 576px) {
+            .milkybar-container {
+                padding: 0.5vh 10px;
+                justify-content: center;
+            }
+            .milkybar-header h1 {
+                font-size: clamp(1.6rem, 5vw, 2.5rem);
+                padding: 0.3em;
+            }
+            .milkybar-header p {
+                font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+            }
+            .image-carousel {
+                min-height: clamp(250px, 55vh, 550px);
+                padding-top: 100px;
+            }
+            .dragon-frame {
+                height: clamp(250px, 45vh, 450px);
+            }
+            .info-section-wrapper {
+                min-height: 80px;
+            }
+            .dragon-name {
+                font-size: clamp(1.6rem, 4vw, 2.2rem);
+                margin-bottom: 5px;
+            }
+            .dragon-description {
+                font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="milkybar-container">
+        <div class="milkybar-header">
+            <h1>Naruto Universe</h1>
+            <p>Meet the Sharingan-Eye Collection</p>
+        </div>
+
+        <div class="dragon-carousel">
+            <div class="carousel-visuals-wrapper">
+                <div class="image-carousel">
+                    <div class="image-track" id="imageTrack"></div>
+                </div>
+                <button class="milkybar-nav milkybar-prev" id="milkybarPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="milkybar-nav milkybar-next" id="milkybarNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="info-section-wrapper">
+                <div id="infoSections"></div>
+            </div>
+            <div class="milkybar-dots" id="milkybarDots"></div>
+        </div>
+    </div>
+
+    <div class="media-overlay" id="mediaOverlay">
+         <div id="overlayContentWrapper"></div>
+    </div>
+
+
+    <script>
+        const dragonData = [
+            {
+                front: { type: 'image', src: 'https://mrwallpaper.com/images/high/red-naruto-sharingan-aqm6i6wth0713qyu.webp' },
+                back: { type: 'image', src: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3M2YjRlbnlrbTJ6OThvd3IwMjA2b2VpenQ3Y2gxNDFyNnc5anNvaiZlcD1WMV9pbnRlcm5hbF9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/shpIYfSrJ5d9wqrumG/giphy.gif', text: '3 Tomoe Sharingan' },
+                name: 'Sahringan (Standard)',
+                description: 'The Standard Sharingan grants heightened perception, allowing users to anticipate movements, copy techniques, and see chakra flow, giving them a significant edge in battle.'
+            },
+            {
+                front: { type: 'image', src: 'https://wallpapers.com/images/hd/itachi-sharingan-eye-art-xzh6k7ry75eafog7.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/a6/61/93/a661935c4126d02290d5be9dfbd61e59.gif', text: 'Mangekyō Sharingan (Itachi)' },
+                name: 'Mangekyou Sharingan (Itachi)',
+                description: 'Itachi’s Mangekyō Sharingan grants access to powerful techniques like Tsukuyomi (an inescapable time-distorting genjutsu), Amaterasu (black flames that burn anything), and the spectral warrior Susanoo for ultimate offense and defense.'
+            },
+            {
+                front: { type: 'image', src: 'https://wallpapersok.com/images/hd/sasuke-s-mangekyou-sharingan-fg9je2tfd41vzwio-fg9je2tfd41vzwio.jpg' },
+                back: { type: 'image', src: 'https://images.steamusercontent.com/ugc/922554680988074070/260888D48A1C227ADF8B351092D496367048D71C/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false', text: 'Sasuke Uchiha' },
+                name: 'Sasuke Uchiha Sharingan',
+                description: 'Sasuke Uchiha\'s Mangekyō Sharingan evolves, granting him mastery over Amaterasu and the ability to manipulate its black flames with Kagutsuchi. Later, he awakens the Rinnegan, merging these powers.'
+            },
+            {
+                front: { type: 'image', src: 'https://e0.pxfuel.com/wallpapers/319/33/desktop-wallpaper-sharingan-and-rinnegan-naruto-and-boruto-naruto-mangekyou-sharingan-and-rinnegan.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/30/8a/16/308a163dd59d280b2a3a1f107f7c4613.gif', text: 'Eternal Mangekyou' },
+                name: 'Eternal Mangekyou Sharingan',
+                description: 'The Eternal Mangekyō Sharingan is an advanced form of the Mangekyō Sharingan, achieved by transplanting the Mangekyō Sharingan from a close relative, preventing blindness from overuse.'
+            },
+            {
+                front: { type: 'image', src: 'https://c4.wallpaperflare.com/wallpaper/47/921/28/naruto-anime-mangekyou-sharingan-obito-uchiha-wallpaper-preview.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/f3/d3/18/f3d31837885b5505e6b20c24e60155b0.gif', text: 'Obito Uchiha' },
+                name: 'Mangekyou Sharingan (Obito)',
+                description: 'Obito Uchiha\'s Mangekyō Sharingan grants him the unique space-time ninjutsu, Kamui, which allows him to instantly teleport to another dimension and become intangible.'
+            },
+            {
+                front: { type: 'image', src: 'https://c4.wallpaperflare.com/wallpaper/486/465/921/naruto-sharingan-madara-uchiha-mangekyou-sharingan-wallpaper-preview.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/30/8a/16/308a163dd59d280b2a3a1f107f7c4613.gif', text: 'Madara Uchiha' },
+                name: 'Mangekyou Sharingan (Madara)',
+                description: 'Madara Uchiha’s Mangekyō Sharingan grants him immense power, which, when combined with his brother Izuna’s, allowed him to form the Eternal Mangekyō Sharingan and perfect the Susanoo.'
+            },
+            {
+                front: { type: 'image', src: 'https://c4.wallpaperflare.com/wallpaper/70/463/935/naruto-anime-uchiha-shisui-uchiha-shisui-mangekyou-sharingan-wallpaper-preview.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/83/8d/f3/838df36113b290d20d7554901f661073.gif', text: 'Shisui Uchiha' },
+                name: 'Mangekyou Sharingan (Shisui)',
+                description: 'Shisui Uchiha\'s Mangekyō Sharingan is legendary for its genjutsu, Kotoamatsukami, which allows him to manipulate a person\'s mind without them even knowing it.'
+            },
+            {
+                front: { type: 'image', src: 'https://e1.pxfuel.com/wallpaper/279/119/desktop-wallpaper-sharingan-and-rinnegan-mangekyou-and-rinnegan.jpg' },
+                back: { type: 'image', src: 'https://gifdb.com/images/high/naruto-rinne-sharingan-madara-uchiha-v6p9e25d6423u656.gif', text: 'Rinne Sharingan' },
+                name: 'Rinne Sharingan',
+                description: 'The Rinne Sharingan is a precursor to the Rinnegan and Sharingan. It allows the user to cast the Infinite Tsukuyomi, trapping the world in a powerful genjutsu.'
+            },
+            {
+                front: { type: 'image', src: 'https://e1.pxfuel.com/wallpaper/52/633/desktop-wallpaper-uchiha-sasuke-anime-mangekyou-sharingan-and-rinnegan-naruto-shippuden-naruto-shippuden-mangekyou-sharingan.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/7a/7f/2a/7a7f2a1b9454877717088b22e11ac127.gif', text: 'Tomoe Rinnegan' },
+                name: 'Rinnegan',
+                description: 'The Rinnegan grants a user mastery over all five basic nature transformations, the ability to summon the Demonic Statue of the Outer Path, and control over gravity and souls.'
+            },
+            {
+                front: { type: 'image', src: 'https://e1.pxfuel.com/wallpaper/317/631/desktop-wallpaper-sasuke-the-king-of-genjutsu-sharingan-sasuke-uchiha-rinnegan-sasuke-mangekyou-sharingan.jpg' },
+                back: { type: 'image', src: 'https://media.tenor.com/8xV4_R7g7l0AAAAC/sasuke-susanoo-amaterasu.gif', text: 'Sasuke\'s Final Rinnegan' },
+                name: 'Rinnegan (Sasuke)',
+                description: 'Sasuke Uchiha\'s Rinnegan, located in his left eye, provides him with unique space-time ninjutsu, planetary devastation, and the ability to switch places with objects in an instant.'
+            },
+            {
+                front: { type: 'image', src: 'https://i.pinimg.com/736x/8b/56/67/8b5667e4368146ac3b8c322b2b1ceec9.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/74/45/b9/7445b98a0870932585f9ce02b0c44365.gif', text: 'Sharingan (Kakashi)' },
+                name: 'Sharingan (Kakashi Hatake)',
+                description: 'Kakashi Hatake, famously known as the "Copy Ninja," wielded Obito\'s Sharingan, which allowed him to copy over a thousand jutsus and use it for his own strategic advantage in countless battles.'
+            },
+            {
+                front: { type: 'image', src: 'https://w.forfun.com/fetch/f2/f2f5341f22144d4715f335b2e3e5b30b.jpeg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/5c/4a/07/5c4a0709b11925b3997d91e1d2c67995.gif', text: 'Sarada Uchiha' },
+                name: 'Sharingan (Sarada Uchiha)',
+                description: 'Sarada Uchiha, the daughter of Sasuke and Sakura, has inherited the Sharingan from her father. She initially awakens it as a single tomoe, showcasing her immense potential and emotional power.'
+            },
+            {
+                front: { type: 'image', src: 'https://c4.wallpaperflare.com/wallpaper/220/861/799/kaguya-otsutsuki-rinne-sharingan-mangekyou-sharingan-naruto-shippuden-naruto-wallpaper-preview.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/b5/e8/52/b5e852a373b984534a60b94372e008d7.gif', text: 'Kaguya Ōtsutsuki' },
+                name: 'Rinne Sharingan (Kaguya)',
+                description: 'Kaguya Ōtsutsuki, the progenitor of chakra, possessed the Rinne Sharingan on her forehead, which she used to cast the Infinite Tsukuyomi and access her various space-time dimensions.'
+            },
+            {
+                front: { type: 'image', src: 'https://e0.pxfuel.com/wallpapers/112/322/desktop-wallpaper-sharingan-kakashi-hatake-mangekyou-sharingan-naruto-shippuden-kakashi.jpg' },
+                back: { type: 'image', src: 'https://i.pinimg.com/originals/f3/d3/18/f3d31837885b5505e6b20c24e60155b0.gif', text: 'Obito Uchiha' },
+                name: 'Mangekyou Sharingan (Kakashi)',
+                description: 'After receiving Obito\'s other Mangekyō Sharingan, Kakashi could perform Kamui with both eyes, allowing him to use the ability with greater speed and precision.'
+            }
+        ];
+
+        const imageTrack = document.getElementById('imageTrack');
+        const infoSectionsContainer = document.getElementById('infoSections');
+        const dotsContainer = document.getElementById('milkybarDots');
+        const prevButton = document.getElementById('milkybarPrev');
+        const nextButton = document.getElementById('milkybarNext');
+        const mediaOverlay = document.getElementById('mediaOverlay');
+        const overlayContentWrapper = document.getElementById('overlayContentWrapper');
+
+        let currentIndex = 0;
+        let slideFullWidth = 0;
+        let videoTimeUpdateIntervals = {};
+
+        const LOCAL_STORAGE_CURRENT_INDEX = 'milkybarCarouselCurrentIndex';
+        const LOCAL_STORAGE_FLIPPED_STATE = 'milkybarCarouselFlippedState';
+        const LOCAL_STORAGE_VIDEO_TIME = 'milkybarCarouselVideoTime_';
+        const LOCAL_STORAGE_OVERLAY_VISIBLE = 'milkybarCarouselOverlayVisible';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_SRC = 'milkybarCarouselOverlaySrc';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_TYPE = 'milkybarCarouselOverlayType';
+        const LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME = 'milkybarCarouselOverlayCurrentTime';
+
+
+        function initCarousel() {
+            imageTrack.innerHTML = '';
+            infoSectionsContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            currentIndex = parseInt(localStorage.getItem(LOCAL_STORAGE_CURRENT_INDEX) || '0');
+            let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+            if (Object.keys(savedFlippedState).length !== dragonData.length) {
+                savedFlippedState = {};
+                dragonData.forEach((_, i) => savedFlippedState[i] = false);
+                localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+            }
+
+            dragonData.forEach((dragon, index) => {
+                const imageSlide = document.createElement('div');
+                imageSlide.className = 'image-slide';
+                imageSlide.dataset.index = index;
+
+                const frame = document.createElement('div');
+                frame.className = 'dragon-frame';
+
+                const frameInner = document.createElement('div');
+                frameInner.className = 'dragon-frame-inner';
+
+                const front = document.createElement('div');
+                front.className = 'dragon-front';
+                
+                // Set the background image on the front of the card for the blur effect
+                if (dragon.front.type === 'image') {
+                    front.style.backgroundImage = `url('${dragon.front.src}')`;
+                }
+
+                let frontContentElement;
+                if (dragon.front.type === 'video') {
+                    frontContentElement = document.createElement('video');
+                    frontContentElement.src = dragon.front.src;
+                    frontContentElement.loop = true;
+                    frontContentElement.playsInline = true;
+                    frontContentElement.muted = true;
+                    if (dragon.front.poster) frontContentElement.poster = dragon.front.poster;
+                    frontContentElement.preload = 'metadata';
+                } else {
+                    frontContentElement = document.createElement('img');
+                    frontContentElement.src = dragon.front.src;
+                }
+                frontContentElement.alt = dragon.name;
+                frontContentElement.className = 'dragon-content';
+                frontContentElement.dataset.type = dragon.front.type;
+
+                const back = document.createElement('div');
+                back.className = 'dragon-back';
+
+                let backContentElement;
+                if (dragon.back.type === 'video') {
+                    backContentElement = document.createElement('video');
+                    backContentElement.src = dragon.back.src;
+                    backContentElement.loop = true;
+                    backContentElement.playsInline = true;
+                    backContentElement.controls = true;
+                    backContentElement.controlsList = "nodownload nofullscreen";
+                    backContentElement.muted = true;
+                    if (dragon.back.poster) backContentElement.poster = dragon.back.poster;
+                    backContentElement.preload = 'metadata';
+
+                    const savedVideoTime = parseFloat(localStorage.getItem(LOCAL_STORAGE_VIDEO_TIME + index) || '0');
+                    if (savedVideoTime > 0) {
+                        backContentElement.currentTime = savedVideoTime;
+                    }
+
+                    const saveVideoTime = () => {
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, backContentElement.currentTime.toString());
+                    };
+
+                    backContentElement.addEventListener('play', () => {
+                        if (videoTimeUpdateIntervals[index]) {
+                            clearInterval(videoTimeUpdateIntervals[index]);
+                        }
+                        videoTimeUpdateIntervals[index] = setInterval(saveVideoTime, 5000);
+                    });
+                    backContentElement.addEventListener('pause', () => {
+                        clearInterval(videoTimeUpdateIntervals[index]);
+                        saveVideoTime();
+                    });
+                    backContentElement.addEventListener('ended', () => {
+                        clearInterval(videoTimeUpdateIntervals[index]);
+                        localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
+                    });
+
+                } else {
+                    backContentElement = document.createElement('img');
+                    backContentElement.src = dragon.back.src;
+                }
+                backContentElement.alt = `${dragon.name} back view`;
+                backContentElement.className = 'dragon-content';
+                backContentElement.dataset.type = dragon.back.type;
+                backContentElement.dataset.src = dragon.back.src;
+
+                back.appendChild(backContentElement);
+
+                if (dragon.back.text) {
+                    const backText = document.createElement('div');
+                    backText.className = 'dragon-back-text';
+                    backText.textContent = dragon.back.text;
+                    back.appendChild(backText);
+                }
+
+                if (dragon.back.type === 'image') {
+                    backContentElement.addEventListener('dblclick', (e) => {
+                        e.stopPropagation();
+                        showMediaInOverlay(backContentElement.src, backContentElement.dataset.type);
+                    });
+                }
+
+                front.appendChild(frontContentElement);
+                frameInner.appendChild(front);
+                frameInner.appendChild(back);
+                frame.appendChild(frameInner);
+
+                if (savedFlippedState[index]) {
+                    frame.classList.add('flipped');
+                }
+
+                frame.addEventListener('click', function(e) {
+                    if (imageSlide.classList.contains('current')) {
+                        e.stopPropagation();
+                        const isFlippingToBack = !this.classList.contains('flipped');
+                        this.classList.toggle('flipped');
+
+                        const currentBackVideo = this.querySelector('.dragon-back video');
+                        const currentFrontVideo = this.querySelector('.dragon-front video');
+
+                        if (isFlippingToBack) {
+                            hideMediaOverlay();
+                            if (currentBackVideo) {
+                                currentBackVideo.muted = false;
+                                currentBackVideo.play().catch(error => console.warn("Autoplay with sound was prevented:", error));
+                            }
+                            if (currentFrontVideo) currentFrontVideo.pause();
+                        } else {
+                            if (currentBackVideo) {
+                                currentBackVideo.pause();
+                                currentBackVideo.currentTime = 0;
+                                currentBackVideo.muted = true;
+                                localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
+                            }
+                            if (currentFrontVideo) {
+                                frontContentElement.muted = true;
+                                currentFrontVideo.play().catch(error => console.warn("Front video autoplay prevented:", error));
+                            }
+                        }
+                        savedFlippedState[index] = this.classList.contains('flipped');
+                        localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+
+                    } else {
+                        goToSlide(parseInt(imageSlide.dataset.index));
+                    }
+                });
+
+                imageSlide.appendChild(frame);
+                imageTrack.appendChild(imageSlide);
+
+                const dot = document.createElement('div');
+                dot.className = 'milkybar-dot';
+                dot.dataset.index = index;
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+
+            const infoSectionContent = document.createElement('div');
+            infoSectionContent.className = 'info-section';
+            infoSectionsContainer.appendChild(infoSectionContent);
+
+            requestAnimationFrame(updateCarousel);
+        }
+
+        function showMediaInOverlay(src, type, initialTime = 0) {
+            overlayContentWrapper.innerHTML = '';
+            let mediaElement;
+
+            if (type === 'video') {
+                mediaElement = document.createElement('video');
+                mediaElement.src = src;
+                mediaElement.loop = true;
+                mediaElement.playsInline = true;
+                mediaElement.controls = true;
+                mediaElement.controlsList = "nodownload nofullscreen";
+                mediaElement.muted = false;
+                mediaElement.preload = 'auto';
+
+                if (initialTime > 0) {
+                    mediaElement.currentTime = initialTime;
+                }
+
+                mediaElement.addEventListener('play', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                });
+                mediaElement.addEventListener('pause', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                });
+                mediaElement.addEventListener('ended', () => {
+                    localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, '0');
+                });
+                mediaElement.addEventListener('timeupdate', () => {
+                    if (Math.floor(mediaElement.currentTime) % 5 === 0 && mediaElement.lastSavedTime !== Math.floor(mediaElement.currentTime)) {
+                        localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
+                        mediaElement.lastSavedTime = Math.floor(mediaElement.currentTime);
+                    }
+                });
+
+                mediaElement.play().catch(e => console.warn("Overlay video autoplay prevented:", e));
+
+            } else {
+                mediaElement = document.createElement('img');
+                mediaElement.src = src;
+                mediaElement.classList.add('zoomable-image');
+                mediaElement.addEventListener('dblclick', hideMediaOverlay);
+            }
+            mediaElement.className = 'overlay-content';
+            mediaElement.dataset.type = type;
+            mediaElement.dataset.src = src;
+
+            overlayContentWrapper.appendChild(mediaElement);
+            mediaOverlay.classList.add('visible');
+
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_VISIBLE, 'true');
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC, src);
+            localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE, type);
+        }
+
+        function hideMediaOverlay() {
+            mediaOverlay.classList.remove('visible');
+            const overlayVideo = overlayContentWrapper.querySelector('video');
+            if (overlayVideo) {
+                overlayVideo.pause();
+            }
+            overlayContentWrapper.innerHTML = '';
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_VISIBLE);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE);
+            localStorage.removeItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME);
+        }
+
+        function restoreOverlayState() {
+            const isOverlayVisible = localStorage.getItem(LOCAL_STORAGE_OVERLAY_VISIBLE) === 'true';
+            if (isOverlayVisible) {
+                const src = localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_SRC);
+                const type = localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_TYPE);
+                const currentTime = parseFloat(localStorage.getItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME) || '0');
+                if (src && type) {
+                    showMediaInOverlay(src, type, currentTime);
+                } else {
+                    hideMediaOverlay();
+                }
+            }
+        }
+
+        function cleanUpMedia(slide) {
+            const frame = slide.querySelector('.dragon-frame');
+            const frontVideo = slide.querySelector('.dragon-front video');
+            const backVideo = slide.querySelector('.dragon-back video');
+            const index = parseInt(slide.dataset.index);
+
+            if (frame.classList.contains('flipped')) {
+                frame.classList.remove('flipped');
+                let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+                savedFlippedState[index] = false;
+                localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+            }
+
+            if (frontVideo) {
+                frontVideo.pause();
+                frontVideo.currentTime = 0;
+                frontVideo.muted = true;
+            }
+            if (backVideo) {
+                backVideo.pause();
+                backVideo.currentTime = 0;
+                backVideo.muted = true;
+                localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
+                if (videoTimeUpdateIntervals[index]) {
+                    clearInterval(videoTimeUpdateIntervals[index]);
+                    delete videoTimeUpdateIntervals[index];
+                }
+            }
+        }
+
+        function updateInfoSection() {
+            const infoSectionContent = document.querySelector('.info-section');
+            const currentDragon = dragonData[currentIndex];
+            infoSectionContent.innerHTML = `
+                <h2 class="dragon-name">${currentDragon.name}</h2>
+                <p class="dragon-description">${currentDragon.description}</p>
+            `;
+        }
+
+        function updateCarousel() {
+            const imageSlides = document.querySelectorAll('.image-slide');
+            const dots = document.querySelectorAll('.milkybar-dot');
+            let savedFlippedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FLIPPED_STATE) || '{}');
+
+            if (imageSlides.length === 0) return;
+            slideFullWidth = imageSlides[0].offsetWidth;
+
+            const carouselWidth = imageTrack.parentElement.offsetWidth;
+            const slidesCount = dragonData.length;
+
+            let translateXValue = (carouselWidth / 2) - (slideFullWidth / 2);
+            translateXValue -= currentIndex * slideFullWidth;
+
+            imageTrack.style.transform = `translateX(${translateXValue}px)`;
+            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentIndex));
+            updateInfoSection();
+
+            localStorage.setItem(LOCAL_STORAGE_CURRENT_INDEX, currentIndex.toString());
+
+            imageSlides.forEach((slide, index) => {
+                const isCurrentSlide = index === currentIndex;
+                const frame = slide.querySelector('.dragon-frame');
+                const frontVideo = slide.querySelector('.dragon-front video');
+                const backVideo = slide.querySelector('.dragon-back video');
+
+                slide.classList.remove('current', 'prev', 'next', 'far-prev', 'far-next');
+
+                let distance = index - currentIndex;
+                if (distance > slidesCount / 2) distance -= slidesCount;
+                else if (distance < -slidesCount / 2) distance += slidesCount;
+
+                switch(distance) {
+                    case 0: slide.classList.add('current'); break;
+                    case 1: slide.classList.add('next'); break;
+                    case -1: slide.classList.add('prev'); break;
+                    case -2: slide.classList.add('far-prev'); break;
+                    case 2: slide.classList.add('far-next'); break;
+                }
+
+                if (!isCurrentSlide) {
+                    // Reset flipped state and media for all non-current slides
+                    if (frame.classList.contains('flipped')) {
+                        frame.classList.remove('flipped');
+                        savedFlippedState[index] = false;
+                    }
+                    if (frontVideo) frontVideo.pause();
+                    if (backVideo) backVideo.pause();
+                } else {
+                    // Handle current slide
+                    const isFlipped = savedFlippedState[index];
+                    if (isFlipped && !frame.classList.contains('flipped')) {
+                        frame.classList.add('flipped');
+                    }
+                    if (!isFlipped && frame.classList.contains('flipped')) {
+                         frame.classList.remove('flipped');
+                    }
+
+                    if (frontVideo) {
+                        frontVideo.muted = true;
+                        if (!isFlipped) {
+                            frontVideo.play().catch(e=>console.warn("Front video autoplay prevented (current):", e));
+                        } else {
+                            frontVideo.pause();
+                        }
+                    }
+
+                    if (backVideo) {
+                        if (isFlipped) {
+                            backVideo.muted = false;
+                            backVideo.play().catch(e => console.warn("Back video autoplay prevented (current flipped):", e));
+                        } else {
+                            backVideo.pause();
+                            backVideo.currentTime = 0;
+                            backVideo.muted = true;
+                            localStorage.setItem(LOCAL_STORAGE_VIDEO_TIME + index, '0');
+                        }
+                    }
+                }
+            });
+            localStorage.setItem(LOCAL_STORAGE_FLIPPED_STATE, JSON.stringify(savedFlippedState));
+        }
+
+        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
+        function goToSlide(index) {
+            currentIndex = index;
+            requestAnimationFrame(updateCarousel);
+        }
+
+        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
+        function nextSlide() {
+            hideMediaOverlay();
+            currentIndex = (currentIndex + 1) % dragonData.length;
+            requestAnimationFrame(updateCarousel);
+        }
+
+        // MODIFIED: Wrapped updateCarousel call in requestAnimationFrame for performance
+        function prevSlide() {
+            hideMediaOverlay();
+            currentIndex = (currentIndex - 1 + dragonData.length) % dragonData.length;
+            requestAnimationFrame(updateCarousel);
+        }
+
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+        mediaOverlay.addEventListener('click', hideMediaOverlay);
+        overlayContentWrapper.addEventListener('click', e => e.stopPropagation());
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        imageTrack.addEventListener('touchstart', (e) => {
+            if (mediaOverlay.classList.contains('visible')) return;
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        imageTrack.addEventListener('touchend', (e) => {
+            if (mediaOverlay.classList.contains('visible')) return;
+            touchEndX = e.changedTouches[0].screenX;
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) nextSlide();
+            else if (touchEndX > touchStartX + threshold) prevSlide();
+        }, { passive: true });
+
+        document.addEventListener('keydown', (e) => {
+            if (mediaOverlay.classList.contains('visible')) {
+                if (e.key === 'Escape') hideMediaOverlay();
+                return;
+            }
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') {
+                const currentFlippedCard = document.querySelector('.image-slide.current .dragon-frame.flipped');
+                if (currentFlippedCard) {
+                    currentFlippedCard.click();
+                }
+            }
+        });
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                initCarousel();
+                restoreOverlayState();
+            }, 200);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel();
+            restoreOverlayState();
+
+            const isTouchDevice = window.matchMedia('(hover: none)').matches;
+            if(isTouchDevice) {
+                [prevButton, nextButton].forEach(button => {
+                    button.addEventListener('touchstart', () => button.classList.add('glow-active'));
+                    button.addEventListener('animationend', () => button.classList.remove('glow-active'));
+                });
+            }
+        });
+
+        /************************************************************************
+         * INDEPENDENT PERFORMANCE BOOSTER SCRIPT
+         *
+         * The following is not a standalone script but a set of best practices
+         * already applied to the code above for better performance.
+         *
+         * 1. requestAnimationFrame: All carousel updates (next, prev, go to slide,
+         * and initial load) are now wrapped in `requestAnimationFrame`. This
+         * tells the browser to run the update code right before the next
+         * repaint, preventing visual lag and creating smoother animations.
+         *
+         * 2. Passive Event Listeners: The 'touchstart' and 'touchend' events
+         * use the `{ passive: true }` option. This tells the browser that
+         * the event listener will not call `preventDefault()`, allowing the
+         * browser to handle scrolling smoothly without waiting for the
+         * JavaScript to finish executing.
+         *
+         * 3. CSS Hardware Acceleration: The use of `transform` and `opacity`
+         * for animations in CSS (`.image-slide`, `.dragon-frame`, etc.)
+         * allows the browser to offload these animations to the GPU, freeing
+         * up the CPU and resulting in much smoother rendering. The
+         * `will-change` property is also used to hint to the browser which
+         * elements will be animated.
+         *
+         * These techniques are integrated directly into the existing logic
+         * for maximum effectiveness without causing conflicts.
+        ************************************************************************/
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Disable text selection
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none'; // For Safari
+            document.body.style.MozUserSelect = 'none'; // For Firefox
+            document.body.style.msUserSelect = 'none'; // For Internet Explorer/Edge
+            
+            // 2. Disable right-click context menu
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            
+            // 3. Disable printing and screenshot
+            window.addEventListener('beforeprint', e => {
+                alert('Printing this page is not allowed!');
+                e.preventDefault();
+            });
+            
+            // Disable common keyboard shortcuts for printing and saving
+            document.addEventListener('keydown', e => {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 's')) {
+                    e.preventDefault();
+                }
+            });
+
+            // Prevent screenshot attempts on some browsers (though not foolproof)
+            document.addEventListener('keyup', e => {
+                if (e.key === 'PrintScreen' || (e.altKey && e.key === 'p')) {
+                    alert('Screenshots are disabled on this page!');
+                    e.preventDefault();
+                }
+            });
+
+            // 4. Disable image dragging
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('dragstart', e => e.preventDefault());
+            });
+
+            // 5. Detect and handle developer tools
+            const devtoolsDetector = () => {
+                let isDevToolsOpen = false;
+                const widthThreshold = window.outerWidth - window.innerWidth > 160;
+                const heightThreshold = window.outerHeight - window.innerHeight > 160;
+                
+                if (widthThreshold || heightThreshold) {
+                    isDevToolsOpen = true;
+                }
+
+                if (isDevToolsOpen) {
+                    document.body.innerHTML = '<div style="background-color: white; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 9999;"></div>';
+                } else {
+                    // Restore content by reloading if it was previously hidden
+                    if (document.body.querySelector('div[style*="background-color: white"]')) {
+                         location.reload();
+                    }
+                }
+            };
+            
+            // Check periodically for dev tools
+            setInterval(devtoolsDetector, 1000);
+            window.addEventListener('resize', devtoolsDetector);
+        });
+    </script>
+</body>
+</html>
