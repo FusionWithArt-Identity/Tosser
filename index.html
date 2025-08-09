@@ -6,7 +6,7 @@
     <title>Naruto Webpage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-	    @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
+        @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
         /* Base styles */
         * {
             margin: 0;
@@ -48,7 +48,7 @@
         .milkybar-header {
             text-align: center;
             margin-bottom: 0;
-	        margin-top: 1vh;
+            margin-top: 1vh;
             padding: 0 5px;
             width: 100%;
             position: relative;
@@ -1197,61 +1197,69 @@
          * These techniques are integrated directly into the existing logic
          * for maximum effectiveness without causing conflicts.
         ************************************************************************/
-<Script>
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Disable text selection
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none'; // For Safari
-    document.body.style.MozUserSelect = 'none'; // For Firefox
-    document.body.style.msUserSelect = 'none'; // For Internet Explorer/Edge
-    
-    // 2. Disable right-click context menu
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    
-    // 3. Disable printing
-    window.addEventListener('beforeprint', e => {
-        alert('Printing this page is not allowed!');
-        e.preventDefault();
-    });
-    
-    // Disable common keyboard shortcuts for printing and saving
-    document.addEventListener('keydown', e => {
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 's')) {
-            e.preventDefault();
-        }
-    });
+    </script>
 
-    // 4. Disable image dragging
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('dragstart', e => e.preventDefault());
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Disable text selection
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none'; // For Safari
+            document.body.style.MozUserSelect = 'none'; // For Firefox
+            document.body.style.msUserSelect = 'none'; // For Internet Explorer/Edge
+            
+            // 2. Disable right-click context menu
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            
+            // 3. Disable printing and screenshot
+            window.addEventListener('beforeprint', e => {
+                alert('Printing this page is not allowed!');
+                e.preventDefault();
+            });
+            
+            // Disable common keyboard shortcuts for printing and saving
+            document.addEventListener('keydown', e => {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 's')) {
+                    e.preventDefault();
+                }
+            });
 
-    // 5. Detect and handle developer tools
-    const devtoolsDetector = () => {
-        let isDevToolsOpen = false;
-        const widthThreshold = window.outerWidth - window.innerWidth > 160;
-        const heightThreshold = window.outerHeight - window.innerHeight > 160;
-        
-        if (widthThreshold || heightThreshold) {
-            isDevToolsOpen = true;
-        }
+            // Prevent screenshot attempts on some browsers (though not foolproof)
+            document.addEventListener('keyup', e => {
+                if (e.key === 'PrintScreen' || (e.altKey && e.key === 'p')) {
+                    alert('Screenshots are disabled on this page!');
+                    e.preventDefault();
+                }
+            });
 
-        if (isDevToolsOpen) {
-            document.body.innerHTML = '<div style="background-color: white; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 9999;"></div>';
-        } else {
-            // Restore content if it was previously hidden
-            if (document.body.querySelector('div[style*="background-color: white"]')) {
-                 location.reload();
-            }
-        }
-    };
-    
-    // Check periodically for dev tools
-    setInterval(devtoolsDetector, 1000);
-    window.addEventListener('resize', devtoolsDetector);
-});
-	</Script>
+            // 4. Disable image dragging
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('dragstart', e => e.preventDefault());
+            });
+
+            // 5. Detect and handle developer tools
+            const devtoolsDetector = () => {
+                let isDevToolsOpen = false;
+                const widthThreshold = window.outerWidth - window.innerWidth > 160;
+                const heightThreshold = window.outerHeight - window.innerHeight > 160;
+                
+                if (widthThreshold || heightThreshold) {
+                    isDevToolsOpen = true;
+                }
+
+                if (isDevToolsOpen) {
+                    document.body.innerHTML = '<div style="background-color: white; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 9999;"></div>';
+                } else {
+                    // Restore content by reloading if it was previously hidden
+                    if (document.body.querySelector('div[style*="background-color: white"]')) {
+                         location.reload();
+                    }
+                }
+            };
+            
+            // Check periodically for dev tools
+            setInterval(devtoolsDetector, 1000);
+            window.addEventListener('resize', devtoolsDetector);
+        });
     </script>
 </body>
 </html>
-
