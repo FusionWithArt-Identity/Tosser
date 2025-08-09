@@ -264,7 +264,6 @@
             z-index: 0; /* Layer 0: Bottom */
         }
         
-        /* === MODIFICATION START === */
         /* Glare effect is now on .dragon-front to control its layer order */
         .dragon-front::after {
             content: '';
@@ -281,7 +280,6 @@
             filter: blur(3px);
             will-change: transform;
         }
-        /* === MODIFICATION END === */
 
         .dragon-frame.flipped .dragon-front { opacity: 0; pointer-events: none; }
 
@@ -502,7 +500,6 @@
 
         /* --- RESPONSIVE FIXES & MODIFICATIONS FOR MOBILE --- */
         @media (max-width: 767px) {
-            /* MODIFIED: Moved carousel further up */
             .dragon-carousel {
                 position: relative;
                 z-index: 20;
@@ -634,7 +631,7 @@
                 description: 'The Eternal Mangekyō Sharingan is an advanced form of the Mangekyō Sharingan, achieved by transplanting the Mangekyō Sharingan from a close relative, preventing blindness from overuse.'
             },
             {
-                front: { type: 'image', src: 'https://c4.wallpaperflare.com/wallpaper/47/921/28/naruto-anime-mangekyou-sharingan-obito-uchiha-wallpaper-preview.jpg' },
+                front: { type: 'image', src: 'https://c4.wallpaperflare.com/wallpaper/47/921/28/kurenai-yuhi-mangekyou-sharingan-obito-uchiha-naruto-shippuuden-naruto-uzumaki-wallpaper-preview.jpg' },
                 back: { type: 'image', src: 'https://i.pinimg.com/originals/f3/d3/18/f3d31837885b5505e6b20c24e60155b0.gif', text: 'Obito Uchiha' },
                 name: 'Mangekyou Sharingan (Obito)',
                 description: 'Obito Uchiha\'s Mangekyō Sharingan grants him the unique space-time ninjutsu, Kamui, which allows him to instantly teleport to another dimension and become intangible.'
@@ -664,7 +661,7 @@
                 description: 'The Rinnegan grants a user mastery over all five basic nature transformations, the ability to summon the Demonic Statue of the Outer Path, and control over gravity and souls.'
             },
             {
-                front: { type: 'image', src: 'https://e1.pxfuel.com/wallpaper/317/631/desktop-wallpaper-sasuke-the-king-of-genjutsu-sharingan-sasuke-uchiha-rinnegan-sasuke-mangekyou-sharingan.jpg' },
+                front: { type: 'image', src: 'https://e0.pxfuel.com/wallpapers/317/631/desktop-wallpaper-sasuke-the-king-of-genjutsu-sharingan-sasuke-uchiha-rinnegan-sasuke-mangekyou-sharingan.jpg' },
                 back: { type: 'image', src: 'https://media.tenor.com/8xV4_R7g7l0AAAAC/sasuke-susanoo-amaterasu.gif', text: 'Sasuke\'s Final Rinnegan' },
                 name: 'Rinnegan (Sasuke)',
                 description: 'Sasuke Uchiha\'s Rinnegan, located in his left eye, provides him with unique space-time ninjutsu, planetary devastation, and the ability to switch places with objects in an instant.'
@@ -904,11 +901,24 @@
                 mediaElement.controlsList = "nodownload nofullscreen";
                 mediaElement.muted = false;
                 mediaElement.preload = 'auto';
+            } else {
+                mediaElement = document.createElement('img');
+                mediaElement.src = src;
+                mediaElement.classList.add('zoomable-image');
+                mediaElement.addEventListener('dblclick', hideMediaOverlay);
+            }
+            mediaElement.className = 'overlay-content';
+            mediaElement.dataset.type = type;
+            mediaElement.dataset.src = src;
+            
+            // New: Add event listener to prevent dragging on the enlarged content
+            mediaElement.addEventListener('dragstart', e => e.preventDefault());
 
+            if (type === 'video') {
                 if (initialTime > 0) {
                     mediaElement.currentTime = initialTime;
                 }
-
+                
                 mediaElement.addEventListener('play', () => {
                     localStorage.setItem(LOCAL_STORAGE_OVERLAY_CONTENT_CURRENT_TIME, mediaElement.currentTime.toString());
                 });
@@ -926,16 +936,7 @@
                 });
 
                 mediaElement.play().catch(e => console.warn("Overlay video autoplay prevented:", e));
-
-            } else {
-                mediaElement = document.createElement('img');
-                mediaElement.src = src;
-                mediaElement.classList.add('zoomable-image');
-                mediaElement.addEventListener('dblclick', hideMediaOverlay);
             }
-            mediaElement.className = 'overlay-content';
-            mediaElement.dataset.type = type;
-            mediaElement.dataset.src = src;
 
             overlayContentWrapper.appendChild(mediaElement);
             mediaOverlay.classList.add('visible');
