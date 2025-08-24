@@ -72,16 +72,6 @@
     body.loaded .coin {
       transform: translateY(calc(var(--coin-diam) * 1.2)) rotateX(90deg);
     }
-    
-    /* State Restoration: Directly apply the final position and orientation */
-    .scene-container.restored .coin {
-      transform: translateY(0) rotateX(0deg) rotateY(2520deg);
-      animation: none; /* Crucial to prevent animation from running */
-    }
-    .scene-container.restored.show-back .coin {
-      transform: translateY(0) rotateX(0deg) rotateY(2520deg) rotateY(180deg);
-      animation: none; /* Crucial to prevent animation from running */
-    }
 
     /* Step 2: The Flipping Animation */
     .scene-container.tossed .coin {
@@ -135,30 +125,16 @@
         opacity: 0;
     }
 
-    .scene-container.tossed .coin .front, .scene-container.tossed .coin .back,
-    .scene-container.restored .coin .front, .scene-container.restored .coin .back {
+    .scene-container.tossed .coin .front, .scene-container.tossed .coin .back {
         opacity: 1;
     }
     
-    .scene-container.tossed.show-back .coin .front, .scene-container.tossed.show-back .coin .back,
-    .scene-container.restored.show-back .coin .front, .scene-container.restored.show-back .coin .back {
+    .scene-container.tossed.show-back .coin .front, .scene-container.tossed.show-back .coin .back {
         opacity: 1;
-    }
-    
-    .scene-container.restored .coin .initial {
-        opacity: 0;
     }
 
     /* Step 3: Final State - hide the losing image when animation is over */
     .scene-container.result-shown.show-back .coin .front {
-        opacity: 0;
-    }
-
-    /* Hide losing image on restored state */
-    .scene-container.restored.show-back .coin .front {
-        opacity: 0;
-    }
-    .scene-container.restored:not(.show-back) .coin .back {
         opacity: 0;
     }
 
@@ -231,12 +207,6 @@
     .scene-container.tossed .shadow {
       animation: shadow-jump 2s forwards;
     }
-    
-    .scene-container.restored .shadow {
-      opacity: 0.35;
-      transform: translateX(-50%) scale(1.2) translateZ(-25px);
-      animation: none;
-    }
 
     .text-area-wrapper {
       position: relative;
@@ -264,24 +234,18 @@
     }
 
     .scene-container.result-shown #front-text,
-    .scene-container.result-shown #back-text,
-    .scene-container.restored #front-text,
-    .scene-container.restored #back-text {
+    .scene-container.result-shown #back-text {
       opacity: 1;
       transform: translateX(0);
       pointer-events: auto;
     }
-    
-    .scene-container.restored:not(.show-back) #back-text,
-    .scene-container.restored.show-back #front-text {
-        opacity: 0;
-    }
-    
-    .scene-container.result-shown:not(.show-back) #back-text,
-    .scene-container.result-shown.show-back #front-text {
-        opacity: 0;
-    }
 
+    .scene-container.result-shown:not(.show-back) #back-text,
+    .scene-container.result-shown.show-back #front-text,
+    .scene-container:not(.result-shown) #front-text,
+    .scene-container:not(.result-shown) #back-text {
+      opacity: 0;
+    }
 
     .text-area h2 {
       font-size: var(--header-font-size);
@@ -391,7 +355,7 @@
 
     <div class="text-area-wrapper">
       <div id="front-text" class="text-area">
-        <h2>Mohun Bagan Super Giant (MSBG)</h2>
+        <h2>Mohun Bagan Super Giant (MBSG)</h2>
         <p> Nick Names: Sobuj Maroon/ The Mariners.  <i>Founded	15 August 1889; 136 years ago (as Mohun Bagan Sporting Club)</i></p>
       </div>
       <div id="back-text" class="text-area">
@@ -405,195 +369,41 @@
     document.addEventListener("DOMContentLoaded", () => {
       const coin = document.getElementById("coin");
       const scene = document.getElementById("scene");
-      const isRestored = sessionStorage.getItem('coinResult');
-
-      if (isRestored) {
-        // If a result is saved, restore the final state instantly
-        document.body.classList.add("loaded");
-        scene.classList.add("restored", "result-shown");
-        if (isRestored === 'tails') {
-          scene.classList.add("show-back");
-        } else {
-          scene.classList.remove("show-back");
-        }
-      } else {
-        // If this is the first time loading, run the initial animation
-        setTimeout(() => {
-          document.body.classList.add("loaded");
-        }, 100);
-      }
-
+      
       // Prevents right-click context menu
       window.addEventListener("contextmenu", (e) => {
         e.preventDefault();
       });
 
-      coin.addEventListener("click", () => {
-        // Clear previous state and saved result
-        sessionStorage.removeItem('coinResult');
-        scene.classList.remove("tossed", "show-back", "result-shown", "restored");
+      setTimeout(() => {
+        document.body.classList.add("loaded");
+      }, 100);
 
+      coin.addEventListener("click", () => {
+        // Decide the result BEFORE starting the animation
         const result = Math.random() < 0.5 ? "heads" : "tails";
+        
+        // Remove existing classes to reset the animation
+        scene.classList.remove("tossed", "show-back", "result-shown");
+
+        // Add the 'show-back' class immediately if the result is 'tails'
         if (result === "tails") {
           scene.classList.add("show-back");
-        }
-        
-        void scene.offsetWidth; // Force reflow to restart animation
-        scene.classList.add("tossed");
-
-        // Save the result to sessionStorage when the toss is complete
-        coin.addEventListener("animationend", () => {
-          scene.classList.add("result-shown");
-          sessionStorage.setItem('coinResult', result);
-        }, { once: true });
-      });
-    });
-  </script>
-
-  <script>
-    (function() {
-      // This function is called periodically to check if developer tools are open.
-      const detectDevTools = () => {
-        const threshold = 160;
-        // Check if the difference between outer and inner window dimensions is past a threshold.
-        const widthDifference = window.outerWidth - window.innerWidth > threshold;
-        const heightDifference = window.outerHeight - window.innerHeight > threshold;
-
-        if (widthDifference || heightDifference) {
-          // If the difference is significant, it's likely that dev tools are open.
-          window.location.href = 'about:blank';
-        }
-      };
-
-      // Set an interval to run the detection function every 500 milliseconds.
-      setInterval(detectDevTools, 500);
-    })();
-  </script>
-
-  <script>
-    (function() {
-      // 1, 3, 4. Blocks page saving, all special keys, and key combinations.
-      // 2. Disables navigation keys (Arrow Up, Down, Left, Right).
-      document.addEventListener('keydown', (e) => {
-        // Prevent all key combinations with Ctrl, Alt, Meta (Windows/Command), Shift
-        if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) {
-          e.preventDefault();
-        }
-
-        // Prevent F1 through F12 keys
-        if (e.key.startsWith('F')) {
-          e.preventDefault();
-        }
-        
-        // Disable arrow keys for navigation
-        const blockedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-        if (blockedKeys.includes(e.key)) {
-            e.preventDefault();
-        }
-      });
-      
-      // 5. Prevents "Add to Home Screen" and other offline download prompts on mobile devices.
-      window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent the default prompt from appearing.
-        e.preventDefault();
-      });
-    })();
-  </script>
-<script>
-    let tabCount = 0;
-    
-    function handleMouseLeave() {
-        // Redirects to main.html in the same tab
-        window.location.href = 'main.html';
-    }
-    
-    function handleKeyDown(e) {
-        if (e.key === 'Tab') {
-            tabCount++;
-            if (tabCount >= 4) {
-                window.location.href = 'about:blank';
-            }
         } else {
-            tabCount = 0;
+          scene.classList.remove("show-back");
         }
-    }
-    window.addEventListener('keydown', handleKeyDown);
-    document.body.addEventListener('mouseleave', handleMouseLeave);
-</script>
-<script>
-    // New script to disable browser navigation keys
-    history.pushState(null, document.title, location.href);
-    window.addEventListener('popstate', function (event) {
-        history.pushState(null, document.title, location.href);
-    });
-</script>
-<script>
-// Ultimate TAB Key Blocker (Fine-Tuned)
-(function() {
-    // 1. Prevent any initial TAB focus
-    document.addEventListener('DOMContentLoaded', () => {
-        document.body.tabIndex = -1;
-        document.body.focus();
-    });
 
-    // 2. Block TAB key with zero tolerance
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            
-            // Optionally show a subtle warning (remove if not needed)
-            const warning = document.createElement('div');
-            warning.textContent = 'TAB navigation is disabled';
-            warning.style.position = 'fixed';
-            warning.style.bottom = '10px';
-            warning.style.right = '10px';
-            warning.style.background = 'rgba(0,0,0,0.7)';
-            warning.style.color = 'white';
-            warning.style.padding = '5px 10px';
-            warning.style.borderRadius = '5px';
-            warning.style.zIndex = '9999';
-            document.body.appendChild(warning);
-            
-            setTimeout(() => warning.remove(), 1500);
-            
-            // Force focus back to body
-            document.body.focus();
-            return false;
-        }
-    }, true); // Capture phase to block before any other handlers
+        void scene.offsetWidth; // This is a trick to restart the CSS animation
 
-    // 3. Disable all focusable elements
-    const disableFocus = () => {
-        document.querySelectorAll('a, button, input, textarea, select, [tabindex]').forEach(el => {
-            el.setAttribute('tabindex', '-1');
-            el.style.outline = 'none';
-        });
-    };
-    
-    disableFocus(); // Run immediately
-    
-    // 4. Re-check for new elements (e.g., dynamically loaded)
-    const observer = new MutationObserver(disableFocus);
-    observer.observe(document.body, { 
-        childList: true, 
-        subtree: true 
-    });
+        // Add the 'tossed' class to start the animation
+        scene.classList.add("tossed");
+      });
 
-    // 5. Prevent any history navigation attempts
-    history.pushState(null, null, location.href);
-    window.addEventListener('popstate', () => {
-        history.pushState(null, null, location.href);
+      coin.addEventListener("animationend", () => {
+        // Once the animation ends, show the text for the final result
+        scene.classList.add("result-shown");
+      });
     });
-
-    // 6. Ensure no element can receive focus
-    document.addEventListener('focusin', (e) => {
-        if (e.target !== document.body) {
-            e.target.blur();
-            document.body.focus();
-        }
-    });
-})();
-</script>
+  </script>
 </body>
 </html>
