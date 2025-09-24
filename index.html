@@ -101,18 +101,18 @@
 
     /* Step 1: Initial state - only the initial image is visible */
     .coin .initial {
-      background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/314/399/small_2x/soccer-ball-football-balls-isolated-sports-fitness-and-game-symbol-icon-3d-render-illustration-png.png");
+      background-image: url("Base Pic.png");
       transform: translateZ(calc(var(--coin-depth) / 2));
     }
     
     .coin .front {
       transform: translateZ(calc(var(--coin-depth) / 2));
-      background-image: url("https://upload.wikimedia.org/wikipedia/en/3/32/Mohun_Bagan_Super_Giant.svg");
+      background-image: url("Front.png");
     }
 
     .coin .back {
       transform: rotateY(180deg) translateZ(calc(var(--coin-depth) / 2));
-      background-image: url("https://upload.wikimedia.org/wikipedia/en/1/15/East_Bengal_FC_logo.svg");
+      background-image: url("Back.png");
     }
 
     /* Hiding the front and back faces initially */
@@ -407,3 +407,4 @@
   </script>
 </body>
 </html>
+
